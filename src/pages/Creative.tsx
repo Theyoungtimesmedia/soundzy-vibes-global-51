@@ -1,0 +1,283 @@
+import { HeroSection } from "@/components/HeroSection";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
+
+export default function Creative() {
+  const services = [
+    {
+      icon: Globe,
+      title: "Web Design",
+      description: "Modern, responsive websites that convert visitors into customers"
+    },
+    {
+      icon: Palette,
+      title: "Graphic Design",
+      description: "Brand identity, logos, and marketing materials that make an impact"
+    },
+    {
+      icon: Megaphone,
+      title: "Music Promotion",
+      description: "Strategic promotion to get your music heard by the right audience"
+    },
+    {
+      icon: Film,
+      title: "Video Editing",
+      description: "Professional video production and post-production services"
+    },
+    {
+      icon: Printer,
+      title: "Printing & Press",
+      description: "High-quality printing for all your business and promotional needs"
+    },
+    {
+      icon: Camera,
+      title: "Online Promotion Packages",
+      description: "Complete digital marketing solutions for artists and businesses"
+    }
+  ];
+
+  const portfolioItems = [
+    {
+      category: "Web Design",
+      title: "Entertainment Website",
+      description: "Modern website for event management company"
+    },
+    {
+      category: "Graphic Design",
+      title: "Brand Identity",
+      description: "Complete branding package for music artist"
+    },
+    {
+      category: "Video Production",
+      title: "Music Video",
+      description: "Professional music video production and editing"
+    },
+    {
+      category: "Print Design",
+      title: "Event Flyers",
+      description: "Eye-catching promotional materials"
+    },
+    {
+      category: "Digital Marketing",
+      title: "Social Media Campaign",
+      description: "Successful online promotion strategy"
+    },
+    {
+      category: "Logo Design",
+      title: "Corporate Branding",
+      description: "Professional logo and brand guidelines"
+    }
+  ];
+
+  return (
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <HeroSection
+        backgroundImage="/images/hero-creative.jpg"
+        headline="Design, Promotion, Print and Web"
+        subheadline="Full creative stack for brands and artists. From concept to execution, we bring your vision to life."
+      />
+
+      {/* Services Overview */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Creative Services</h2>
+            <p className="text-lg text-muted-foreground">
+              Comprehensive creative solutions for modern businesses and artists
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <Card key={index} className="group hover:shadow-brand transition-all duration-300">
+                  <CardHeader>
+                    <div className="h-12 w-12 mb-4 bg-secondary/10 rounded-lg flex items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
+                      <Icon className="h-6 w-6 text-secondary group-hover:text-secondary-foreground" />
+                    </div>
+                    <CardTitle>{service.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{service.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Showcase with Company Flyer */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Full Service Range</h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                We provide 24/7 service availability for all your creative and promotional needs. 
+                From initial concept to final delivery, our team ensures quality and professionalism 
+                at every step.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-primary rounded-full"></div>
+                  <span>Available 24 hours for urgent projects</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-secondary rounded-full"></div>
+                  <span>Professional quality guaranteed</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-accent rounded-full"></div>
+                  <span>Competitive pricing for all services</span>
+                </div>
+              </div>
+              
+              <Button variant="hero" size="lg">
+                View Our Work
+              </Button>
+            </div>
+            
+            <div className="flex justify-center">
+              <img 
+                src="/lovable-uploads/3931db77-5e3e-47bc-aebb-1b0fb9113a3f.png" 
+                alt="Soundzy World Global Services"
+                className="max-w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Gallery */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Portfolio</h2>
+            <p className="text-lg text-muted-foreground">
+              Showcasing our latest creative projects and successful campaigns
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {portfolioItems.map((item, index) => (
+              <Card key={index} className="group hover:shadow-brand transition-all duration-300 overflow-hidden">
+                <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <span className="text-muted-foreground">Portfolio Image</span>
+                </div>
+                <CardContent className="p-6">
+                  <Badge variant="outline" className="mb-3">
+                    {item.category}
+                  </Badge>
+                  <h3 className="font-semibold mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Blog & Insights</h2>
+            <p className="text-lg text-muted-foreground">
+              Latest trends and tips in creative design and digital marketing
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="group hover:shadow-brand transition-all duration-300">
+              <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <span className="text-muted-foreground">Blog Image</span>
+              </div>
+              <CardContent className="p-6">
+                <Badge variant="outline" className="mb-3">Design Tips</Badge>
+                <h3 className="font-semibold mb-2">Modern Logo Design Trends 2024</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Discover the latest trends shaping logo design this year and how to apply them to your brand.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>5 min read</span>
+                  <span>•</span>
+                  <span>Design</span>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="group hover:shadow-brand transition-all duration-300">
+              <div className="aspect-video bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
+                <span className="text-muted-foreground">Blog Image</span>
+              </div>
+              <CardContent className="p-6">
+                <Badge variant="outline" className="mb-3">Marketing</Badge>
+                <h3 className="font-semibold mb-2">Social Media Strategy for Musicians</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Essential tips for building your online presence and growing your fanbase organically.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>7 min read</span>
+                  <span>•</span>
+                  <span>Music</span>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="group hover:shadow-brand transition-all duration-300">
+              <div className="aspect-video bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
+                <span className="text-muted-foreground">Blog Image</span>
+              </div>
+              <CardContent className="p-6">
+                <Badge variant="outline" className="mb-3">Web Design</Badge>
+                <h3 className="font-semibold mb-2">Mobile-First Design Principles</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Why mobile-first approach is crucial for modern website design and user experience.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>6 min read</span>
+                  <span>•</span>
+                  <span>Web</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Start Your Creative Project</h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Ready to bring your vision to life? Let's discuss your creative needs and 
+            create something amazing together.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="whatsapp" size="xl" asChild>
+              <a 
+                href="https://wa.me/2348166687167" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Start Project on WhatsApp
+              </a>
+            </Button>
+            <Button variant="outline" size="xl" asChild>
+              <a href="mailto:soundzybeatz@gmail.com">
+                Email Project Brief
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Soundzy World Global Premium Design System - Green Theme */
+    --primary: 160 100% 20%; /* Deep teal green */
+    --primary-foreground: 0 0% 100%;
+    --accent: 140 100% 35%; /* Bright green */
+    --accent-foreground: 0 0% 100%;
+    --secondary: 180 50% 30%; /* Darker teal */
+    --secondary-foreground: 0 0% 100%;
+    
+    --background: 0 0% 100%; /* Pure white */
+    --foreground: 220 15% 15%; /* Dark text */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+    
+    --muted: 220 13% 96%;
+    --muted-foreground: 220 9% 46%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 320 100% 50%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --radius: 1rem;
+    
+    /* Premium gradients matching green reference */
+    --gradient-hero: linear-gradient(135deg, hsl(160 100% 10% / 0.95), hsl(140 100% 25% / 0.95));
+    --gradient-primary: linear-gradient(135deg, hsl(160 100% 20%), hsl(140 100% 35%));
+    --gradient-accent: linear-gradient(135deg, hsl(140 100% 35%), hsl(160 80% 40%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(0 0% 98% / 0.9));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(160 100% 20% / 0.08);
+    --shadow-accent: 0 8px 32px hsl(140 100% 35% / 0.15);
+    --shadow-hero: 0 20px 60px hsl(160 100% 20% / 0.2);
+    --shadow-card: 0 4px 16px hsl(220 15% 15% / 0.08);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --primary: 280 100% 25%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 320 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --secondary: 280 60% 60%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --background: 220 15% 8%;
+    --foreground: 0 0% 95%;
+    
+    --card: 220 15% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 0 0% 95%;
+    
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 9% 65%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 320 100% 50%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(280 100% 15% / 0.95), hsl(320 100% 25% / 0.95));
+    --shadow-card: 0 4px 16px hsl(0 0% 0% / 0.2);
+    --sidebar-background: 220 15% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 320 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 320 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 600;
+  }
+}
