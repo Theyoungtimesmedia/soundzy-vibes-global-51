@@ -164,7 +164,7 @@ export default function DJ() {
 
       {/* Recent Gigs & Showreels */}
       <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Recent Gigs & Showreels</h2>
             <p className="text-lg text-muted-foreground">
@@ -173,27 +173,47 @@ export default function DJ() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                  <p className="text-muted-foreground">Video Showreel Coming Soon</p>
+            {/* Showreel Card 1 */}
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/7U0ehmGE1G0"
+                    title="DJ Soundzy Performance Highlights"
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
                 </div>
-                <h3 className="font-semibold mb-2">Latest Performance Highlights</h3>
-                <p className="text-sm text-muted-foreground">
-                  Watch DJ Soundzy in action at recent events and club performances
-                </p>
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2">Latest Performance Highlights</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Watch DJ Soundzy in action at recent events and club performances
+                  </p>
+                </div>
               </CardContent>
             </Card>
             
-            <Card>
-              <CardContent className="p-6">
-                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                  <p className="text-muted-foreground">Live Mix Session</p>
+            {/* Showreel Card 2 */}
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/myAHW7UuUDE"
+                    title="DJ Soundzy Behind the Decks"
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
                 </div>
-                <h3 className="font-semibold mb-2">Behind the Decks</h3>
-                <p className="text-sm text-muted-foreground">
-                  Exclusive look at DJ techniques and crowd interaction skills
-                </p>
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2">Behind the Decks</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Exclusive look at DJ techniques and crowd interaction skills
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>

@@ -109,9 +109,13 @@ export function ChatWidget() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-40 w-80 sm:w-96"
+            className="chat-widget fixed bottom-24 right-3 z-[999999]"
+            style={{
+              width: 'min(96vw, 420px)',
+              maxHeight: `calc(100vh - env(safe-area-inset-top, 20px) - 80px)`
+            }}
           >
-            <Card className="h-[500px] flex flex-col shadow-hero border-0">
+            <Card className="h-[min(500px,calc(100vh-120px))] flex flex-col shadow-hero border-0 overflow-hidden">
               {/* Header */}
               <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-4 rounded-t-lg">
                 <h3 className="font-semibold">SWG Assistant</h3>
