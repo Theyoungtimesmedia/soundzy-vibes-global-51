@@ -4,6 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
 
+// Portfolio images
+import portfolioWebDesign from "@/assets/portfolio-web-design.jpg";
+import portfolioBrandIdentity from "@/assets/portfolio-brand-identity.jpg";
+import portfolioVideoProduction from "@/assets/portfolio-video-production.jpg";
+import portfolioPrintDesign from "@/assets/portfolio-print-design.jpg";
+import portfolioDigitalMarketing from "@/assets/portfolio-digital-marketing.jpg";
+import portfolioLogoDesign from "@/assets/portfolio-logo-design.jpg";
+
 export default function Creative() {
   const services = [
     {
@@ -42,32 +50,38 @@ export default function Creative() {
     {
       category: "Web Design",
       title: "Entertainment Website",
-      description: "Modern website for event management company"
+      description: "Modern website for event management company",
+      image: portfolioWebDesign
     },
     {
       category: "Graphic Design",
       title: "Brand Identity",
-      description: "Complete branding package for music artist"
+      description: "Complete branding package for music artist",
+      image: portfolioBrandIdentity
     },
     {
       category: "Video Production",
       title: "Music Video",
-      description: "Professional music video production and editing"
+      description: "Professional music video production and editing",
+      image: portfolioVideoProduction
     },
     {
       category: "Print Design",
       title: "Event Flyers",
-      description: "Eye-catching promotional materials"
+      description: "Eye-catching promotional materials",
+      image: portfolioPrintDesign
     },
     {
       category: "Digital Marketing",
       title: "Social Media Campaign",
-      description: "Successful online promotion strategy"
+      description: "Successful online promotion strategy",
+      image: portfolioDigitalMarketing
     },
     {
       category: "Logo Design",
       title: "Corporate Branding",
-      description: "Professional logo and brand guidelines"
+      description: "Professional logo and brand guidelines",
+      image: portfolioLogoDesign
     }
   ];
 
@@ -167,8 +181,12 @@ export default function Creative() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {portfolioItems.map((item, index) => (
               <Card key={index} className="group hover:shadow-brand transition-all duration-300 overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <span className="text-muted-foreground">Portfolio Image</span>
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={`${item.title} - ${item.description}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <Badge variant="outline" className="mb-3">
