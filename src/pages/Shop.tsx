@@ -2,7 +2,11 @@ import { HeroSection } from "@/components/HeroSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Speaker, Mic, Lightbulb, Settings, Headphones, Monitor } from "lucide-react";
+import { ShoppingCart, Speaker, Mic, Lightbulb, Settings, Headphones, Monitor, MessageCircle } from "lucide-react";
+import paSystemImage from "@/assets/pa-system.jpg";
+import wirelessMicImage from "@/assets/wireless-mic-set.jpg";
+import ledLightsImage from "@/assets/led-stage-lights.jpg";
+import djControllerImage from "@/assets/dj-controller.jpg";
 
 export default function Shop() {
   const categories = [
@@ -49,7 +53,7 @@ export default function Shop() {
       name: "Professional PA System",
       price: "₦450,000",
       originalPrice: "₦500,000",
-      image: "/api/placeholder/300/200",
+      image: paSystemImage,
       category: "Speakers",
       inStock: true,
       features: ["2000W Power", "Wireless Connectivity", "Built-in Mixer"]
@@ -58,7 +62,7 @@ export default function Shop() {
       name: "Wireless Microphone Set",
       price: "₦85,000",
       originalPrice: null,
-      image: "/api/placeholder/300/200", 
+      image: wirelessMicImage, 
       category: "Microphones",
       inStock: true,
       features: ["UHF Technology", "100m Range", "Dual Channel"]
@@ -67,7 +71,7 @@ export default function Shop() {
       name: "LED Stage Light Kit",
       price: "₦120,000",
       originalPrice: "₦150,000",
-      image: "/api/placeholder/300/200",
+      image: ledLightsImage,
       category: "Lighting",
       inStock: false,
       features: ["RGB Colors", "DMX Control", "Sound Active"]
@@ -76,7 +80,7 @@ export default function Shop() {
       name: "DJ Controller Pro",
       price: "₦280,000",
       originalPrice: null,
-      image: "/api/placeholder/300/200",
+      image: djControllerImage,
       category: "DJ Equipment",
       inStock: true,
       features: ["4-Channel", "Touch Strips", "Built-in Interface"]
@@ -140,7 +144,11 @@ export default function Shop() {
             {featuredProducts.map((product, index) => (
               <Card key={index} className="group hover:shadow-brand transition-all duration-300">
                 <div className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-t-lg flex items-center justify-center relative overflow-hidden">
-                  <span className="text-muted-foreground">Product Image</span>
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
                   {product.originalPrice && (
                     <Badge variant="destructive" className="absolute top-2 left-2">
                       Sale
@@ -180,16 +188,21 @@ export default function Shop() {
                   </div>
                   
                   <Button 
-                    variant={product.inStock ? "default" : "outline"} 
+                    variant={product.inStock ? "whatsapp" : "outline"} 
                     size="sm" 
                     className="w-full"
                     disabled={!product.inStock}
+                    asChild={product.inStock}
                   >
                     {product.inStock ? (
-                      <>
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Cart
-                      </>
+                      <a 
+                        href={`https://wa.me/2348166687167?text=Hi! I'm interested in the ${product.name} (${product.price}). Please provide more details.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Buy via WhatsApp
+                      </a>
                     ) : (
                       "Notify When Available"
                     )}

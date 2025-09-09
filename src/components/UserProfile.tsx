@@ -199,7 +199,7 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
 
         {/* Enhanced Profile Tabs */}
         <Tabs defaultValue="settings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 h-12">
+          <TabsList className="grid w-full grid-cols-3 h-12">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="h-4 w-4" />
               Settings
@@ -207,10 +207,6 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
             <TabsTrigger value="activity" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
               Activity
-            </TabsTrigger>
-            <TabsTrigger value="community" className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4" />
-              Community
             </TabsTrigger>
             <TabsTrigger value="preferences" className="flex items-center gap-2">
               <User className="h-4 w-4" />
@@ -333,7 +329,7 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
                       <Heart className="h-5 w-5 text-red-500" />
                     </div>
                     <div>
-                      <p className="font-medium">Liked a community post</p>
+                      <p className="font-medium">Updated profile settings</p>
                       <p className="text-sm text-muted-foreground">2 hours ago</p>
                     </div>
                   </div>
@@ -360,35 +356,6 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
             </Card>
           </TabsContent>
 
-          <TabsContent value="community">
-            <Card className="border-0 shadow-card">
-              <CardHeader>
-                <CardTitle>Community Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Button asChild variant="outline" className="h-auto p-6 justify-start">
-                    <a href="/community" className="flex flex-col items-start gap-2">
-                      <MessageCircle className="h-6 w-6" />
-                      <div>
-                        <div className="font-medium">Join Discussions</div>
-                        <div className="text-sm text-muted-foreground">Connect with the community</div>
-                      </div>
-                    </a>
-                  </Button>
-                  <Button variant="outline" className="h-auto p-6 justify-start">
-                    <div className="flex flex-col items-start gap-2">
-                      <Heart className="h-6 w-6" />
-                      <div>
-                        <div className="font-medium">My Favorites</div>
-                        <div className="text-sm text-muted-foreground">View liked content</div>
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           <TabsContent value="preferences">
             <Card className="border-0 shadow-card">
