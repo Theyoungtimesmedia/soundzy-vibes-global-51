@@ -1,12 +1,14 @@
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { ReactNode } from "react";
+import { useServices } from '@/hooks/useServices';
 interface LayoutProps {
   children: ReactNode;
 }
 export const Layout = ({
   children
 }: LayoutProps) => {
+  const { services: footerServices } = useServices('footer_services');
   return <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1">
@@ -44,12 +46,11 @@ export const Layout = ({
             <div>
               <h3 className="font-semibold mb-6 text-lg">Services</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="hover:text-primary transition-colors cursor-pointer">DJ & Entertainment</li>
-                <li className="hover:text-primary transition-colors cursor-pointer">Sound Engineering</li>
-                <li className="hover:text-primary transition-colors cursor-pointer">Event Production</li>
-                <li className="hover:text-primary transition-colors cursor-pointer">Music Production</li>
-                <li className="hover:text-primary transition-colors cursor-pointer">Web & Graphic Design</li>
-                <li className="hover:text-primary transition-colors cursor-pointer">Equipment Sales</li>
+                {footerServices.map((service) => (
+                  <li key={service.id} className="hover:text-primary transition-colors cursor-pointer">
+                    {service.title}
+                  </li>
+                ))}
               </ul>
             </div>
             

@@ -3,12 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Speaker, Mic, Lightbulb, Settings, Headphones, Monitor, MessageCircle } from "lucide-react";
+import { useServices } from '@/hooks/useServices';
 import paSystemImage from "@/assets/pa-system.jpg";
 import wirelessMicImage from "@/assets/wireless-mic-set.jpg";
 import ledLightsImage from "@/assets/led-stage-lights.jpg";
 import djControllerImage from "@/assets/dj-controller.jpg";
 
 export default function Shop() {
+  const { services: shopServices, loading: servicesLoading } = useServices('shop_services');
+  
   const categories = [
     {
       icon: Speaker,
@@ -126,6 +129,50 @@ export default function Shop() {
                 </Card>
               );
             })}
+          </div>
+
+          {/* Services Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Our Services</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                From equipment rental to complete event solutions, we've got you covered
+              </p>
+            </div>
+            
+            {servicesLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="bg-muted h-48 rounded-lg"></div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {shopServices.map((service, index) => (
+                  <Card key={service.id || index} className="text-center hover:shadow-lg transition-shadow">
+                    {service.image && (
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <CardHeader>
+                      <CardTitle>{service.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">
+                        {service.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -18,6 +18,7 @@ import {
   Shield,
   Database
 } from 'lucide-react';
+import ServicesManager from '@/components/admin/ServicesManager';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -304,14 +305,7 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Settings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Settings interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <ServicesManager />
           </TabsContent>
         </Tabs>
       </div>

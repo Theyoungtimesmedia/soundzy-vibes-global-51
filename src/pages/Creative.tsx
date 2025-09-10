@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
+import { useServices } from '@/hooks/useServices';
 
 // Portfolio images
 import portfolioWebDesign from "@/assets/portfolio-web-design.jpg";
@@ -13,38 +14,7 @@ import portfolioDigitalMarketing from "@/assets/portfolio-digital-marketing.jpg"
 import portfolioLogoDesign from "@/assets/portfolio-logo-design.jpg";
 
 export default function Creative() {
-  const services = [
-    {
-      icon: Globe,
-      title: "Web Design",
-      description: "Modern, responsive websites that convert visitors into customers"
-    },
-    {
-      icon: Palette,
-      title: "Graphic Design",
-      description: "Brand identity, logos, and marketing materials that make an impact"
-    },
-    {
-      icon: Megaphone,
-      title: "Music Promotion",
-      description: "Strategic promotion to get your music heard by the right audience"
-    },
-    {
-      icon: Film,
-      title: "Video Editing",
-      description: "Professional video production and post-production services"
-    },
-    {
-      icon: Printer,
-      title: "Printing & Press",
-      description: "High-quality printing for all your business and promotional needs"
-    },
-    {
-      icon: Camera,
-      title: "Online Promotion Packages",
-      description: "Complete digital marketing solutions for artists and businesses"
-    }
-  ];
+  const { services: creativeServices, loading: servicesLoading } = useServices('creative_services');
 
   const portfolioItems = [
     {
@@ -104,24 +74,37 @@ export default function Creative() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <Card key={index} className="group hover:shadow-brand transition-all duration-300">
-                  <CardHeader>
-                    <div className="h-12 w-12 mb-4 bg-secondary/10 rounded-lg flex items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
-                      <Icon className="h-6 w-6 text-secondary group-hover:text-secondary-foreground" />
+          {servicesLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-muted h-48 rounded-lg"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {creativeServices.map((service, index) => (
+                <Card key={service.id || index} className="group hover:shadow-brand transition-all duration-300">
+                  {service.image && (
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
+                  )}
+                  <CardHeader>
                     <CardTitle>{service.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">{service.description}</p>
                   </CardContent>
                 </Card>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
