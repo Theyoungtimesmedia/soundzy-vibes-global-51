@@ -15,11 +15,13 @@ import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 
 import NotFound from "./pages/NotFound";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
-// Get the secret admin slug from environment or use a default for development
-const ADMIN_SLUG = import.meta.env.VITE_ADMIN_SLUG || 'secret-admin-2024';
+// Secret admin slug - do not rely on env vars in Lovable
+const ADMIN_SLUG = 'secret-admin-2024';
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -37,6 +39,9 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             
             <Route path={`/admin-console-${ADMIN_SLUG}`} element={<Admin />} />
+            {/* Blog routes */}
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

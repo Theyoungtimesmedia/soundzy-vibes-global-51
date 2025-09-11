@@ -150,27 +150,36 @@ export default function Shop() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {shopServices.map((service, index) => (
-                  <Card key={service.id || index} className="text-center hover:shadow-lg transition-shadow">
-                    {service.image && (
+                {shopServices.map((service, index) => {
+                  const title = (service.title || '').toLowerCase();
+                  let displayImage = djControllerImage;
+                  if (title.includes('light')) displayImage = ledLightsImage;
+                  else if (title.includes('mic')) displayImage = wirelessMicImage;
+                  else if (title.includes('microphone')) displayImage = wirelessMicImage;
+                  else if (title.includes('speaker') || title.includes('sound')) displayImage = paSystemImage;
+                  else if (title.includes('dj') || title.includes('mix')) displayImage = djControllerImage;
+                  const img = service.image || displayImage;
+                  return (
+                    <Card key={service.id || index} className="text-center hover:shadow-lg transition-shadow">
                       <div className="aspect-video overflow-hidden rounded-t-lg">
                         <img
-                          src={service.image}
+                          src={img}
                           alt={service.title}
                           className="w-full h-full object-cover"
+                          loading="lazy"
                         />
                       </div>
-                    )}
-                    <CardHeader>
-                      <CardTitle>{service.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">
-                        {service.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <CardHeader>
+                        <CardTitle>{service.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground">
+                          {service.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             )}
           </div>

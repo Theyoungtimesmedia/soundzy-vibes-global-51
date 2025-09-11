@@ -71,7 +71,7 @@ export function useChatService() {
     
     if (lowerMessage.includes('book') || lowerMessage.includes('dj')) {
       return {
-        content: "That's exciting! Can I grab a few details so I can set up your event with the best vibe ever?\n\n• Your full name and phone number\n• Your event date, location, and type of service (e.g. DJ set, MC)\n• Any special needs or requests\n\nOnce you've shared, I'll save them as a lead and send you a quick WhatsApp message to confirm everything.",
+        content: "That's exciting! Can I grab a few details so I can set up your event with the best vibe ever?\n\n• Your full name and phone number\n• Your event date, location, and type of service (e.g. DJ set, MC)\n• Any special needs or requests\n\nYou can reach us on WhatsApp at +2348166687167 or email soundzybeatz@gmail.com.",
         quickReplies: ['Share Details', 'Call Me Instead', 'WhatsApp Me'],
         intent: 'booking_inquiry',
         confidence: 0.9
@@ -80,7 +80,7 @@ export function useChatService() {
     
     if (lowerMessage.includes('shop') || lowerMessage.includes('gear') || lowerMessage.includes('equipment')) {
       return {
-        content: "Great choice! We've got professional audio and stage gear ready to ship.\n\nWhat are you looking for?\n• Speakers & Sound Systems\n• Mixers & DJ Equipment\n• Stage Lighting\n• Installation Services",
+        content: "Great choice! We've got professional audio and stage gear ready to ship.\n\nWhat are you looking for?\n• Speakers & Sound Systems\n• Mixers & DJ Equipment\n• Stage Lighting\n• Installation Services\n\nChat on WhatsApp: +2348166687167 or email soundzybeatz@gmail.com.",
         quickReplies: ['Browse Speakers', 'DJ Equipment', 'Stage Lights', 'Get Quote'],
         intent: 'shop_inquiry',
         confidence: 0.85
@@ -89,7 +89,7 @@ export function useChatService() {
     
     if (lowerMessage.includes('showreel') || lowerMessage.includes('video') || lowerMessage.includes('tape')) {
       return {
-        content: "Sure thing! Here are some of DJ Soundzy's iconic mixes:\n\n🎵 Flashback Mix (2024) — 10 minutes\n🎵 Weekend Vibes (2025) — 8 minutes\n🎵 Festival Energy (2024) — 12 minutes\n\nWant me to stream one right here for you? Just tap the one you're curious about.",
+        content: "Sure thing! Here are some of DJ Soundzy's iconic mixes:\n\n🎵 Flashback Mix (2024) — 10 minutes\n🎵 Weekend Vibes (2025) — 8 minutes\n🎵 Festival Energy (2024) — 12 minutes\n\nFor bookings or info: WhatsApp +2348166687167, email soundzybeatz@gmail.com.",
         quickReplies: ['Play Flashback Mix', 'Weekend Vibes', 'Festival Energy', 'All Showreels'],
         intent: 'media_request',
         confidence: 0.95
@@ -98,7 +98,7 @@ export function useChatService() {
     
     if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('rate')) {
       return {
-        content: "Great question! Our pricing depends on the service you want—DJ sets, equipment hire, production, and more all vary.\n\nCan you tell me which service you're interested in and your event date? I can then share a personalised estimate, or connect with our team to work out the perfect plan for you.",
+        content: "Great question! Our pricing depends on the service you want—DJ sets, equipment hire, production, and more all vary.\n\nTell me which service and your event date, and I’ll share a personalised estimate.\n\nContact: WhatsApp +2348166687167 or email soundzybeatz@gmail.com.",
         quickReplies: ['DJ Pricing', 'Equipment Rates', 'Production Costs', 'Get Custom Quote'],
         intent: 'pricing_inquiry',
         confidence: 0.8
@@ -107,7 +107,7 @@ export function useChatService() {
     
     // Default response
     return {
-      content: "Thanks for reaching out! I'm here to help with all things Soundzy World Global.\n\nI can help you with:\n• Booking DJ Soundzy for events\n• Shopping for audio equipment\n• Learning about our creative services\n• Playing our latest mixes\n\nWhat interests you most?",
+      content: "Thanks for reaching out! I'm here to help with all things Soundzy World Global.\n\nWe offer: DJ services, Creative design & branding, Equipment shop & installation.\n\nWhatsApp: +2348166687167\nEmail: soundzybeatz@gmail.com\n\nWhat interests you most?",
       quickReplies: ['Book DJ', 'Shop Equipment', 'Creative Services', 'Play Music'],
       intent: 'general_inquiry',
       confidence: 0.6

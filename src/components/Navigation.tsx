@@ -149,12 +149,6 @@ export const Navigation = () => {
                         Profile
                       </Link>
                     </Button>
-                    <Button variant="ghost" asChild className="w-full justify-start">
-                      <Link to="/admin-console-secret-admin-2024" onClick={() => setIsOpen(false)}>
-                        <Settings className="mr-2 h-4 w-4" />
-                        Admin Dashboard
-                      </Link>
-                    </Button>
                     <Button variant="ghost" className="w-full justify-start" onClick={() => {
                   handleSignOut();
                   setIsOpen(false);

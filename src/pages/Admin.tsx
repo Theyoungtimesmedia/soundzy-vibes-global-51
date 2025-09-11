@@ -41,17 +41,21 @@ export default function AdminDashboard() {
 
       setUser(session.user);
 
-      // Check user role using RPC call since types aren't updated yet
-      const { data: profile, error } = await supabase.rpc('get_user_role', {
-        user_id: session.user.id
-      });
+      // Check user role from profiles table
+      const { data: profileRow, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
 
-      if (error || !profile || !['admin', 'super_admin', 'editor', 'dj_manager', 'product_manager', 'support_agent'].includes(profile)) {
+      const role = (profileRow?.role as string | null) ?? 'user';
+
+      if (!['admin', 'super_admin', 'editor', 'dj_manager', 'product_manager', 'support_agent'].includes(role)) {
         navigate('/');
         return;
       }
 
-      setUserRole(profile as string);
+      setUserRole(role);
     } catch (error) {
       console.error('Auth check failed:', error);
       navigate('/auth');

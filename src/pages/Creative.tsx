@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
 import { useServices } from '@/hooks/useServices';
+import { Link } from 'react-router-dom';
 
 // Portfolio images
 import portfolioWebDesign from "@/assets/portfolio-web-design.jpg";
@@ -84,25 +85,37 @@ export default function Creative() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {creativeServices.map((service, index) => (
-                <Card key={service.id || index} className="group hover:shadow-brand transition-all duration-300">
-                  {service.image && (
-                    <div className="aspect-video overflow-hidden rounded-t-lg">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <CardHeader>
-                    <CardTitle>{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
+              {creativeServices.map((service, index) => {
+                const fallbackImages = [
+                  portfolioWebDesign,
+                  portfolioBrandIdentity,
+                  portfolioVideoProduction,
+                  portfolioPrintDesign,
+                  portfolioDigitalMarketing,
+                  portfolioLogoDesign,
+                ];
+                const displayImage = service.image || fallbackImages[index % fallbackImages.length];
+                return (
+                  <Card key={service.id || index} className="group hover:shadow-brand transition-all duration-300">
+                    {displayImage && (
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
+                        <img
+                          src={displayImage}
+                          alt={service.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <CardHeader>
+                      <CardTitle>{service.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{service.description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>
@@ -195,59 +208,47 @@ export default function Creative() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="group hover:shadow-brand transition-all duration-300">
-              <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <span className="text-muted-foreground">Blog Image</span>
-              </div>
-              <CardContent className="p-6">
-                <Badge variant="outline" className="mb-3">Design Tips</Badge>
-                <h3 className="font-semibold mb-2">Modern Logo Design Trends 2024</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Discover the latest trends shaping logo design this year and how to apply them to your brand.
-                </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>5 min read</span>
-                  <span>•</span>
-                  <span>Design</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:shadow-brand transition-all duration-300">
-              <div className="aspect-video bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
-                <span className="text-muted-foreground">Blog Image</span>
-              </div>
-              <CardContent className="p-6">
-                <Badge variant="outline" className="mb-3">Marketing</Badge>
-                <h3 className="font-semibold mb-2">Social Media Strategy for Musicians</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Essential tips for building your online presence and growing your fanbase organically.
-                </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>7 min read</span>
-                  <span>•</span>
-                  <span>Music</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:shadow-brand transition-all duration-300">
-              <div className="aspect-video bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
-                <span className="text-muted-foreground">Blog Image</span>
-              </div>
-              <CardContent className="p-6">
-                <Badge variant="outline" className="mb-3">Web Design</Badge>
-                <h3 className="font-semibold mb-2">Mobile-First Design Principles</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Why mobile-first approach is crucial for modern website design and user experience.
-                </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>6 min read</span>
-                  <span>•</span>
-                  <span>Web</span>
-                </div>
-              </CardContent>
-            </Card>
+            {[
+              {
+                slug: 'modern-logo-design-trends-2024',
+                category: 'Design Tips',
+                title: 'Modern Logo Design Trends 2024',
+                excerpt: 'Discover the latest trends shaping logo design this year and how to apply them to your brand.',
+                image: portfolioLogoDesign,
+              },
+              {
+                slug: 'social-media-strategy-for-musicians',
+                category: 'Marketing',
+                title: 'Social Media Strategy for Musicians',
+                excerpt: 'Essential tips for building your online presence and growing your fanbase organically.',
+                image: portfolioDigitalMarketing,
+              },
+              {
+                slug: 'mobile-first-design-principles',
+                category: 'Web Design',
+                title: 'Mobile-First Design Principles',
+                excerpt: 'Why mobile-first approach is crucial for modern website design and user experience.',
+                image: portfolioWebDesign,
+              },
+            ].map((post) => (
+              <Link key={post.slug} to={`/blog/${post.slug}`} className="group hover:shadow-brand transition-all duration-300">
+                <Card className="overflow-hidden">
+                  <div className="aspect-video overflow-hidden">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  </div>
+                  <CardContent className="p-6">
+                    <Badge variant="outline" className="mb-3">{post.category}</Badge>
+                    <h3 className="font-semibold mb-2">{post.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{post.excerpt}</p>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span>5–7 min read</span>
+                      <span>•</span>
+                      <span>{post.category}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
