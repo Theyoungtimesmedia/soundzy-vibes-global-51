@@ -112,8 +112,17 @@ export default function Shop() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category, index) => {
               const Icon = category.icon;
+              const title = category.title.toLowerCase();
+              let catImage = djControllerImage;
+              if (title.includes('light')) catImage = ledLightsImage;
+              else if (title.includes('mic')) catImage = wirelessMicImage;
+              else if (title.includes('speaker') || title.includes('sound')) catImage = paSystemImage;
+              else if (title.includes('dj') || title.includes('mix')) catImage = djControllerImage;
               return (
-                <Card key={index} className="group hover:shadow-brand transition-all duration-300 cursor-pointer">
+                <Card key={index} className="group hover:shadow-brand transition-all duration-300 cursor-pointer overflow-hidden">
+                  <div className="aspect-video overflow-hidden">
+                    <img src={catImage} alt={category.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  </div>
                   <CardHeader>
                     <div className="h-12 w-12 mb-4 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                       <Icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />

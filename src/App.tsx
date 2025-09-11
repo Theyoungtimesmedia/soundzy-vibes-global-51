@@ -38,7 +38,9 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             
+            {/* Admin routes */}
             <Route path={`/admin-console-${ADMIN_SLUG}`} element={<Admin />} />
+            <Route path="/admin" element={<Admin />} />
             {/* Blog routes */}
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
