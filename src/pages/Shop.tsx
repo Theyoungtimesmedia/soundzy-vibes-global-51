@@ -8,6 +8,7 @@ import paSystemImage from "@/assets/pa-system.jpg";
 import wirelessMicImage from "@/assets/wireless-mic-set.jpg";
 import ledLightsImage from "@/assets/led-stage-lights.jpg";
 import djControllerImage from "@/assets/dj-controller.jpg";
+import studioEquipmentImage from "@/assets/studio-equipment.jpg";
 
 export default function Shop() {
   const { services: shopServices, loading: servicesLoading } = useServices('shop_services');
@@ -159,15 +160,16 @@ export default function Shop() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {shopServices.map((service, index) => {
-                  const title = (service.title || '').toLowerCase();
-                  let displayImage = djControllerImage;
-                  if (title.includes('light')) displayImage = ledLightsImage;
-                  else if (title.includes('mic')) displayImage = wirelessMicImage;
-                  else if (title.includes('microphone')) displayImage = wirelessMicImage;
-                  else if (title.includes('speaker') || title.includes('sound')) displayImage = paSystemImage;
-                  else if (title.includes('dj') || title.includes('mix')) displayImage = djControllerImage;
-                  const img = service.image || displayImage;
+                 {shopServices.map((service, index) => {
+                   const title = (service.title || '').toLowerCase();
+                   let displayImage = djControllerImage;
+                   if (title.includes('light')) displayImage = ledLightsImage;
+                   else if (title.includes('mic')) displayImage = wirelessMicImage;
+                   else if (title.includes('microphone')) displayImage = wirelessMicImage;
+                   else if (title.includes('speaker') || title.includes('sound')) displayImage = paSystemImage;
+                   else if (title.includes('dj') || title.includes('mix')) displayImage = djControllerImage;
+                   else if (title.includes('studio') || title.includes('recording') || title.includes('production')) displayImage = studioEquipmentImage;
+                   const img = service.image || displayImage;
                   return (
                     <Card key={service.id || index} className="text-center hover:shadow-lg transition-shadow">
                       <div className="aspect-video overflow-hidden rounded-t-lg">
