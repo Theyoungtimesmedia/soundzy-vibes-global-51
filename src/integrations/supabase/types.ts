@@ -14,6 +14,102 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          content: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          priority: string
+          status: string
+          target_audience: string | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          priority?: string
+          status?: string
+          target_audience?: string | null
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          priority?: string
+          status?: string
+          target_audience?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author_email: string | null
+          author_name: string
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          read_time: number | null
+          slug: string
+          status: string
+          tags: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_email?: string | null
+          author_name: string
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          read_time?: number | null
+          slug: string
+          status?: string
+          tags?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_email?: string | null
+          author_name?: string
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          read_time?: number | null
+          slug?: string
+          status?: string
+          tags?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -48,6 +144,173 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          last_activity: string
+          message_count: number | null
+          session_id: string
+          status: string
+          visitor_info: Json | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_activity?: string
+          message_count?: number | null
+          session_id: string
+          status?: string
+          visitor_info?: Json | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_activity?: string
+          message_count?: number | null
+          session_id?: string
+          status?: string
+          visitor_info?: Json | null
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          content: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          post_id: string
+          status: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          post_id: string
+          status?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          post_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dj_tapes: {
+        Row: {
+          artist_name: string
+          audio_url: string | null
+          cover_image: string | null
+          created_at: string
+          description: string | null
+          duration: number | null
+          genre: string | null
+          id: string
+          play_count: number | null
+          status: string
+          tags: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist_name: string
+          audio_url?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          genre?: string | null
+          id?: string
+          play_count?: number | null
+          status?: string
+          tags?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist_name?: string
+          audio_url?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          genre?: string | null
+          id?: string
+          play_count?: number | null
+          status?: string
+          tags?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          assigned_to: string | null
+          budget_range: string | null
+          created_at: string
+          email: string
+          event_date: string | null
+          id: string
+          message: string | null
+          name: string
+          phone: string | null
+          priority: string
+          service_type: string
+          source: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          budget_range?: string | null
+          created_at?: string
+          email: string
+          event_date?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          phone?: string | null
+          priority?: string
+          service_type: string
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          budget_range?: string | null
+          created_at?: string
+          email?: string
+          event_date?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          phone?: string | null
+          priority?: string
+          service_type?: string
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       orders: {
         Row: {
