@@ -19,6 +19,12 @@ import {
   Database
 } from 'lucide-react';
 import ServicesManager from '@/components/admin/ServicesManager';
+import LeadsManager from '@/components/admin/LeadsManager';
+import BlogManager from '@/components/admin/BlogManager';
+import ProductManager from '@/components/admin/ProductManager';
+import DJTapeManager from '@/components/admin/DJTapeManager';
+import AnnouncementManager from '@/components/admin/AnnouncementManager';
+import ChatManager from '@/components/admin/ChatManager';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -212,69 +218,27 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="chat">
-            <Card>
-              <CardHeader>
-                <CardTitle>Chat Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Chat management interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <ChatManager />
           </TabsContent>
 
           <TabsContent value="leads">
-            <Card>
-              <CardHeader>
-                <CardTitle>Lead Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Lead management interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <LeadsManager />
           </TabsContent>
 
           <TabsContent value="products">
-            <Card>
-              <CardHeader>
-                <CardTitle>Product Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Product management interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <ProductManager />
           </TabsContent>
 
           <TabsContent value="blog">
-            <Card>
-              <CardHeader>
-                <CardTitle>Blog Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Blog management interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <BlogManager />
           </TabsContent>
 
           <TabsContent value="dj-tapes">
-            <Card>
-              <CardHeader>
-                <CardTitle>DJ Tape Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">DJ tape management interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <DJTapeManager />
           </TabsContent>
 
           <TabsContent value="announcements">
-            <Card>
-              <CardHeader>
-                <CardTitle>Announcements</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Announcements interface will be available once Supabase types are updated.</p>
-              </CardContent>
-            </Card>
+            <AnnouncementManager />
           </TabsContent>
 
           <TabsContent value="settings">
