@@ -14,6 +14,14 @@ import portfolioPrintDesign from "@/assets/portfolio-print-design.jpg";
 import portfolioDigitalMarketing from "@/assets/portfolio-digital-marketing.jpg";
 import portfolioLogoDesign from "@/assets/portfolio-logo-design.jpg";
 
+// Service images
+import serviceGraphicDesign from "@/assets/service-graphic-design.jpg";
+import serviceWebDevelopment from "@/assets/service-web-development.jpg";
+import serviceBrandIdentity from "@/assets/service-brand-identity.jpg";
+import serviceVideoProduction from "@/assets/service-video-production.jpg";
+import serviceDigitalMarketing from "@/assets/service-digital-marketing.jpg";
+import servicePrintDesign from "@/assets/service-print-design.jpg";
+
 export default function Creative() {
   const { services: creativeServices, loading: servicesLoading } = useServices('creative_services');
 
@@ -86,15 +94,29 @@ export default function Creative() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {creativeServices.map((service, index) => {
-                const fallbackImages = [
-                  portfolioWebDesign,
-                  portfolioBrandIdentity,
-                  portfolioVideoProduction,
-                  portfolioPrintDesign,
-                  portfolioDigitalMarketing,
-                  portfolioLogoDesign,
-                ];
-                const displayImage = service.image || fallbackImages[index % fallbackImages.length];
+                // Service-specific images based on title
+                const getServiceImage = (title: string) => {
+                  const titleLower = title.toLowerCase();
+                  if (titleLower.includes('graphic') || titleLower.includes('design')) return serviceGraphicDesign;
+                  if (titleLower.includes('web') || titleLower.includes('development')) return serviceWebDevelopment;
+                  if (titleLower.includes('brand') || titleLower.includes('identity')) return serviceBrandIdentity;
+                  if (titleLower.includes('video') || titleLower.includes('production')) return serviceVideoProduction;
+                  if (titleLower.includes('marketing') || titleLower.includes('digital')) return serviceDigitalMarketing;
+                  if (titleLower.includes('print')) return servicePrintDesign;
+                  
+                  // Fallback images for other services
+                  const fallbackImages = [
+                    portfolioWebDesign,
+                    portfolioBrandIdentity,
+                    portfolioVideoProduction,
+                    portfolioPrintDesign,
+                    portfolioDigitalMarketing,
+                    portfolioLogoDesign,
+                  ];
+                  return fallbackImages[index % fallbackImages.length];
+                };
+                
+                const displayImage = service.image || getServiceImage(service.title);
                 return (
                   <Card key={service.id || index} className="group hover:shadow-brand transition-all duration-300">
                     {displayImage && (
