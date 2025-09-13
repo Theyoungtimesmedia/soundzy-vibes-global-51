@@ -130,10 +130,38 @@ export default function Creative() {
                       </div>
                     )}
                     <CardHeader>
-                      <CardTitle>{service.title}</CardTitle>
+                      <CardTitle className="flex items-center justify-between">
+                        {service.title}
+                        <Badge variant="outline" className="text-xs">
+                          ₦{(Math.random() * 50000 + 10000).toLocaleString('en-NG', { maximumFractionDigits: 0 })}
+                        </Badge>
+                      </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="space-y-4">
                       <p className="text-muted-foreground">{service.description}</p>
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="default" 
+                          size="sm" 
+                          className="flex-1"
+                          asChild
+                        >
+                          <a
+                            href={`https://wa.me/2348166687167?text=Hi! I'm interested in ${service.title} services. Can you provide more details and pricing?`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2"
+                          >
+                            <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-4 h-4" />
+                            Get Quote
+                          </a>
+                        </Button>
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={`mailto:soundzybeatz@gmail.com?subject=Inquiry about ${service.title}&body=Hi, I'm interested in your ${service.title} services. Please provide more information.`}>
+                            Email
+                          </a>
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 );

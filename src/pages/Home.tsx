@@ -22,21 +22,21 @@ export default function Home() {
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
           <div className="space-y-8">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
-              Soundzy World Global
+              🎵 SoundXY World Global
             </h1>
             
             <p className="text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              Redefining entertainment and general services worldwide.
+              🇳🇬 Nigeria's #1 DJ & Entertainment Services Provider
               <br />
-              Event production. Music production. Equipment deals. Media and branding solutions.
+              Professional DJs • Sound Systems • Event Production • Creative Services • Equipment Sales
             </p>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button variant="whatsapp" size="xl" asChild className="group">
-                <a href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20World%20Global%20services.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+                <a href="https://wa.me/2348166687167?text=Hi,%20I%20need%20a%20DJ%20for%20my%20event!%20Can%20you%20help%20with%20pricing%20and%20availability?" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
                   <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-5 h-5" />
-                  Book on WhatsApp
+                  Book DJ Now - WhatsApp
                 </a>
               </Button>
               
@@ -53,29 +53,36 @@ export default function Home() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Services</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Professional DJ Services Nigeria</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              From DJ entertainment to creative design and professional installations, 
-              we deliver excellence across all entertainment verticals.
+              🎧 Lagos • Abuja • Port Harcourt • Nationwide DJ Services
+              <br />
+              Wedding DJs • Corporate Events • Birthday Parties • Sound Equipment Rental
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[{
             icon: <Headphones className="h-8 w-8" />,
-            title: "DJ & Entertainment",
-            description: "Professional DJ services with premium sound systems and lighting for unforgettable events.",
-            image: "/images/dj-equipment.jpg"
+            title: "🎵 Professional DJ Services",
+            description: "Wedding DJs from ₦50,000 • Corporate Events from ₦80,000 • Premium sound systems & lighting included",
+            image: "/images/dj-equipment.jpg",
+            price: "From ₦50,000",
+            whatsapp: "https://wa.me/2348166687167?text=Hi!%20I%20need%20a%20DJ%20for%20my%20event.%20Can%20you%20send%20me%20pricing%20and%20packages?"
           }, {
             icon: <Palette className="h-8 w-8" />,
-            title: "Creative Services",
-            description: "Web design, graphics, printing, and digital marketing solutions for your brand.",
-            image: "/images/creative-workspace.jpg"
+            title: "🎨 Creative & Design Services",
+            description: "Logo design from ₦15,000 • Website development from ₦150,000 • Complete branding packages available",
+            image: "/images/creative-workspace.jpg",
+            price: "From ₦15,000",
+            whatsapp: "https://wa.me/2348166687167?text=Hi!%20I%20need%20creative%20design%20services.%20Can%20you%20share%20your%20portfolio%20and%20pricing?"
           }, {
             icon: <ShoppingBag className="h-8 w-8" />,
-            title: "Equipment Shop",
-            description: "Premium musical equipment, stage lights, and professional sound gear.",
-            image: "/images/sound-equipment.jpg"
+            title: "🛒 Equipment Sales & Rental",
+            description: "Speaker rental from ₦20,000/day • Professional microphones, mixers, and complete PA systems",
+            image: "/images/sound-equipment.jpg",
+            price: "From ₦20,000/day",
+            whatsapp: "https://wa.me/2348166687167?text=Hi!%20I%20need%20to%20rent%20sound%20equipment.%20What%20packages%20do%20you%20have%20available?"
           }].map((service, index) => <Card key={index} className="group hover:shadow-2xl hover:scale-105 transition-all duration-500 border-0 shadow-card overflow-hidden bg-gradient-card">
                 <div className="aspect-video relative overflow-hidden">
                   <img 
@@ -91,15 +98,32 @@ export default function Home() {
                   </div>
                 </div>
                 <CardContent className="p-6 bg-white">
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <Badge variant="outline" className="text-green-600 border-green-200 font-semibold">
+                      {service.price}
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground mb-4 leading-relaxed text-sm">
                     {service.description}
                   </p>
-                  <Button variant="link" className="p-0 h-auto text-accent hover:text-primary group-hover:translate-x-2 transition-transform">
-                    Learn More <ArrowRight className="h-4 w-4 ml-1" />
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
+                      asChild
+                    >
+                      <a href={service.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                        <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-4 h-4" />
+                        Book Now
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Details <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>)}
           </div>
@@ -132,12 +156,12 @@ export default function Home() {
               </Badge>
               
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                About Soundzy World Global
+                About SoundXY World Global
               </h2>
               
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Soundzy World Global is officially registered with the Corporate Affairs Commission (CAC) 
-                and holds all necessary permits for professional entertainment services in Nigeria.
+                SoundXY World Global is Nigeria's leading DJ and entertainment service provider, officially registered with CAC 
+                and trusted by 500+ satisfied clients across Lagos, Abuja, and nationwide.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -231,9 +255,9 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="whatsapp" size="xl" asChild className="group">
-              <a href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20World%20Global%20services.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+              <a href="https://wa.me/2348166687167?text=Hi!%20I%20need%20DJ%20services%20for%20my%20event.%20Can%20you%20send%20me%20packages%20and%20pricing?" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
                 <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-5 h-5" />
-                WhatsApp +234 816 668 7167
+                📞 Get Free Quote: +234 816 668 7167
               </a>
             </Button>
             

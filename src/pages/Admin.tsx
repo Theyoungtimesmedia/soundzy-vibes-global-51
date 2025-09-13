@@ -16,7 +16,9 @@ import {
   Megaphone,
   Settings,
   Shield,
-  Database
+  Database,
+  TrendingUp,
+  TrendingDown
 } from 'lucide-react';
 import ServicesManager from '@/components/admin/ServicesManager';
 import LeadsManager from '@/components/admin/LeadsManager';
@@ -25,11 +27,15 @@ import ProductManager from '@/components/admin/ProductManager';
 import DJTapeManager from '@/components/admin/DJTapeManager';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import ChatManager from '@/components/admin/ChatManager';
+import { useRealTimeData } from '@/hooks/useRealTimeData';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { stats, loading: statsLoading } = useRealTimeData();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   // Accessibility override: Always show Admin dashboard without auth gating
@@ -37,6 +43,48 @@ export default function AdminDashboard() {
     setUserRole('admin');
     setLoading(false);
   }, []);
+
+  const createQuickAction = async (type: string) => {
+    try {
+      switch (type) {
+        case 'announcement':
+          // Switch to announcements tab
+          document.querySelector('[value="announcements"]')?.click();
+          toast({
+            title: "Ready to create announcement",
+            description: "Switched to announcements tab. Click 'Add Announcement' to create a new one.",
+          });
+          break;
+        case 'dj-tape':
+          document.querySelector('[value="dj-tapes"]')?.click();
+          toast({
+            title: "Ready to upload DJ tape",
+            description: "Switched to DJ tapes tab. Click 'Add DJ Tape' to upload a new one.",
+          });
+          break;
+        case 'blog':
+          document.querySelector('[value="blog"]')?.click();
+          toast({
+            title: "Ready to create blog post",
+            description: "Switched to blog tab. Click 'Add Blog Post' to create a new one.",
+          });
+          break;
+        case 'product':
+          document.querySelector('[value="products"]')?.click();
+          toast({
+            title: "Ready to add product",
+            description: "Switched to products tab. Click 'Add Product' to create a new one.",
+          });
+          break;
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to perform quick action",
+        variant: "destructive",
+      });
+    }
+  };
 
 
   const handleSignOut = async () => {
@@ -113,48 +161,76 @@ export default function AdminDashboard() {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Active Chats</CardTitle>
                   <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">12</div>
-                  <p className="text-xs text-muted-foreground">+3 from yesterday</p>
+                  <div className="text-2xl font-bold">
+                    {statsLoading ? '...' : stats.activeChats}
+                  </div>
+                  <div className="flex items-center text-xs text-muted-foreground mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+                    Real-time data
+                  </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">New Leads</CardTitle>
+                  <CardTitle className="text-sm font-medium">New Leads Today</CardTitle>
                   <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">8</div>
-                  <p className="text-xs text-muted-foreground">+2 from yesterday</p>
+                  <div className="text-2xl font-bold">
+                    {statsLoading ? '...' : stats.newLeads}
+                  </div>
+                  <div className="flex items-center text-xs text-muted-foreground mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+                    Live updates
+                  </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Orders Today</CardTitle>
                   <ShoppingCart className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">5</div>
-                  <p className="text-xs text-muted-foreground">₦45,000 revenue</p>
+                  <div className="text-2xl font-bold">
+                    {statsLoading ? '...' : stats.ordersToday}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    ₦{statsLoading ? '...' : (stats.totalRevenue / 100).toLocaleString()} revenue
+                  </p>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Low Stock</CardTitle>
+                  <CardTitle className="text-sm font-medium">Low Stock Items</CardTitle>
                   <Database className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">3</div>
-                  <p className="text-xs text-muted-foreground">items need restock</p>
+                  <div className="text-2xl font-bold">
+                    {statsLoading ? '...' : stats.lowStock}
+                  </div>
+                  <div className="flex items-center text-xs text-muted-foreground mt-1">
+                    {stats.lowStock > 0 ? (
+                      <>
+                        <TrendingDown className="h-3 w-3 mr-1 text-red-500" />
+                        Needs attention
+                      </>
+                    ) : (
+                      <>
+                        <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+                        All good
+                      </>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -196,19 +272,35 @@ export default function AdminDashboard() {
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button 
+                    className="w-full justify-start" 
+                    variant="outline"
+                    onClick={() => createQuickAction('announcement')}
+                  >
                     <Megaphone className="h-4 w-4 mr-2" />
                     Create Announcement
                   </Button>
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button 
+                    className="w-full justify-start" 
+                    variant="outline"
+                    onClick={() => createQuickAction('dj-tape')}
+                  >
                     <Music className="h-4 w-4 mr-2" />
                     Upload DJ Tape
                   </Button>
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button 
+                    className="w-full justify-start" 
+                    variant="outline"
+                    onClick={() => createQuickAction('blog')}
+                  >
                     <FileText className="h-4 w-4 mr-2" />
                     New Blog Post
                   </Button>
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button 
+                    className="w-full justify-start" 
+                    variant="outline"
+                    onClick={() => createQuickAction('product')}
+                  >
                     <ShoppingCart className="h-4 w-4 mr-2" />
                     Add Product
                   </Button>
