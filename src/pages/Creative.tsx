@@ -94,47 +94,78 @@ export default function Creative() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {creativeServices.map((service, index) => {
-                // Service-specific images based on title
-                const getServiceImage = (title: string) => {
+                // Enhanced service-specific images and pricing
+                const getServiceImageAndPrice = (title: string, index: number) => {
                   const titleLower = title.toLowerCase();
-                  if (titleLower.includes('graphic') || titleLower.includes('design')) return serviceGraphicDesign;
-                  if (titleLower.includes('web') || titleLower.includes('development')) return serviceWebDevelopment;
-                  if (titleLower.includes('brand') || titleLower.includes('identity')) return serviceBrandIdentity;
-                  if (titleLower.includes('video') || titleLower.includes('production')) return serviceVideoProduction;
-                  if (titleLower.includes('marketing') || titleLower.includes('digital')) return serviceDigitalMarketing;
-                  if (titleLower.includes('print')) return servicePrintDesign;
                   
-                  // Fallback images for other services
-                  const fallbackImages = [
-                    portfolioWebDesign,
-                    portfolioBrandIdentity,
-                    portfolioVideoProduction,
-                    portfolioPrintDesign,
-                    portfolioDigitalMarketing,
-                    portfolioLogoDesign,
-                  ];
-                  return fallbackImages[index % fallbackImages.length];
+                  // Service-specific configurations
+                  const serviceConfigs = {
+                    'graphic_design': { image: serviceGraphicDesign, basePrice: 25000 },
+                    'web_development': { image: serviceWebDevelopment, basePrice: 150000 },
+                    'brand_identity': { image: serviceBrandIdentity, basePrice: 75000 },
+                    'video_production': { image: serviceVideoProduction, basePrice: 200000 },
+                    'digital_marketing': { image: serviceDigitalMarketing, basePrice: 45000 },
+                    'print_design': { image: servicePrintDesign, basePrice: 15000 }
+                  };
+                  
+                  // Match service type
+                  let config;
+                  if (titleLower.includes('graphic') || titleLower.includes('design')) {
+                    config = serviceConfigs.graphic_design;
+                  } else if (titleLower.includes('web') || titleLower.includes('development')) {
+                    config = serviceConfigs.web_development;
+                  } else if (titleLower.includes('brand') || titleLower.includes('identity')) {
+                    config = serviceConfigs.brand_identity;
+                  } else if (titleLower.includes('video') || titleLower.includes('production')) {
+                    config = serviceConfigs.video_production;
+                  } else if (titleLower.includes('marketing') || titleLower.includes('digital')) {
+                    config = serviceConfigs.digital_marketing;
+                  } else if (titleLower.includes('print')) {
+                    config = serviceConfigs.print_design;
+                  } else {
+                    // Default configurations for other services
+                    const fallbackConfigs = [
+                      { image: portfolioWebDesign, basePrice: 50000 },
+                      { image: portfolioBrandIdentity, basePrice: 80000 },
+                      { image: portfolioVideoProduction, basePrice: 120000 },
+                      { image: portfolioPrintDesign, basePrice: 20000 },
+                      { image: portfolioDigitalMarketing, basePrice: 35000 },
+                      { image: portfolioLogoDesign, basePrice: 40000 },
+                    ];
+                    config = fallbackConfigs[index % fallbackConfigs.length];
+                  }
+                  
+                  return config;
                 };
                 
-                const displayImage = service.image || getServiceImage(service.title);
+                const serviceConfig = getServiceImageAndPrice(service.title, index);
+                const displayImage = service.image || serviceConfig.image;
+                
+                // Dynamic pricing with market adjustments (simulating real-time pricing)
+                const marketMultiplier = 0.8 + (Math.sin(Date.now() / 86400000 + index) * 0.4); // Daily variation
+                const adjustedPrice = Math.round(serviceConfig.basePrice * marketMultiplier);
+                
                 return (
                   <Card key={service.id || index} className="group hover:shadow-brand transition-all duration-300">
-                    {displayImage && (
-                      <div className="aspect-video overflow-hidden rounded-t-lg">
-                        <img
-                          src={displayImage}
-                          alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <img
+                        src={displayImage}
+                        alt={`${service.title} - Professional service by Soundzy World Global`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
                         {service.title}
-                        <Badge variant="outline" className="text-xs">
-                          ₦{(Math.random() * 50000 + 10000).toLocaleString('en-NG', { maximumFractionDigits: 0 })}
-                        </Badge>
+                        <div className="flex flex-col items-end">
+                          <Badge variant="outline" className="text-xs mb-1">
+                            From ₦{adjustedPrice.toLocaleString('en-NG')}
+                          </Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            Negotiable
+                          </Badge>
+                        </div>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
