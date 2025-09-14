@@ -16,7 +16,7 @@ export const Layout = ({
         {/* WhatsApp Float Button */}
         <div className="relative">
           <div className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-            <a href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20World%20Global%20services.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center" aria-label="Contact us on WhatsApp">
+            <a href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20Global%20services.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center" aria-label="Contact us on WhatsApp">
               <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-8 h-8 filter brightness-0 invert group-hover:scale-110 transition-transform" />
             </a>
           </div>
@@ -28,7 +28,7 @@ export const Layout = ({
             {/* Company Info */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-6">
-                <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy World Global Logo" className="h-12 w-auto" />
+                <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy Global Logo" className="h-12 w-auto" />
                 <span className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   SWG
                 </span>
@@ -115,7 +115,7 @@ export const Layout = ({
           </div>
           
           <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Soundzy World Global. All rights reserved.</p>
+            <p>&copy; 2024 Soundzy Global. All rights reserved.</p>
           </div>
         </div>
       </footer>

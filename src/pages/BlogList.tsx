@@ -34,7 +34,7 @@ export default function BlogList() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold">Blog</h1>
-          <p className="text-muted-foreground">Insights, tips, and stories from Soundzy World Global</p>
+          <p className="text-muted-foreground">Insights, tips, and stories from Soundzy Global</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (

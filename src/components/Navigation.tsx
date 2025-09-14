@@ -41,11 +41,17 @@ export const Navigation = () => {
     label: "DJ Services",
     href: "/dj"
   }, {
+    label: "Mixtapes",
+    href: "/mixtapes"
+  }, {
     label: "Creative Services",
     href: "/creative"
   }, {
     label: "Shop",
     href: "/shop"
+  }, {
+    label: "Blog",
+    href: "/blog"
   }];
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
@@ -73,13 +79,13 @@ export const Navigation = () => {
       <div className="container flex h-20 md:h-24 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
-          <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy World Global Logo" className="h-14 w-auto md:h-20 lg:h-24" />
+          <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy Global Logo" className="h-14 w-auto md:h-20 lg:h-24" />
           <div className="flex flex-col">
             <span className="font-bold text-xl md:text-2xl lg:text-3xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               SWG
             </span>
             <span className="text-xs md:text-sm text-muted-foreground hidden sm:block">
-              Soundzy World Global
+              Soundzy Global
             </span>
           </div>
         </Link>

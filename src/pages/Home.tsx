@@ -22,7 +22,7 @@ export default function Home() {
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
           <div className="space-y-8">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
-              🎵 SoundXY World Global
+              🎵 Soundzy Global
             </h1>
             
             <p className="text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
@@ -156,11 +156,11 @@ export default function Home() {
               </Badge>
               
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                About SoundXY World Global
+                About Soundzy Global
               </h2>
               
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                SoundXY World Global is Nigeria's leading DJ and entertainment service provider, officially registered with CAC 
+                Soundzy Global is Nigeria's leading DJ and entertainment service provider, officially registered with CAC 
                 and trusted by 500+ satisfied clients across Lagos, Abuja, and nationwide.
               </p>
               

@@ -20,7 +20,7 @@ export function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hey there! Welcome to Soundzy World Global — how can I light up your day today?\n\nNeed ideas? Just tap: Book DJ, Shop Gear, or Watch Showreels.",
+      content: "Hey there! Welcome to Soundzy Global — how can I light up your day today?\n\nNeed ideas? Just tap: Book DJ, Shop Gear, or Watch Showreels.",
       isBot: true,
       timestamp: new Date(),
       quickReplies: ['Book DJ', 'Shop Gear', 'Watch Showreel']

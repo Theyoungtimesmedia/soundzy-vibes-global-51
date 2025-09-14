@@ -14,7 +14,7 @@ export function WhatsAppCTA({
   className = '', 
   size = 'lg', 
   showLabel = true,
-  prefillText = "Hi, I'm interested in Soundzy World Global services. Can you help me?"
+  prefillText = "Hi, I'm interested in Soundzy Global services. Can you help me?"
 }: WhatsAppCTAProps) {
   const phoneNumber = '+2348166687167';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(prefillText)}`;

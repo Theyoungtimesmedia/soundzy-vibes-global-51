@@ -7,7 +7,7 @@ interface WhatsAppFloatProps {
 
 export function WhatsAppFloat({ className = '' }: WhatsAppFloatProps) {
   const phoneNumber = '+2348166687167';
-  const prefillText = "Hi, I'm interested in Soundzy World Global services. Can you help me?";
+  const prefillText = "Hi, I'm interested in Soundzy Global services. Can you help me?";
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(prefillText)}`;
 
   return (
