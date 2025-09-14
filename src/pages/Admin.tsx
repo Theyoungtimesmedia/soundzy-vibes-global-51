@@ -49,28 +49,28 @@ export default function AdminDashboard() {
       switch (type) {
         case 'announcement':
           // Switch to announcements tab
-          document.querySelector('[value="announcements"]')?.click();
+          (document.querySelector('[value="announcements"]') as HTMLElement)?.click();
           toast({
             title: "Ready to create announcement",
             description: "Switched to announcements tab. Click 'Add Announcement' to create a new one.",
           });
           break;
         case 'dj-tape':
-          document.querySelector('[value="dj-tapes"]')?.click();
+          (document.querySelector('[value="dj-tapes"]') as HTMLElement)?.click();
           toast({
             title: "Ready to upload DJ tape",
             description: "Switched to DJ tapes tab. Click 'Add DJ Tape' to upload a new one.",
           });
           break;
         case 'blog':
-          document.querySelector('[value="blog"]')?.click();
+          (document.querySelector('[value="blog"]') as HTMLElement)?.click();
           toast({
             title: "Ready to create blog post",
             description: "Switched to blog tab. Click 'Add Blog Post' to create a new one.",
           });
           break;
         case 'product':
-          document.querySelector('[value="products"]')?.click();
+          (document.querySelector('[value="products"]') as HTMLElement)?.click();
           toast({
             title: "Ready to add product",
             description: "Switched to products tab. Click 'Add Product' to create a new one.",
