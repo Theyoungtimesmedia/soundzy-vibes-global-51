@@ -1,3 +1,4 @@
+import { AudioPlayer } from "@/components/AudioPlayer";
 import { HeroSection } from "@/components/HeroSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -219,7 +220,32 @@ export default function DJ() {
           </div>
         </div>
       </section>
-
+{/* Mixtapes Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Latest Mixtapes</h2>
+            <p className="text-lg text-muted-foreground">
+              Check out the latest mixes and live recordings
+            </p>
+          </div>
+          
+          <div className="grid gap-6 max-w-3xl mx-auto">
+            <AudioPlayer
+              src="/mixtapes/summer-vibes-2024.mp3"
+              title="Summer Vibes Mix 2024"
+            />
+            <AudioPlayer
+              src="/mixtapes/club-bangers.mp3"
+              title="Club Bangers Vol. 1"
+            />
+            <AudioPlayer
+              src="/mixtapes/afrobeats-essentials.mp3"
+              title="Afrobeats Essentials"
+            />
+          </div>
+        </div>
+      </section>
       {/* Press & Credentials */}
       <section className="py-16 px-4 bg-muted/30">
         <div className="max-w-4xl mx-auto text-center">
