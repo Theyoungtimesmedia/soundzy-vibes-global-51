@@ -34,25 +34,12 @@ export const Navigation = () => {
     });
     return () => subscription.unsubscribe();
   }, []);
-  const navItems = [{
-    label: "Home",
-    href: "/"
-  }, {
-    label: "DJ Services",
-    href: "/dj"
-  }, {
-    label: "Mixtapes",
-    href: "/mixtapes"
-  }, {
-    label: "Creative Services",
-    href: "/creative"
-  }, {
-    label: "Shop",
-    href: "/shop"
-  }, {
-    label: "Blog",
-    href: "/blog"
-  }];
+ const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/dj", label: "DJ Services" },
+  { href: "/creative", label: "Creative Services" },
+  { href: "/shop", label: "Shop" }
+];
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
     return location.pathname.startsWith(href);
