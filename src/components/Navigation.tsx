@@ -72,8 +72,8 @@ export const Navigation = () => {
               SWG
             </span>
             <span className="text-xs md:text-sm text-muted-foreground hidden sm:block">
-              Soundzy Global
-            </span>
+  Soundzy World Global
+</span>
           </div>
         </Link>
 
