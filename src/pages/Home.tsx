@@ -22,7 +22,7 @@ export default function Home() {
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
           <div className="space-y-8">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
-              🎵 Soundzy Global
+              🎵 Soundzy World Global
             </h1>
             
             <p className="text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
