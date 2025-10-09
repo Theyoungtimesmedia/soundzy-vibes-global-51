@@ -220,29 +220,65 @@ export default function DJ() {
           </div>
         </div>
       </section>
-{/* Mixtapes Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Latest Mixtapes</h2>
-            <p className="text-lg text-muted-foreground">
-              Check out the latest mixes and live recordings
+{/* DJ Mixtapes Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-background via-card/50 to-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-4 bg-primary/10 border-primary/30 text-primary">
+              🎧 Fresh Mixes
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+              DJ Soundzy's Latest Mixtapes
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience the hottest Afrobeats, hip-hop, and party anthems. Listen, download, and share the vibes!
             </p>
           </div>
           
-          <div className="grid gap-6 max-w-3xl mx-auto">
+          <div className="space-y-8">
             <AudioPlayer
               src="/mixtapes/summer-vibes-2024.mp3"
               title="Summer Vibes Mix 2024"
+              artist="DJ Soundzy (Odogwu Na Vibes)"
+              genre="Afrobeats • Dancehall"
+              downloadUrl="/mixtapes/summer-vibes-2024.mp3"
+              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
             />
             <AudioPlayer
               src="/mixtapes/club-bangers.mp3"
               title="Club Bangers Vol. 1"
+              artist="DJ Soundzy (Odogwu Na Vibes)"
+              genre="Hip-Hop • Trap"
+              downloadUrl="/mixtapes/club-bangers.mp3"
+              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
             />
             <AudioPlayer
               src="/mixtapes/afrobeats-essentials.mp3"
               title="Afrobeats Essentials"
+              artist="DJ Soundzy (Odogwu Na Vibes)"
+              genre="Afrobeats • Amapiano"
+              downloadUrl="/mixtapes/afrobeats-essentials.mp3"
+              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
             />
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-16 text-center">
+            <div className="inline-block p-8 rounded-2xl bg-gradient-to-br from-card to-card/80 border border-primary/30 shadow-glow">
+              <h3 className="text-2xl font-bold mb-4">Want a Custom Mix?</h3>
+              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                Book DJ Soundzy for your next event and get a personalized mixtape tailored to your vibe!
+              </p>
+              <Button variant="default" size="lg" className="bg-gradient-primary hover:shadow-accent" asChild>
+                <a 
+                  href="https://wa.me/2348166687167?text=Hi DJ Soundzy! I'm interested in booking you for an event and would love a custom mix!" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book Now on WhatsApp
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
