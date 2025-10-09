@@ -8,13 +8,13 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Soundzy World Global Premium Design System - Green Theme */
-    --primary: 160 100% 20%; /* Deep teal green */
-    --primary-foreground: 0 0% 100%;
-    --accent: 140 100% 35%; /* Bright green */
-    --accent-foreground: 0 0% 100%;
-    --secondary: 180 50% 30%; /* Darker teal */
-    --secondary-foreground: 0 0% 100%;
+    /* Soundzy World Global Premium Design System - Gold/Amber Theme */
+    --primary: 43 74% 66%; /* Rich gold */
+    --primary-foreground: 0 0% 0%;
+    --accent: 38 92% 50%; /* Vibrant gold accent */
+    --accent-foreground: 0 0% 0%;
+    --secondary: 45 60% 55%; /* Mid-tone gold */
+    --secondary-foreground: 0 0% 0%;
     
     --background: 0 0% 100%; /* Pure white */
     --foreground: 220 15% 15%; /* Dark text */
@@ -35,17 +35,19 @@ All colors MUST be HSL.
     
     --radius: 1rem;
     
-    /* Premium gradients matching green reference */
-    --gradient-hero: linear-gradient(135deg, hsl(160 100% 10% / 0.95), hsl(140 100% 25% / 0.95));
-    --gradient-primary: linear-gradient(135deg, hsl(160 100% 20%), hsl(140 100% 35%));
-    --gradient-accent: linear-gradient(135deg, hsl(140 100% 35%), hsl(160 80% 40%));
+    /* Premium gradients matching gold theme */
+    --gradient-hero: linear-gradient(135deg, hsl(43 74% 10% / 0.95), hsl(38 92% 25% / 0.95));
+    --gradient-primary: linear-gradient(135deg, hsl(43 74% 66%), hsl(38 92% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(38 92% 50%), hsl(45 93% 47%));
     --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(0 0% 98% / 0.9));
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsl(160 100% 20% / 0.08);
-    --shadow-accent: 0 8px 32px hsl(140 100% 35% / 0.15);
-    --shadow-hero: 0 20px 60px hsl(160 100% 20% / 0.2);
+    --shadow-soft: 0 4px 20px hsl(43 74% 66% / 0.08);
+    --shadow-accent: 0 8px 32px hsl(38 92% 50% / 0.15);
+    --shadow-hero: 0 20px 60px hsl(43 74% 66% / 0.2);
     --shadow-card: 0 4px 16px hsl(220 15% 15% / 0.08);
+    --shadow-brand: 0 10px 40px -10px hsla(43, 74%, 66%, 0.3);
+    --shadow-glow: 0 0 40px hsla(45, 93%, 47%, 0.4);
     
     /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

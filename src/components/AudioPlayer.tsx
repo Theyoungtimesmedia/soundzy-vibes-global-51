@@ -29,12 +29,20 @@ export const AudioPlayer = ({ src, title }: AudioPlayerProps) => {
       let animationId: number;
 
       const drawWaveform = () => {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, 'hsla(43, 74%, 66%, 0.1)');
+        gradient.addColorStop(0.5, 'hsla(38, 92%, 50%, 0.1)');
+        gradient.addColorStop(1, 'hsla(43, 74%, 66%, 0.1)');
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.beginPath();
-        ctx.strokeStyle = 'hsl(var(--primary))';
-        ctx.lineWidth = 2;
+        const strokeGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        strokeGradient.addColorStop(0, 'hsl(43, 74%, 66%)');
+        strokeGradient.addColorStop(0.5, 'hsl(38, 92%, 50%)');
+        strokeGradient.addColorStop(1, 'hsl(43, 74%, 66%)');
+        ctx.strokeStyle = strokeGradient;
+        ctx.lineWidth = 3;
         
         for (let i = 0; i < canvas.width; i++) {
           const amplitude = Math.sin(i * 0.02 + Date.now() * 0.005) * 30;
@@ -74,45 +82,69 @@ export const AudioPlayer = ({ src, title }: AudioPlayerProps) => {
   };
 
   return (
-    <div className="bg-card rounded-lg p-4 space-y-4">
+    <div className="bg-gradient-to-br from-card to-card/80 rounded-xl p-6 space-y-6 shadow-glow border border-primary/20">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold">{title}</h3>
-        <div className="flex items-center gap-2">
+        <div>
+          <h3 className="font-bold text-lg text-foreground">{title}</h3>
+          <p className="text-sm text-muted-foreground">
+            {audioRef.current && duration > 0 ? `${formatTime(audioRef.current.currentTime)} / ${formatTime(duration)}` : '0:00 / 0:00'}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setVolume(volume === 0 ? 1 : 0)}
+            className="hover:bg-primary/10"
           >
-            {volume === 0 ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {volume === 0 ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
           </Button>
           <Slider
             value={[volume * 100]}
             max={100}
             step={1}
             onValueChange={(value) => setVolume(value[0] / 100)}
-            className="w-24"
+            className="w-20"
           />
         </div>
       </div>
 
-      <div className="relative h-24">
+      <div className="relative h-32 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-lg overflow-hidden border border-primary/10">
         <canvas
           ref={waveformRef}
           className="w-full h-full"
           width={800}
-          height={96}
+          height={128}
+        />
+        {/* Progress overlay */}
+        <div 
+          className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary/20 to-accent/20 transition-all duration-100"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
       <div className="flex items-center gap-4">
         <Button
-          variant="outline"
           size="icon"
           onClick={togglePlay}
-          className="h-10 w-10 rounded-full"
+          className="h-14 w-14 rounded-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
         >
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-1" />}
         </Button>
+        
+        <div className="flex-1">
+          <Slider
+            value={[progress]}
+            max={100}
+            step={0.1}
+            onValueChange={(value) => {
+              if (audioRef.current && duration > 0) {
+                audioRef.current.currentTime = (value[0] / 100) * duration;
+              }
+            }}
+            className="cursor-pointer"
+          />
+        </div>
         
         <audio
           ref={audioRef}

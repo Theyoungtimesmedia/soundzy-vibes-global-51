@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { GoogleBusinessCTA } from "@/components/GoogleBusinessCTA";
 import { MessageCircle, ArrowRight, Play, Award, Users, Phone, Mail, Sparkles, Headphones, Palette, ShoppingBag } from "lucide-react";
+import officeEquipment from "@/assets/office-equipment.jpg";
+import officeInterior from "@/assets/office-interior.jpg";
+import teamMember from "@/assets/team-member.jpg";
 export default function Home() {
   return <main className="min-h-screen">
       {/* Hero Section - With Background Image */}
@@ -22,13 +26,13 @@ export default function Home() {
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
           <div className="space-y-8">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white">
-              🎵 Soundzy World Global
+              Soundzy World Global - Port Harcourt
             </h1>
             
             <p className="text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              🇳🇬 Nigeria's #1 DJ & Entertainment Services Provider
+              Professional DJ Services • Expert Graphics & Logo Design • Premium Sound Equipment
               <br />
-              Professional DJs • Sound Systems • Event Production • Creative Services • Equipment Sales
+              Based in Port Harcourt | Creative Services Available Worldwide Online
             </p>
             
             {/* CTA Buttons */}
@@ -53,11 +57,11 @@ export default function Home() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Professional DJ Services Nigeria</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Professional Services</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              🎧 Lagos • Abuja • Port Harcourt • Nationwide DJ Services
+              DJ Services • Graphics & Logo Design • Sound Equipment
               <br />
-              Wedding DJs • Corporate Events • Birthday Parties • Sound Equipment Rental
+              Port Harcourt Based | Online Creative Services Worldwide
             </p>
           </div>
 
@@ -130,8 +134,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About SWG Section - With Professional Image */}
-      <section className="py-20 px-4 bg-muted/30">
+      {/* Google Business CTA */}
+      <section className="py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <GoogleBusinessCTA />
+        </div>
+      </section>
+
+      {/* Office Gallery Section */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Port Harcourt Studio</h2>
+            <p className="text-lg text-muted-foreground">
+              Professional facilities equipped with cutting-edge technology
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-16">
+            <Card className="overflow-hidden group hover:shadow-glow transition-all duration-300">
+              <div className="aspect-video overflow-hidden">
+                <img 
+                  src={officeEquipment} 
+                  alt="Professional sound equipment and DJ gear at Soundzy World Global Port Harcourt studio" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h3 className="font-semibold">Professional Equipment</h3>
+                <p className="text-sm text-muted-foreground">Latest DJ gear and sound systems</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden group hover:shadow-glow transition-all duration-300">
+              <div className="aspect-video overflow-hidden">
+                <img 
+                  src={officeInterior} 
+                  alt="Modern interior of Soundzy World Global creative studio in Port Harcourt" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h3 className="font-semibold">Creative Studio Space</h3>
+                <p className="text-sm text-muted-foreground">Designed for innovation and creativity</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden group hover:shadow-glow transition-all duration-300">
+              <div className="aspect-video overflow-hidden">
+                <img 
+                  src={teamMember} 
+                  alt="Professional team member at Soundzy World Global working on creative projects" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h3 className="font-semibold">Expert Team</h3>
+                <p className="text-sm text-muted-foreground">Skilled professionals at your service</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Image First */}
@@ -156,12 +226,11 @@ export default function Home() {
               </Badge>
               
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                About Soundzy Global
+                About Soundzy World Global
               </h2>
               
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Soundzy Global is Nigeria's leading DJ and entertainment service provider, officially registered with CAC 
-                and trusted by 500+ satisfied clients across Lagos, Abuja, and nationwide.
+                Based in Port Harcourt, Soundzy World Global is your trusted partner for professional DJ services, expert graphics & logo design, and premium sound equipment. We serve clients locally and offer remote creative services worldwide.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -262,9 +331,9 @@ export default function Home() {
             </Button>
             
             <Button variant="premium" size="xl" asChild className="group">
-              <a href="mailto:soundzybeatz@gmail.com" className="flex items-center gap-3">
+              <a href="mailto:info@soundzyglobal.com" className="flex items-center gap-3">
                 <Mail className="h-5 w-5" />
-                soundzybeatz@gmail.com
+                info@soundzyglobal.com
               </a>
             </Button>
           </div>

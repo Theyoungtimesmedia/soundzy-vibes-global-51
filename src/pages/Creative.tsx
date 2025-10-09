@@ -69,17 +69,17 @@ export default function Creative() {
       {/* Hero Section */}
       <HeroSection
         backgroundImage="/images/hero-creative.jpg"
-        headline="Design, Promotion, Print and Web"
-        subheadline="Full creative stack for brands and artists. From concept to execution, we bring your vision to life."
+        headline="Professional Graphics & Logo Design Services"
+        subheadline="Based in Port Harcourt, available online worldwide. Expert design, promotion, print and web solutions for your brand."
       />
 
       {/* Services Overview */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Creative Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Creative Services - Port Harcourt & Online</h2>
             <p className="text-lg text-muted-foreground">
-              Comprehensive creative solutions for modern businesses and artists
+              Professional graphics design, logo design, and creative solutions available remotely. Based in Port Harcourt, serving clients worldwide.
             </p>
           </div>
           

@@ -28,14 +28,11 @@ export const Layout = ({
             {/* Company Info */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-6">
-                <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy Global Logo" className="h-12 w-auto" />
-                <span className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  SWG
-                </span>
+                <img src="/favicon.png" alt="Soundzy World Global" className="h-16 w-auto" />
               </div>
+              <h3 className="font-bold text-lg mb-3">Soundzy World Global</h3>
               <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-                Premium Afro-global entertainment services that bring your events to life 
-                with professional sound, lighting, and creative excellence.
+                Professional DJ services, graphics design, logo design, and premium sound equipment in Port Harcourt. Available online worldwide for creative services.
               </p>
               <p className="text-xs text-muted-foreground font-mono">
                 CAC RC 7304047
@@ -58,10 +55,11 @@ export const Layout = ({
             <div>
               <h3 className="font-semibold mb-6 text-lg">Quick Links</h3>
               <ul className="space-y-3 text-sm text-muted-foreground">
-                <li><a href="/" className="hover:text-primary transition-colors">Soundzy Global</a></li>
-                <li><a href="/dj" className="hover:text-primary transition-colors">Soundzy Entertainment</a></li>
+                <li><a href="/" className="hover:text-primary transition-colors">Home</a></li>
+                <li><a href="/dj" className="hover:text-primary transition-colors">DJ Services</a></li>
                 <li><a href="/creative" className="hover:text-primary transition-colors">Creative Services</a></li>
                 <li><a href="/shop" className="hover:text-primary transition-colors">Equipment Shop</a></li>
+                <li><a href="https://share.google/nGWycgIcGOxhQx19d" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Google Business Profile</a></li>
               </ul>
             </div>
             
@@ -70,18 +68,26 @@ export const Layout = ({
               <h3 className="font-semibold mb-6 text-lg">Contact</h3>
               <div className="space-y-4 text-sm text-muted-foreground mb-8">
                 <div>
-                  <p className="font-medium text-foreground">Address</p>
-                  <p>Royal Paragon Street</p>
-                  <p>by Iwofe Road, PH City</p>
+                  <p className="font-medium text-foreground">Location</p>
+                  <p>Port Harcourt</p>
                   <p>Rivers State, Nigeria</p>
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Phone</p>
-                  <p>+234 816 668 7167</p>
+                  <p><a href="tel:+2348166687167" className="hover:text-primary transition-colors">+234 816 668 7167</a></p>
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Email</p>
-                  <p>soundzybeatz@gmail.com</p>
+                  <p><a href="mailto:info@soundzyglobal.com" className="hover:text-primary transition-colors">info@soundzyglobal.com</a></p>
+                </div>
+                <div>
+                  <p className="font-medium text-foreground">Google Business</p>
+                  <p><a href="https://share.google/nGWycgIcGOxhQx19d" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors inline-flex items-center gap-1">
+                    Visit & Review Us
+                    <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                    </svg>
+                  </a></p>
                 </div>
               </div>
               
@@ -115,7 +121,7 @@ export const Layout = ({
           </div>
           
           <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Soundzy Global. All rights reserved.</p>
+            <p>&copy; 2025 Soundzy World Global. All rights reserved. | Port Harcourt, Nigeria</p>
           </div>
         </div>
       </footer>

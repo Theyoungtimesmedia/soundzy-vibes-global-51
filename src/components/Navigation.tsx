@@ -56,7 +56,7 @@ export const Navigation = () => {
         </a>
       </Button>
       <Button variant="outline" size="sm" asChild>
-        <a href="mailto:soundzybeatz@gmail.com" className="flex items-center gap-2">
+        <a href="mailto:info@soundzyglobal.com" className="flex items-center gap-2">
           <Phone className="h-4 w-4" />
           Email
         </a>
@@ -65,15 +65,15 @@ export const Navigation = () => {
   return <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="container flex h-20 md:h-24 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3">
-          <img src="/lovable-uploads/522535fe-b8e2-4598-aaa4-fe680d012385.png" alt="Soundzy Global Logo" className="h-14 w-auto md:h-20 lg:h-24" />
+        <Link to="/" className="flex items-center space-x-2 md:space-x-3">
+          <img src="/favicon.png" alt="Soundzy World Global Logo" className="h-12 w-auto md:h-16 lg:h-20" />
           <div className="flex flex-col">
-            <span className="font-bold text-xl md:text-2xl lg:text-3xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              SWG
+            <span className="font-bold text-base md:text-xl lg:text-2xl bg-gradient-primary bg-clip-text text-transparent leading-tight">
+              Soundzy World Global
             </span>
-            <span className="text-xs md:text-sm text-muted-foreground hidden sm:block">
-  Soundzy World Global
-</span>
+            <span className="text-xs text-muted-foreground hidden sm:block">
+              Port Harcourt | Online Services
+            </span>
           </div>
         </Link>
 
