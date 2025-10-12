@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Speaker, Mic, Lightbulb, Settings, Headphones, Monitor, MessageCircle } from "lucide-react";
 import { useServices } from '@/hooks/useServices';
+import heroShop from "@/assets/hero-shop-premium.jpg";
 import paSystemImage from "@/assets/pa-system.jpg";
 import wirelessMicImage from "@/assets/wireless-mic-set.jpg";
 import ledLightsImage from "@/assets/led-stage-lights.jpg";
@@ -95,9 +96,10 @@ export default function Shop() {
     <main className="min-h-screen">
       {/* Hero Section */}
       <HeroSection
-        backgroundImage="/images/hero-shop.jpg"
-        headline="Buy Pro Audio and Stage Gear"
-        subheadline="Speakers. Mixers. Lights. Full installs available. Premium equipment for professionals and enthusiasts."
+        backgroundImage={heroShop}
+        preHeadline="Shop the"
+        headline="BEST GEAR"
+        subheadline="Premium Audio Equipment & Professional Sound Solutions"
       />
 
       {/* Categories */}

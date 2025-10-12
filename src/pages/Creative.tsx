@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
 import { useServices } from '@/hooks/useServices';
 import { Link } from 'react-router-dom';
+import heroCreative from "@/assets/hero-creative-premium.jpg";
 
 // Portfolio images
 import portfolioWebDesign from "@/assets/portfolio-web-design.jpg";
@@ -68,9 +69,10 @@ export default function Creative() {
     <main className="min-h-screen">
       {/* Hero Section */}
       <HeroSection
-        backgroundImage="/images/hero-creative.jpg"
-        headline="Professional Graphics & Logo Design Services"
-        subheadline="Based in Port Harcourt, available online worldwide. Expert design, promotion, print and web solutions for your brand."
+        backgroundImage={heroCreative}
+        preHeadline="Unleash your"
+        headline="CREATIVITY"
+        subheadline="Professional Design & Branding Solutions Available Online from Port Harcourt"
       />
 
       {/* Services Overview */}
