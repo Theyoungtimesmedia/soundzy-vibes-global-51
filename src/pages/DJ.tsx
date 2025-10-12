@@ -40,9 +40,9 @@ export default function DJ() {
       {/* Hero Section */}
       <HeroSection 
         backgroundImage={heroDj}
-        preHeadline="Feel the"
-        headline="RHYTHM"
-        subheadline="Professional DJ Services & Premium Sound Equipment in Port Harcourt"
+        preHeadline="Professional"
+        headline="DJ SERVICES"
+        subheadline="Weddings, Corporate Events & Club Nights in Port Harcourt"
       />
 
       {/* DJ Bio Section */}

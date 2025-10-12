@@ -20,74 +20,71 @@ export const HeroSection = ({
 }: HeroSectionProps) => {
   return (
     <section 
-      className={`relative min-h-[85vh] flex items-center justify-center overflow-hidden ${className}`}
+      className={`relative min-h-[90vh] flex items-center justify-center overflow-hidden ${className}`}
     >
-      {/* Background Image with Overlay */}
+      {/* Background Image with Dark Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/50" />
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 border-2 border-primary/20 rounded-full animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-24 h-24 border-2 border-primary/20 rounded-full animate-pulse delay-150" />
+      <div className="absolute inset-0 bg-black/70" />
       
       {/* Content */}
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-4 py-12">
-        {preHeadline && (
-          <p className="font-script text-4xl md:text-5xl lg:text-6xl text-primary mb-4 animate-fade-in">
-            {preHeadline}
+      <div className="relative z-10 text-left max-w-7xl mx-auto px-8 py-20 w-full">
+        <div className="max-w-2xl">
+          {preHeadline && (
+            <p className="text-2xl md:text-3xl text-white/80 mb-4 font-light italic animate-fade-in">
+              {preHeadline}
+            </p>
+          )}
+          
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-none tracking-tight animate-scale-in">
+            <span className="block text-white">{headline.split(' ')[0]}</span>
+            <span className="block text-primary drop-shadow-[0_0_30px_rgba(218,165,32,0.5)]">
+              {headline.split(' ').slice(1).join(' ')}
+            </span>
+          </h1>
+          
+          <p className="text-base md:text-lg mb-12 text-white/70 font-normal max-w-xl leading-relaxed">
+            {subheadline}
           </p>
-        )}
-        
-        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-bold mb-6 leading-none text-3d-gold uppercase tracking-wider animate-scale-in">
-          {headline}
-        </h1>
-        
-        <p className="text-lg md:text-xl lg:text-2xl mb-10 text-white/90 font-medium max-w-3xl mx-auto tracking-wide">
-          {subheadline}
-        </p>
-        
-        {showPrimaryCta && (
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              variant="default"
-              size="xl"
-              asChild
-              className="bg-gradient-primary text-black font-bold text-lg px-8 py-6 rounded-full shadow-brand hover:scale-105 transition-transform"
-            >
-              <a 
-                href="https://wa.me/2348166687167" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-3"
+          
+          {showPrimaryCta && (
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="lg"
+                asChild
+                className="bg-primary hover:bg-primary/90 text-black font-bold text-base px-10 py-6 rounded-md transition-all hover:scale-105"
               >
-                <MessageCircle className="h-6 w-6" />
-                Get Started Now
-              </a>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="xl"
-              asChild
-              className="border-2 border-primary text-primary hover:bg-primary hover:text-black font-bold text-lg px-8 py-6 rounded-full transition-all"
-            >
-              <a 
-                href="mailto:info@soundzyglobal.com"
-                className="flex items-center gap-3"
+                <a 
+                  href="https://wa.me/2348166687167" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Get Started Now
+                </a>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                size="lg"
+                asChild
+                className="border-2 border-white/30 bg-white/5 text-white hover:bg-white hover:text-black font-semibold text-base px-10 py-6 rounded-md transition-all backdrop-blur-sm"
               >
-                <Phone className="h-6 w-6" />
-                Contact Us
-              </a>
-            </Button>
-          </div>
-        )}
+                <a 
+                  href="mailto:info@soundzyglobal.com"
+                  className="flex items-center gap-3"
+                >
+                  <Phone className="h-5 w-5" />
+                  Contact Us
+                </a>
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
-      
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };

@@ -70,9 +70,9 @@ export default function Creative() {
       {/* Hero Section */}
       <HeroSection
         backgroundImage={heroCreative}
-        preHeadline="Unleash your"
-        headline="CREATIVITY"
-        subheadline="Professional Design & Branding Solutions Available Online from Port Harcourt"
+        preHeadline="Creative"
+        headline="DESIGN SOLUTIONS"
+        subheadline="Professional Graphics & Logo Design | Port Harcourt & Online Worldwide"
       />
 
       {/* Services Overview */}

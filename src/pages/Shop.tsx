@@ -97,22 +97,22 @@ export default function Shop() {
       {/* Hero Section */}
       <HeroSection
         backgroundImage={heroShop}
-        preHeadline="Shop the"
-        headline="BEST GEAR"
-        subheadline="Premium Audio Equipment & Professional Sound Solutions"
+        preHeadline="Shop"
+        headline="PREMIUM GEAR"
+        subheadline="Professional Audio Equipment & Sound Solutions"
       />
 
       {/* Categories */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Shop by Category</h2>
-            <p className="text-lg text-muted-foreground">
+      <section className="py-32 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">Shop by Category</h2>
+            <p className="text-lg text-muted-foreground font-light">
               Find the perfect equipment for your needs
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {categories.map((category, index) => {
               const Icon = category.icon;
               const title = category.title.toLowerCase();
@@ -122,21 +122,21 @@ export default function Shop() {
               else if (title.includes('speaker') || title.includes('sound')) catImage = paSystemImage;
               else if (title.includes('dj') || title.includes('mix')) catImage = djControllerImage;
               return (
-                <Card key={index} className="group hover:shadow-brand transition-all duration-300 cursor-pointer overflow-hidden">
+                <Card key={index} className="group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden border border-border/50">
                   <div className="aspect-video overflow-hidden">
                     <img src={catImage} alt={category.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
-                  <CardHeader>
-                    <div className="h-12 w-12 mb-4 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
+                  <CardHeader className="p-6">
+                    <div className="h-12 w-12 mb-4 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors">
+                      <Icon className="h-6 w-6 text-primary group-hover:text-black transition-colors" />
                     </div>
-                    <CardTitle className="group-hover:text-primary transition-colors">
+                    <CardTitle className="group-hover:text-primary transition-colors text-lg">
                       {category.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-2">{category.description}</p>
-                    <Badge variant="outline">{category.count}</Badge>
+                  <CardContent className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-2 text-sm">{category.description}</p>
+                    <Badge variant="outline" className="border-primary/30">{category.count}</Badge>
                   </CardContent>
                 </Card>
               );
@@ -200,46 +200,46 @@ export default function Shop() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Products</h2>
-            <p className="text-lg text-muted-foreground">
+      <section className="py-32 px-4 bg-card/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">Featured Products</h2>
+            <p className="text-lg text-muted-foreground font-light">
               Hand-picked equipment from top brands
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((product, index) => (
-              <Card key={index} className="group hover:shadow-brand transition-all duration-300">
-                <div className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-t-lg flex items-center justify-center relative overflow-hidden">
+              <Card key={index} className="group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-border/50 overflow-hidden">
+                <div className="aspect-square bg-muted/30 rounded-t-lg flex items-center justify-center relative overflow-hidden">
                   <img 
                     src={product.image} 
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                   {product.originalPrice && (
-                    <Badge variant="destructive" className="absolute top-2 left-2">
+                    <Badge className="absolute top-3 left-3 bg-destructive text-white">
                       Sale
                     </Badge>
                   )}
                   {!product.inStock && (
-                    <Badge variant="outline" className="absolute top-2 right-2 bg-background">
+                    <Badge variant="outline" className="absolute top-3 right-3 bg-background">
                       Out of Stock
                     </Badge>
                   )}
                 </div>
                 
-                <CardContent className="p-4">
-                  <Badge variant="outline" className="mb-2 text-xs">
+                <CardContent className="p-6">
+                  <Badge variant="outline" className="mb-3 text-xs border-primary/30">
                     {product.category}
                   </Badge>
-                  <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">
                     {product.name}
                   </h3>
                   
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-bold text-primary">{product.price}</span>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xl font-black text-primary">{product.price}</span>
                     {product.originalPrice && (
                       <span className="text-sm text-muted-foreground line-through">
                         {product.originalPrice}
@@ -247,19 +247,9 @@ export default function Shop() {
                     )}
                   </div>
                   
-                  <div className="space-y-1 mb-4">
-                    {product.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <div className="h-1 w-1 bg-primary rounded-full"></div>
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
                   <Button 
-                    variant={product.inStock ? "whatsapp" : "outline"} 
                     size="sm" 
-                    className="w-full"
+                    className="w-full bg-primary hover:bg-primary/90 text-black font-bold"
                     disabled={!product.inStock}
                     asChild={product.inStock}
                   >
@@ -269,11 +259,10 @@ export default function Shop() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <MessageCircle className="h-4 w-4 mr-2" />
-                        Buy via WhatsApp
+                        Buy Now
                       </a>
                     ) : (
-                      "Notify When Available"
+                      "Notify Me"
                     )}
                   </Button>
                 </CardContent>
