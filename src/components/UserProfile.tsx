@@ -199,14 +199,10 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
 
         {/* Enhanced Profile Tabs */}
         <Tabs defaultValue="settings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 h-12">
+          <TabsList className="grid w-full grid-cols-2 h-12">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="h-4 w-4" />
               Settings
-            </TabsTrigger>
-            <TabsTrigger value="activity" className="flex items-center gap-2">
-              <Heart className="h-4 w-4" />
-              Activity
             </TabsTrigger>
             <TabsTrigger value="preferences" className="flex items-center gap-2">
               <User className="h-4 w-4" />
@@ -316,46 +312,6 @@ export function UserProfile({ user, onSignOut }: UserProfileProps) {
               </CardContent>
             </Card>
           </TabsContent>
-
-          <TabsContent value="activity">
-            <Card className="border-0 shadow-card">
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-red-50 to-pink-50 rounded-lg border border-red-100">
-                    <div className="h-10 w-10 bg-red-100 rounded-full flex items-center justify-center">
-                      <Heart className="h-5 w-5 text-red-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Updated profile settings</p>
-                      <p className="text-sm text-muted-foreground">2 hours ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg border border-blue-100">
-                    <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <MessageCircle className="h-5 w-5 text-blue-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Commented on a post</p>
-                      <p className="text-sm text-muted-foreground">1 day ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
-                    <div className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <User className="h-5 w-5 text-green-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Updated profile information</p>
-                      <p className="text-sm text-muted-foreground">3 days ago</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
 
           <TabsContent value="preferences">
             <Card className="border-0 shadow-card">
