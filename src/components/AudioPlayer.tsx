@@ -103,6 +103,9 @@ export const AudioPlayer = ({
   };
 
   const handleShare = (platform: string) => {
+    // Guard for Safari compatibility
+    if (typeof window === 'undefined') return;
+    
     const text = `Check out "${title}" by ${artist} 🎵`;
     const url = window.location.href;
     
