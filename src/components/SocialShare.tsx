@@ -28,6 +28,20 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
     }
   };
 
+  // SAFARI FIX: Safe window.open with fallback for popup blockers
+  const safeWindowOpen = (url: string) => {
+    try {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Popup was blocked - use fallback
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.warn('Popup blocked, using fallback navigation:', error);
+      window.location.href = url;
+    }
+  };
+
   const shareLinks = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
@@ -43,7 +57,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
       <Button
         variant="outline"
         size="sm"
-        onClick={() => window.open(shareLinks.facebook, '_blank')}
+        onClick={() => safeWindowOpen(shareLinks.facebook)}
         className="p-2"
       >
         <Facebook className="h-4 w-4" />
@@ -52,7 +66,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
       <Button
         variant="outline"
         size="sm"
-        onClick={() => window.open(shareLinks.twitter, '_blank')}
+        onClick={() => safeWindowOpen(shareLinks.twitter)}
         className="p-2"
       >
         <Twitter className="h-4 w-4" />
@@ -61,7 +75,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
       <Button
         variant="outline"
         size="sm"
-        onClick={() => window.open(shareLinks.linkedin, '_blank')}
+        onClick={() => safeWindowOpen(shareLinks.linkedin)}
         className="p-2"
       >
         <Linkedin className="h-4 w-4" />
@@ -70,7 +84,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
       <Button
         variant="outline"
         size="sm"
-        onClick={() => window.open(shareLinks.whatsapp, '_blank')}
+        onClick={() => safeWindowOpen(shareLinks.whatsapp)}
         className="p-2"
       >
         <MessageCircle className="h-4 w-4" />

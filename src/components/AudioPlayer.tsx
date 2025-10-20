@@ -37,10 +37,17 @@ export const AudioPlayer = ({
   useEffect(() => {
     if (waveformRef.current) {
       const canvas = waveformRef.current;
-      const ctx = canvas.getContext('2d')!;
+      // SAFARI FIX: Safe canvas context handling with null check
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        console.warn('Canvas context not available - waveform disabled for Safari compatibility');
+        return; // Gracefully degrade - audio will still work
+      }
       let animationId: number;
+      let isMounted = true; // SAFARI FIX: Prevent updates after unmount
 
       const drawWaveform = () => {
+        if (!isMounted || !ctx) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Background gradient
@@ -81,7 +88,13 @@ export const AudioPlayer = ({
       };
 
       drawWaveform();
-      return () => cancelAnimationFrame(animationId);
+      // SAFARI FIX: Proper cleanup to prevent memory leaks
+      return () => {
+        isMounted = false;
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+      };
     }
   }, [isPlaying]);
 
@@ -102,8 +115,22 @@ export const AudioPlayer = ({
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // SAFARI FIX: Safe window.open with fallback for popup blockers
+  const safeWindowOpen = (url: string) => {
+    try {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Popup was blocked - fallback to direct navigation
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.warn('Popup blocked, using fallback navigation:', error);
+      window.location.href = url;
+    }
+  };
+
   const handleShare = (platform: string) => {
-    // Guard for Safari compatibility
+    // SAFARI FIX: Guard for Safari compatibility
     if (typeof window === 'undefined') return;
     
     const text = `Check out "${title}" by ${artist} 🎵`;
@@ -116,7 +143,7 @@ export const AudioPlayer = ({
     };
     
     if (shareUrls[platform]) {
-      window.open(shareUrls[platform], '_blank');
+      safeWindowOpen(shareUrls[platform]);
     }
   };
 

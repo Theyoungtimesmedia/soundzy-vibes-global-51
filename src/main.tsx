@@ -2,6 +2,29 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// SAFARI FIX: Global error handlers to prevent blank page
+window.addEventListener('error', (event) => {
+  console.error('Global error caught:', event.error);
+  event.preventDefault(); // Prevent blank page
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', event.reason);
+  event.preventDefault(); // Prevent blank page
+});
+
+// SAFARI FIX: Unregister any stale service workers for fresh start
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(registration => {
+      console.log('Unregistering service worker for fresh start');
+      registration.unregister();
+    });
+  }).catch(err => {
+    console.warn('Service worker cleanup failed:', err);
+  });
+}
+
 // Add error handling for Safari compatibility
 try {
   const rootElement = document.getElementById("root");
@@ -9,8 +32,18 @@ try {
   if (!rootElement) {
     throw new Error("Root element not found");
   }
+
+  // SAFARI FIX: Remove loading fallback on successful mount
+  const loadingFallback = document.getElementById('app-loading-fallback');
   
   createRoot(rootElement).render(<App />);
+  
+  // Hide fallback after React mounts
+  setTimeout(() => {
+    if (loadingFallback) {
+      loadingFallback.style.display = 'none';
+    }
+  }, 100);
 } catch (error) {
   console.error("Failed to initialize app:", error);
   
