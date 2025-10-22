@@ -2,7 +2,18 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// SAFARI FIX: Global error handlers to prevent blank page
+// MAC BROWSER DETECTION: Log browser info for debugging
+const browserInfo = {
+  userAgent: navigator.userAgent,
+  isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+  isChrome: /chrome/i.test(navigator.userAgent),
+  isFirefox: /firefox/i.test(navigator.userAgent),
+  isOpera: /opr\//i.test(navigator.userAgent),
+  isMac: /mac/i.test(navigator.platform || (navigator as any).userAgentData?.platform || ''),
+};
+console.log('🌐 Browser environment:', browserInfo);
+
+// MAC SAFARI FIX: Global error handlers to prevent blank page
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
   event.preventDefault(); // Prevent blank page

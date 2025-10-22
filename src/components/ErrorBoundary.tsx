@@ -38,7 +38,9 @@ export class ErrorBoundary extends Component<Props, State> {
                 Oops! Something went wrong
               </h1>
               <p className="text-muted-foreground">
-                We're sorry for the inconvenience. Please try refreshing the page.
+                {/mac/i.test(navigator.platform || '') && 
+                  'Mac users: Try Safari Private Browsing or Chrome. '}
+                We're sorry for the inconvenience. Please try refreshing the page or clearing your browser cache.
               </p>
             </div>
 
