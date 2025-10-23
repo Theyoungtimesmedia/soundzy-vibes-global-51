@@ -17,7 +17,7 @@ export default function Home() {
         backgroundImage={heroMain}
         preHeadline="Welcome to"
         headline="SOUNDZY WORLD GLOBAL"
-        subheadline="(SWG) - Professional DJ Services, Creative Design & Premium Sound Equipment in Port Harcourt"
+        subheadline="(SWG) - Professional Entertainment & DJ Services, Creative Design & Premium Sound Equipment in Port Harcourt"
       />
 
       {/* Services Section */}
@@ -34,11 +34,11 @@ export default function Home() {
             {[
               {
                 icon: <Headphones className="h-8 w-8" />,
-                title: "Professional DJ Services",
-                description: "Wedding DJs from ₦50,000 • Corporate Events from ₦80,000 • Premium sound systems & lighting included",
+                title: "Professional Entertainment & DJ Services",
+                description: "Wedding DJs from ₦50,000 • Corporate Events from ₦80,000 • Complete sound, lighting & stage setup included",
                 image: "/images/dj-equipment.jpg",
                 price: "From ₦50,000",
-                whatsapp: "https://wa.me/2348166687167?text=Hi!%20I%20need%20a%20DJ%20for%20my%20event.%20Can%20you%20send%20me%20pricing%20and%20packages?"
+                whatsapp: "https://wa.me/2348166687167?text=Hi!%20I%20need%20Entertainment%20and%20DJ%20services%20for%20my%20event.%20Can%20you%20send%20me%20pricing%20and%20packages?"
               },
               {
                 icon: <Palette className="h-8 w-8" />,
@@ -188,22 +188,22 @@ export default function Home() {
                 About Soundzy World Global
               </h2>
               
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed font-light">
-                Based in Port Harcourt, Soundzy World Global is your trusted partner for professional DJ services, expert graphics & logo design, and premium sound equipment. We serve clients locally and offer remote creative services worldwide.
+              <p className="text-lg text-white/90 mb-8 leading-relaxed font-light">
+                Based in Port Harcourt, Soundzy World Global is your trusted partner for professional entertainment & DJ services, expert graphics & logo design, and premium sound equipment. We offer complete event solutions including DJ services, sound systems, lighting, stage setup, and more. We serve clients locally and offer remote creative services worldwide.
               </p>
               
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                  <span className="text-muted-foreground">CAC Business Registration</span>
+                  <span className="text-white/90">CAC Business Registration</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                  <span className="text-muted-foreground">Entertainment License</span>
+                  <span className="text-white/90">Entertainment License</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                  <span className="text-muted-foreground">Professional Insurance</span>
+                  <span className="text-white/90">Professional Insurance</span>
                 </div>
               </div>
               
