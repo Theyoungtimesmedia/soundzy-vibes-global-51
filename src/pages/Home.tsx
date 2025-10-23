@@ -16,8 +16,8 @@ export default function Home() {
       <HeroSection 
         backgroundImage={heroMain}
         preHeadline="Welcome to"
-        headline="SOUNDZY WORLD"
-        subheadline="Professional DJ Services, Creative Design & Premium Sound Equipment in Port Harcourt"
+        headline="SOUNDZY WORLD GLOBAL"
+        subheadline="(SWG) - Professional DJ Services, Creative Design & Premium Sound Equipment in Port Harcourt"
       />
 
       {/* Services Section */}

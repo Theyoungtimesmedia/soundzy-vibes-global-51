@@ -2,11 +2,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { WhatsAppCTA } from "@/components/WhatsAppCTA";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { useEffect } from "react";
 import Home from "./pages/Home";
 import DJ from "./pages/DJ";
 import Creative from "./pages/Creative";
@@ -32,6 +33,17 @@ const queryClient = new QueryClient({
 // Secret admin slug - do not rely on env vars in Lovable
 const ADMIN_SLUG = 'secret-admin-2024';
 
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
@@ -39,6 +51,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
