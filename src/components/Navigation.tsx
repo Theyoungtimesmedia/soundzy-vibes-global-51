@@ -34,10 +34,10 @@ export const Navigation = () => {
     });
     return () => subscription.unsubscribe();
   }, []);
- const navItems = [
+  const navItems = [
   { href: "/", label: "Home" },
-  { href: "/dj", label: "DJ Services" },
-  { href: "/creative", label: "Creative Services" },
+  { href: "/dj", label: "Entertainment & DJ Services" },
+  { href: "/creative", label: "General Services" },
   { href: "/shop", label: "Shop" }
 ];
   const isActive = (href: string) => {
@@ -55,10 +55,10 @@ export const Navigation = () => {
           WhatsApp
         </a>
       </Button>
-      <Button variant="outline" size="sm" asChild>
-        <a href="mailto:info@soundzyglobal.com" className="flex items-center gap-2">
-          <Phone className="h-4 w-4" />
-          Email
+      <Button variant="premium" size="sm" asChild>
+        <a href="mailto:soundzybeatz@gmail.com" className="flex items-center gap-2 text-white">
+          <Phone className="h-4 w-4 text-white" />
+          <span className="text-white">soundzybeatz@gmail.com</span>
         </a>
       </Button>
     </div>;
@@ -79,7 +79,7 @@ export const Navigation = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          {navItems.map(item => <Link key={item.href} to={item.href} className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.href) ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+          {navItems.map(item => <Link key={item.href} to={item.href} className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.href) ? "text-primary font-semibold" : "text-white"}`}>
               {item.label}
             </Link>)}
         </div>
@@ -111,10 +111,10 @@ export const Navigation = () => {
               <ContactButtons />
             </div> : <div className="flex items-center gap-3">
               <Button variant="ghost" asChild>
-                <Link to="/auth">Sign In</Link>
+                <Link to="/auth" className="text-white hover:text-primary">Sign In</Link>
               </Button>
               <Button variant="cta" asChild>
-                <Link to="/auth">Get Started</Link>
+                <Link to="/auth" className="text-black">Get Started</Link>
               </Button>
               <ContactButtons />
             </div>}
@@ -130,7 +130,7 @@ export const Navigation = () => {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <div className="flex flex-col space-y-4 mt-6">
-              {navItems.map(item => <Link key={item.href} to={item.href} onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors hover:text-primary ${isActive(item.href) ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+              {navItems.map(item => <Link key={item.href} to={item.href} onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors hover:text-primary ${isActive(item.href) ? "text-primary font-semibold" : "text-white"}`}>
                   {item.label}
                 </Link>)}
               

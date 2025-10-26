@@ -127,7 +127,7 @@ export default function Shop() {
                     <img src={catImage} alt={category.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
                   <CardHeader className="p-6">
-                    <div className="h-12 w-12 mb-4 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors">
+                    <div className="h-12 w-12 mb-4 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors">
                       <Icon className="h-6 w-6 text-primary group-hover:text-black transition-colors" />
                     </div>
                     <CardTitle className="group-hover:text-primary transition-colors text-lg">
@@ -135,8 +135,8 @@ export default function Shop() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-2 text-sm">{category.description}</p>
-                    <Badge variant="outline" className="border-primary/30">{category.count}</Badge>
+                    <p className="text-white/90 mb-2 text-sm">{category.description}</p>
+                    <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">{category.count}</Badge>
                   </CardContent>
                 </Card>
               );
@@ -186,7 +186,7 @@ export default function Shop() {
                         <CardTitle>{service.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground">
+                        <p className="text-white/90">
                           {service.description}
                         </p>
                       </CardContent>
@@ -286,27 +286,33 @@ export default function Shop() {
               
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <div className="h-8 w-8 bg-primary/20 rounded-full flex items-center justify-center">
                     <Settings className="h-4 w-4 text-primary" />
                   </div>
-                  <span>System design and consultation</span>
+                  <span className="text-white/90">System design and consultation</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 bg-secondary/10 rounded-full flex items-center justify-center">
+                  <div className="h-8 w-8 bg-secondary/20 rounded-full flex items-center justify-center">
                     <Speaker className="h-4 w-4 text-secondary" />
                   </div>
-                  <span>Professional installation and calibration</span>
+                  <span className="text-white/90">Professional installation and calibration</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 bg-accent/10 rounded-full flex items-center justify-center">
+                  <div className="h-8 w-8 bg-accent/20 rounded-full flex items-center justify-center">
                     <Headphones className="h-4 w-4 text-accent-foreground" />
                   </div>
-                  <span>Training and ongoing support</span>
+                  <span className="text-white/90">Training and ongoing support</span>
                 </div>
               </div>
               
-              <Button variant="hero" size="lg">
-                Request Installation Quote
+              <Button variant="hero" size="lg" asChild>
+                <a 
+                  href="https://wa.me/2348166687167?text=Hi! I'd like to request an installation quote." 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Request Installation Quote
+                </a>
               </Button>
             </div>
             
@@ -319,7 +325,7 @@ export default function Shop() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
+                  <p className="text-white/90">
                     Complete audio solutions for restaurants, clubs, and event venues
                   </p>
                 </CardContent>
@@ -333,7 +339,7 @@ export default function Shop() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
+                  <p className="text-white/90">
                     Professional studio setup with acoustic treatment and monitoring
                   </p>
                 </CardContent>
@@ -347,7 +353,7 @@ export default function Shop() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
+                  <p className="text-white/90">
                     Complete stage lighting design and installation services
                   </p>
                 </CardContent>
@@ -368,11 +374,11 @@ export default function Shop() {
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <Card>
               <CardContent className="p-6 text-center">
-                <div className="h-12 w-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+                <div className="h-12 w-12 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
                   <ShoppingCart className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">Flexible Payment</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/90">
                   Cash, bank transfer, and installment options available
                 </p>
               </CardContent>
@@ -380,11 +386,11 @@ export default function Shop() {
             
             <Card>
               <CardContent className="p-6 text-center">
-                <div className="h-12 w-12 mx-auto mb-4 bg-secondary/10 rounded-full flex items-center justify-center">
+                <div className="h-12 w-12 mx-auto mb-4 bg-secondary/20 rounded-full flex items-center justify-center">
                   <Settings className="h-6 w-6 text-secondary" />
                 </div>
                 <h3 className="font-semibold mb-2">Technical Support</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/90">
                   Ongoing maintenance and technical assistance
                 </p>
               </CardContent>
@@ -392,11 +398,11 @@ export default function Shop() {
             
             <Card>
               <CardContent className="p-6 text-center">
-                <div className="h-12 w-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                <div className="h-12 w-12 mx-auto mb-4 bg-accent/20 rounded-full flex items-center justify-center">
                   <Monitor className="h-6 w-6 text-accent-foreground" />
                 </div>
                 <h3 className="font-semibold mb-2">Warranty Coverage</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/90">
                   Comprehensive warranty on all equipment sales
                 </p>
               </CardContent>
@@ -406,15 +412,15 @@ export default function Shop() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="whatsapp" size="xl" asChild>
               <a 
-                href="https://wa.me/2348166687167" 
+                href="https://wa.me/2348166687167?text=Hi! I'd like to shop for equipment." 
                 target="_blank" 
                 rel="noopener noreferrer"
               >
                 Shop via WhatsApp
               </a>
             </Button>
-            <Button variant="outline" size="xl" asChild>
-              <a href="mailto:soundzybeatz@gmail.com">
+            <Button variant="premium" size="xl" asChild>
+              <a href="mailto:soundzybeatz@gmail.com?subject=Equipment Quote Request&body=Hi, I'd like to request a quote for equipment." className="text-white">
                 Request Quote
               </a>
             </Button>

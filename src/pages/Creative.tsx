@@ -71,7 +71,7 @@ export default function Creative() {
       <HeroSection
         backgroundImage={heroCreative}
         preHeadline="Creative"
-        headline="DESIGN SOLUTIONS"
+        headline="DESIGN SOLUTIONS AND GENERAL SERVICES"
         subheadline="Professional Graphics & Logo Design | Port Harcourt & Online Worldwide"
       />
 
@@ -171,10 +171,10 @@ export default function Creative() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <p className="text-muted-foreground">{service.description}</p>
+                      <p className="text-white/90">{service.description}</p>
                       <div className="flex gap-2">
                         <Button 
-                          variant="default" 
+                          variant="cta" 
                           size="sm" 
                           className="flex-1"
                           asChild
@@ -189,8 +189,8 @@ export default function Creative() {
                             Get Quote
                           </a>
                         </Button>
-                        <Button variant="outline" size="sm" asChild>
-                          <a href={`mailto:soundzybeatz@gmail.com?subject=Inquiry about ${service.title}&body=Hi, I'm interested in your ${service.title} services. Please provide more information.`}>
+                        <Button variant="premium" size="sm" asChild>
+                          <a href={`mailto:soundzybeatz@gmail.com?subject=Inquiry about ${service.title}&body=Hi, I'm interested in your ${service.title} services. Please provide more information.`} className="text-white">
                             Email
                           </a>
                         </Button>
@@ -219,15 +219,15 @@ export default function Creative() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 bg-primary rounded-full"></div>
-                  <span>Available 24 hours for urgent projects</span>
+                  <span className="text-white/90">Available 24 hours for urgent projects</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 bg-secondary rounded-full"></div>
-                  <span>Professional quality guaranteed</span>
+                  <span className="text-white/90">Professional quality guaranteed</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 bg-accent rounded-full"></div>
-                  <span>Competitive pricing for all services</span>
+                  <span className="text-white/90">Competitive pricing for all services</span>
                 </div>
               </div>
               
@@ -340,7 +340,7 @@ export default function Creative() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Start Your Creative Project</h2>
-          <p className="text-lg text-muted-foreground mb-8">
+          <p className="text-lg text-white/80 mb-8">
             Ready to bring your vision to life? Let's discuss your creative needs and 
             create something amazing together.
           </p>
@@ -348,15 +348,15 @@ export default function Creative() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="whatsapp" size="xl" asChild>
               <a 
-                href="https://wa.me/2348166687167" 
+                href="https://wa.me/2348166687167?text=Hi! I'd like to start a creative project with Soundzy World Global." 
                 target="_blank" 
                 rel="noopener noreferrer"
               >
                 Start Project on WhatsApp
               </a>
             </Button>
-            <Button variant="outline" size="xl" asChild>
-              <a href="mailto:soundzybeatz@gmail.com">
+            <Button variant="premium" size="xl" asChild>
+              <a href="mailto:soundzybeatz@gmail.com?subject=Creative Project Brief&body=Hi, I'd like to discuss a creative project." className="text-white">
                 Email Project Brief
               </a>
             </Button>
