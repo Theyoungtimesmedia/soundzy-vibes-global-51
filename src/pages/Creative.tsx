@@ -23,6 +23,14 @@ import serviceVideoProduction from "@/assets/service-video-production.jpg";
 import serviceDigitalMarketing from "@/assets/service-digital-marketing.jpg";
 import servicePrintDesign from "@/assets/service-print-design.jpg";
 
+// Professional service images
+import serviceLogoDesign from "@/assets/service-logo-design.jpg";
+import serviceBrandIdentityPro from "@/assets/service-brand-identity-pro.jpg";
+import serviceWebDesignPro from "@/assets/service-web-design-pro.jpg";
+import servicePrintDesignPro from "@/assets/service-print-design-pro.jpg";
+import serviceDigitalMarketingPro from "@/assets/service-digital-marketing-pro.jpg";
+import serviceVideoProductionPro from "@/assets/service-video-production-pro.jpg";
+
 export default function Creative() {
   const { services: creativeServices, loading: servicesLoading } = useServices('creative_services');
 
@@ -102,20 +110,24 @@ export default function Creative() {
                   
                   // Service-specific configurations
                   const serviceConfigs = {
+                    'logo_design': { image: serviceLogoDesign, basePrice: 30000 },
                     'graphic_design': { image: serviceGraphicDesign, basePrice: 25000 },
-                    'web_development': { image: serviceWebDevelopment, basePrice: 150000 },
-                    'brand_identity': { image: serviceBrandIdentity, basePrice: 75000 },
-                    'video_production': { image: serviceVideoProduction, basePrice: 200000 },
-                    'digital_marketing': { image: serviceDigitalMarketing, basePrice: 45000 },
-                    'print_design': { image: servicePrintDesign, basePrice: 15000 }
+                    'web_development': { image: serviceWebDesignPro, basePrice: 150000 },
+                    'web_design': { image: serviceWebDesignPro, basePrice: 150000 },
+                    'brand_identity': { image: serviceBrandIdentityPro, basePrice: 75000 },
+                    'video_production': { image: serviceVideoProductionPro, basePrice: 200000 },
+                    'digital_marketing': { image: serviceDigitalMarketingPro, basePrice: 45000 },
+                    'print_design': { image: servicePrintDesignPro, basePrice: 15000 }
                   };
                   
                   // Match service type
                   let config;
-                  if (titleLower.includes('graphic') || titleLower.includes('design')) {
+                  if (titleLower.includes('logo')) {
+                    config = serviceConfigs.logo_design;
+                  } else if (titleLower.includes('graphic') || titleLower.includes('design')) {
                     config = serviceConfigs.graphic_design;
-                  } else if (titleLower.includes('web') || titleLower.includes('development')) {
-                    config = serviceConfigs.web_development;
+                  } else if (titleLower.includes('web')) {
+                    config = serviceConfigs.web_design;
                   } else if (titleLower.includes('brand') || titleLower.includes('identity')) {
                     config = serviceConfigs.brand_identity;
                   } else if (titleLower.includes('video') || titleLower.includes('production')) {

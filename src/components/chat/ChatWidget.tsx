@@ -88,7 +88,7 @@ export function ChatWidget() {
     <>
       {/* Chat Toggle Button */}
       <motion.div
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1, type: "spring" }}
@@ -96,10 +96,13 @@ export function ChatWidget() {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
-          className="h-14 w-14 rounded-full bg-accent hover:bg-accent/90 shadow-accent text-accent-foreground"
+          className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-accent hover:opacity-90 shadow-2xl border-2 border-accent transition-all duration-300 hover:scale-110"
         >
-          {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+          {isOpen ? <X className="h-6 w-6 text-background" /> : <MessageCircle className="h-6 w-6 text-background" />}
         </Button>
+        <span className="text-xs font-medium text-foreground bg-background/90 px-3 py-1 rounded-full border border-accent/30 shadow-lg">
+          Live Chat
+        </span>
       </motion.div>
 
       {/* Chat Window */}

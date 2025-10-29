@@ -15,10 +15,19 @@ export const Layout = ({
         {children}
         {/* WhatsApp Float Button */}
         <div className="relative">
-          <div className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-            <a href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20Global%20services.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center" aria-label="Contact us on WhatsApp">
-              <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-8 h-8 filter brightness-0 invert group-hover:scale-110 transition-transform" />
+          <div className="fixed bottom-6 left-6 z-50 flex flex-col items-center gap-2">
+            <a 
+              href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20Global%20services.%20Can%20you%20help%20me?" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group border-2 border-accent"
+              aria-label="Contact us on WhatsApp"
+            >
+              <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-8 h-8 group-hover:scale-110 transition-transform" />
             </a>
+            <span className="text-xs font-medium text-foreground bg-background/90 px-3 py-1 rounded-full border border-accent/30 shadow-lg">
+              WhatsApp
+            </span>
           </div>
         </div>
       </main>
@@ -78,7 +87,7 @@ export const Layout = ({
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Email</p>
-                  <p><a href="mailto:info@soundzyglobal.com" className="hover:text-primary transition-colors">info@soundzyglobal.com</a></p>
+                  <p><a href="mailto:Info@soundzyworld.com.ng" className="hover:text-primary transition-colors text-white">Info@soundzyworld.com.ng</a></p>
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Google Business</p>
