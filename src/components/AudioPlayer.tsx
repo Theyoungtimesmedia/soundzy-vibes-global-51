@@ -17,7 +17,7 @@ export const AudioPlayer = ({
   src, 
   title, 
   artist = "DJ Soundzy",
-  albumArt = "/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png",
+  albumArt = "/assets/images/dj-album-art.png",
   downloadUrl,
   genre = "Afrobeats"
 }: AudioPlayerProps) => {

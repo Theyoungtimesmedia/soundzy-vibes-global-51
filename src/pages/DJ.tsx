@@ -203,7 +203,7 @@ export default function DJ() {
               artist="DJ Soundzy (Odogwu Na Vibes)"
               genre="Afrobeats • Dancehall"
               downloadUrl="/mixtapes/summer-vibes-2024.mp3"
-              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
+              albumArt="/assets/images/dj-album-art.png"
             />
             <AudioPlayer
               src="/mixtapes/club-bangers.mp3"
@@ -211,7 +211,7 @@ export default function DJ() {
               artist="DJ Soundzy (Odogwu Na Vibes)"
               genre="Hip-Hop • Trap"
               downloadUrl="/mixtapes/club-bangers.mp3"
-              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
+              albumArt="/assets/images/dj-album-art.png"
             />
             <AudioPlayer
               src="/mixtapes/afrobeats-essentials.mp3"
@@ -219,7 +219,7 @@ export default function DJ() {
               artist="DJ Soundzy (Odogwu Na Vibes)"
               genre="Afrobeats • Amapiano"
               downloadUrl="/mixtapes/afrobeats-essentials.mp3"
-              albumArt="/lovable-uploads/908ec127-5e76-4301-84c0-34eddfc15eb2.png"
+              albumArt="/assets/images/dj-album-art.png"
             />
           </div>
 
@@ -263,7 +263,7 @@ export default function DJ() {
               </CardHeader>
               <CardContent>
                 <img 
-                  src="/lovable-uploads/8145e5df-a0a6-4ad7-b79b-64dd23291a18.png" 
+                  src="/assets/certifications/nollywood-permit.png" 
                   alt="Nollywood Work Permit"
                   className="w-full max-w-md mx-auto rounded-lg"
                 />
@@ -279,7 +279,7 @@ export default function DJ() {
               </CardHeader>
               <CardContent>
                 <img 
-                  src="/lovable-uploads/a93d22b2-9d29-4935-8eb8-8b99f328cbd5.png" 
+                  src="/assets/certifications/ampsomi-cert.png" 
                   alt="AMPSOMI Certificate"
                   className="w-full max-w-md mx-auto rounded-lg"
                 />

@@ -1,13 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface WhatsAppFloatProps {
-  className?: string;
-}
-
-export function WhatsAppFloat({ className = '' }: WhatsAppFloatProps) {
+export function FloatingWhatsApp() {
   const phoneNumber = '+2348166687167';
-  const prefillText = "Hi, I'm interested in Soundzy Global services. Can you help me?";
+  const prefillText = "Hi, I'm interested in Soundzy World Global services. Can you help me?";
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(prefillText)}`;
 
   return (
@@ -15,21 +11,9 @@ export function WhatsAppFloat({ className = '' }: WhatsAppFloatProps) {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1, type: "spring", stiffness: 260, damping: 20 }}
-      className={`fixed bottom-6 right-6 z-50 ${className}`}
+      className="fixed bottom-6 left-6 z-50"
     >
-      <div className="flex flex-col items-end gap-3">
-        {/* Chat bubble */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 2 }}
-          className="bg-white text-foreground px-4 py-2 rounded-2xl shadow-lg border max-w-xs"
-        >
-          <p className="text-sm font-medium">Chat with us!</p>
-          <p className="text-xs text-muted-foreground">We're here to help 24/7</p>
-        </motion.div>
-        
-        {/* WhatsApp Button */}
+      <div className="flex flex-col items-center gap-2">
         <motion.a
           href={whatsappUrl}
           target="_blank"
@@ -40,11 +24,20 @@ export function WhatsAppFloat({ className = '' }: WhatsAppFloatProps) {
           aria-label="Contact us on WhatsApp"
         >
           <img 
-            src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" 
+            src="/assets/icons/whatsapp.png" 
             alt="WhatsApp" 
             className="w-8 h-8 filter brightness-0 invert group-hover:scale-110 transition-transform" 
           />
         </motion.a>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5 }}
+          className="bg-background text-foreground px-3 py-1 rounded-full text-xs font-medium shadow-lg border border-accent/30"
+        >
+          WhatsApp
+        </motion.div>
       </div>
     </motion.div>
   );

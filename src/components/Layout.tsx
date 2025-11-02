@@ -13,23 +13,6 @@ export const Layout = ({
       <Navigation />
       <main className="flex-1">
         {children}
-        {/* WhatsApp Float Button */}
-        <div className="relative">
-          <div className="fixed bottom-6 left-6 z-50 flex flex-col items-center gap-2">
-            <a 
-              href="https://wa.me/2348166687167?text=Hi,%20I'm%20interested%20in%20Soundzy%20Global%20services.%20Can%20you%20help%20me?" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group border-2 border-accent"
-              aria-label="Contact us on WhatsApp"
-            >
-              <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-8 h-8 group-hover:scale-110 transition-transform" />
-            </a>
-            <span className="text-xs font-medium text-foreground bg-background/90 px-3 py-1 rounded-full border border-accent/30 shadow-lg">
-              WhatsApp
-            </span>
-          </div>
-        </div>
       </main>
       <footer className="bg-background border-t py-16 px-4">
         <div className="max-w-6xl mx-auto">
@@ -84,11 +67,11 @@ export const Layout = ({
                 <div>
                   <p className="font-medium text-foreground">Phone</p>
                   <p><a href="tel:+2348166687167" className="hover:text-primary transition-colors">+234 816 668 7167</a></p>
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Email</p>
-                  <p><a href="mailto:Info@soundzyworld.com.ng" className="hover:text-primary transition-colors text-white">Info@soundzyworld.com.ng</a></p>
-                </div>
+                 </div>
+                 <div>
+                   <p className="font-medium text-foreground">Email</p>
+                   <p><a href="mailto:Info@soundzyworld.com.ng" className="hover:text-primary transition-colors text-white">Info@soundzyworld.com.ng</a></p>
+                 </div>
                 <div>
                   <p className="font-medium text-foreground">Google Business</p>
                   <p><a href="https://share.google/nGWycgIcGOxhQx19d" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors inline-flex items-center gap-1">
@@ -101,26 +84,26 @@ export const Layout = ({
               </div>
               
               {/* Social Media Icons */}
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Follow Us</h4>
-                <div className="flex items-center gap-4">
-                  <a href="https://www.youtube.com/@soundzyofficial6917?si=pYlzXM16pSDNONWZ" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
-                    <img src="/lovable-uploads/d473772a-e449-48b9-8ee9-d9eb33f959a6.png" alt="YouTube" className="w-full h-full object-contain" />
-                  </a>
-                  <a href="https://www.tiktok.com/@soundzyofficial?_t=ZS-8zOWgJ6vZS4&_r=1" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
-                    <img src="/lovable-uploads/a8477a7f-9c2f-4a55-99af-84fd482a5076.png" alt="TikTok" className="w-full h-full object-contain" />
-                  </a>
-                  <a href="#" className="w-8 h-8 hover:scale-110 transition-transform opacity-50" title="Instagram - Coming Soon">
-                    <img src="/lovable-uploads/161d31ff-fdd9-4b31-bdb6-503ad5bf8f20.png" alt="Instagram" className="w-full h-full object-contain" />
-                  </a>
-                  <a href="#" className="w-8 h-8 hover:scale-110 transition-transform opacity-50" title="Facebook - Coming Soon">
-                    <img src="/lovable-uploads/4343b4e2-4b11-4c0b-9f3d-5b271c7c1e8a.png" alt="Facebook" className="w-full h-full object-contain" />
-                  </a>
-                  <a href="https://wa.me/2348166687167" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
-                    <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-full h-full object-contain" />
-                  </a>
-                </div>
-              </div>
+               <div>
+                 <h4 className="font-semibold mb-4 text-sm">Follow Us</h4>
+                 <div className="flex items-center gap-4">
+                   <a href="https://www.youtube.com/@soundzyofficial6917?si=pYlzXM16pSDNONWZ" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
+                     <img src="/assets/icons/youtube.png" alt="YouTube" className="w-full h-full object-contain" />
+                   </a>
+                   <a href="https://www.tiktok.com/@soundzyofficial?_t=ZS-8zOWgJ6vZS4&_r=1" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
+                     <img src="/assets/icons/tiktok.png" alt="TikTok" className="w-full h-full object-contain" />
+                   </a>
+                   <a href="#" className="w-8 h-8 hover:scale-110 transition-transform opacity-50" title="Instagram - Coming Soon">
+                     <img src="/assets/icons/instagram.png" alt="Instagram" className="w-full h-full object-contain" />
+                   </a>
+                   <a href="#" className="w-8 h-8 hover:scale-110 transition-transform opacity-50" title="Facebook - Coming Soon">
+                     <img src="/assets/icons/facebook.png" alt="Facebook" className="w-full h-full object-contain" />
+                   </a>
+                   <a href="https://wa.me/2348166687167" target="_blank" rel="noopener noreferrer" className="w-8 h-8 hover:scale-110 transition-transform">
+                     <img src="/assets/icons/whatsapp-alt.png" alt="WhatsApp" className="w-full h-full object-contain" />
+                   </a>
+                 </div>
+               </div>
             </div>
           </div>
           

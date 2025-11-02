@@ -53,7 +53,7 @@ export default function BlogPost() {
   }
 
   const whatsappUrl = `https://wa.me/2348166687167?text=${encodeURIComponent(`Hi, I read "${post.title}" — I'd like more info / a quote.`)}`;
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://soundzy.lovable.app/blog/${post.slug}`;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://soundzyworld.com.ng/blog/${post.slug}`;
 
   return (
     <main className="min-h-screen">

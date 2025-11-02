@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { ChatWidget } from "@/components/chat/ChatWidget";
-import { WhatsAppCTA } from "@/components/WhatsAppCTA";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useEffect } from "react";
 import Home from "./pages/Home";
@@ -30,7 +30,7 @@ const queryClient = new QueryClient({
   },
 });
 
-// Secret admin slug - do not rely on env vars in Lovable
+// Secret admin slug
 const ADMIN_SLUG = 'secret-admin-2024';
 
 // Scroll to top on route change
@@ -74,7 +74,7 @@ const App = () => (
           
           {/* Global Components */}
           <ChatWidget />
-          <WhatsAppCTA />
+          <FloatingWhatsApp />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

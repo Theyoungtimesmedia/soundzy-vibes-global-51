@@ -197,7 +197,7 @@ export default function Creative() {
                             rel="noopener noreferrer"
                             className="flex items-center gap-2"
                           >
-                            <img src="/lovable-uploads/129af1b2-fe79-4aaf-8b75-413d18cea6ab.png" alt="WhatsApp" className="w-4 h-4" />
+                            <img src="/assets/icons/whatsapp-alt.png" alt="WhatsApp" className="w-4 h-4" />
                             Get Quote
                           </a>
                         </Button>
@@ -250,7 +250,7 @@ export default function Creative() {
             
             <div className="flex justify-center">
               <img 
-                src="/lovable-uploads/3931db77-5e3e-47bc-aebb-1b0fb9113a3f.png" 
+                src="/assets/images/services-banner.png" 
                 alt="Soundzy World Global Services"
                 className="max-w-full h-auto rounded-lg shadow-lg"
               />
