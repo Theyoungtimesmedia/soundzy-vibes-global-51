@@ -145,6 +145,33 @@ export type Database = {
           },
         ]
       }
+      chat_messages: {
+        Row: {
+          created_at: string | null
+          direction: string
+          id: string
+          message: string
+          metadata: Json | null
+          session_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          direction: string
+          id?: string
+          message: string
+          metadata?: Json | null
+          session_id: string
+        }
+        Update: {
+          created_at?: string | null
+          direction?: string
+          id?: string
+          message?: string
+          metadata?: Json | null
+          session_id?: string
+        }
+        Relationships: []
+      }
       chat_sessions: {
         Row: {
           created_at: string
@@ -502,10 +529,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_user_role: {
-        Args: { user_id: string }
-        Returns: string
-      }
+      get_user_role: { Args: { user_id: string }; Returns: string }
       save_chat_message: {
         Args: {
           p_direction: string
