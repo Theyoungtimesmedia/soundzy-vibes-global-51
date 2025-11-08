@@ -231,22 +231,64 @@ export default function DJTapeManager() {
                 />
               </div>
               <div>
-                <Label htmlFor="audio_url">Audio URL</Label>
+                <Label htmlFor="audio_file">Audio File (Upload to Storage)</Label>
                 <Input
-                  id="audio_url"
-                  value={formData.audio_url}
-                  onChange={(e) => setFormData({ ...formData, audio_url: e.target.value })}
-                  placeholder="https://example.com/audio.mp3"
+                  id="audio_file"
+                  type="file"
+                  accept="audio/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const fileName = `${Date.now()}-${file.name}`;
+                      const { error } = await supabase.storage
+                        .from('audio-files')
+                        .upload(fileName, file);
+                      
+                      if (!error) {
+                        const { data } = supabase.storage
+                          .from('audio-files')
+                          .getPublicUrl(fileName);
+                        setFormData({ ...formData, audio_url: data.publicUrl });
+                        toast({ title: "Audio uploaded", description: "File uploaded successfully" });
+                      } else {
+                        toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+                      }
+                    }
+                  }}
                 />
+                {formData.audio_url && (
+                  <p className="text-xs text-muted-foreground mt-1 truncate">{formData.audio_url}</p>
+                )}
               </div>
               <div>
-                <Label htmlFor="cover_image">Cover Image URL</Label>
+                <Label htmlFor="cover_file">Cover Art (Upload to Storage)</Label>
                 <Input
-                  id="cover_image"
-                  value={formData.cover_image}
-                  onChange={(e) => setFormData({ ...formData, cover_image: e.target.value })}
-                  placeholder="https://example.com/cover.jpg"
+                  id="cover_file"
+                  type="file"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const fileName = `${Date.now()}-${file.name}`;
+                      const { error } = await supabase.storage
+                        .from('cover-art')
+                        .upload(fileName, file);
+                      
+                      if (!error) {
+                        const { data } = supabase.storage
+                          .from('cover-art')
+                          .getPublicUrl(fileName);
+                        setFormData({ ...formData, cover_image: data.publicUrl });
+                        toast({ title: "Cover art uploaded", description: "File uploaded successfully" });
+                      } else {
+                        toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+                      }
+                    }
+                  }}
                 />
+                {formData.cover_image && (
+                  <img src={formData.cover_image} alt="Cover preview" className="mt-2 w-32 h-32 object-cover rounded" />
+                )}
               </div>
               <div>
                 <Label htmlFor="duration">Duration (seconds)</Label>

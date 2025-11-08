@@ -1,12 +1,66 @@
+import { useState, useEffect } from 'react';
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { HeroSection } from "@/components/HeroSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Music, Mic, Calendar, Award, Users, Volume2 } from "lucide-react";
+import { supabase } from '@/integrations/supabase/client';
 import heroDj from "@/assets/hero-dj-premium.jpg";
 
+interface DJTape {
+  id: string;
+  title: string;
+  artist_name: string;
+  audio_url?: string;
+  cover_image?: string;
+  genre?: string;
+  status: string;
+}
+
+interface VideoEmbed {
+  id: string;
+  title: string;
+  description: string | null;
+  video_url: string;
+  thumbnail_url: string | null;
+}
+
 export default function DJ() {
+  const [djTapes, setDjTapes] = useState<DJTape[]>([]);
+  const [videos, setVideos] = useState<VideoEmbed[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      // Load DJ Tapes
+      const { data: tapesData } = await supabase
+        .from('dj_tapes')
+        .select('*')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+
+      // Load Videos
+      const { data: videosData } = await supabase
+        .from('video_embeds')
+        .select('*')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+      setDjTapes(tapesData || []);
+      setVideos(videosData || []);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const services = [
     {
       icon: Music,
@@ -134,49 +188,76 @@ export default function DJ() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Showreel Card 1 */}
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="aspect-video">
-                  <iframe
-                    src="https://www.youtube.com/embed/7U0ehmGE1G0"
-                    title="DJ Soundzy Performance Highlights"
-                    className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-semibold mb-2">Latest Performance Highlights</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Watch DJ Soundzy in action at recent events and club performances
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Showreel Card 2 */}
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="aspect-video">
-                  <iframe
-                    src="https://www.youtube.com/embed/myAHW7UuUDE"
-                    title="DJ Soundzy Behind the Decks"
-                    className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-semibold mb-2">Behind the Decks</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Exclusive look at DJ techniques and crowd interaction skills
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            {videos.length > 0 ? (
+              videos.map((video) => (
+                <Card key={video.id} className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="aspect-video">
+                      <iframe
+                        src={video.video_url}
+                        title={video.title}
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-semibold mb-2">{video.title}</h3>
+                      {video.description && (
+                        <p className="text-sm text-muted-foreground">
+                          {video.description}
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <>
+                <Card className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="aspect-video">
+                      <iframe
+                        src="https://www.youtube.com/embed/7U0ehmGE1G0"
+                        title="DJ Soundzy Performance Highlights"
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-semibold mb-2">Latest Performance Highlights</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Watch DJ Soundzy in action at recent events and club performances
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="aspect-video">
+                      <iframe
+                        src="https://www.youtube.com/embed/myAHW7UuUDE"
+                        title="DJ Soundzy Behind the Decks"
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-semibold mb-2">Behind the Decks</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Exclusive look at DJ techniques and crowd interaction skills
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -197,30 +278,50 @@ export default function DJ() {
           </div>
           
           <div className="space-y-8">
-            <AudioPlayer
-              src="/mixtapes/summer-vibes-2024.mp3"
-              title="Summer Vibes Mix 2024"
-              artist="DJ Soundzy (Odogwu Na Vibes)"
-              genre="Afrobeats • Dancehall"
-              downloadUrl="/mixtapes/summer-vibes-2024.mp3"
-              albumArt="/assets/images/dj-album-art.png"
-            />
-            <AudioPlayer
-              src="/mixtapes/club-bangers.mp3"
-              title="Club Bangers Vol. 1"
-              artist="DJ Soundzy (Odogwu Na Vibes)"
-              genre="Hip-Hop • Trap"
-              downloadUrl="/mixtapes/club-bangers.mp3"
-              albumArt="/assets/images/dj-album-art.png"
-            />
-            <AudioPlayer
-              src="/mixtapes/afrobeats-essentials.mp3"
-              title="Afrobeats Essentials"
-              artist="DJ Soundzy (Odogwu Na Vibes)"
-              genre="Afrobeats • Amapiano"
-              downloadUrl="/mixtapes/afrobeats-essentials.mp3"
-              albumArt="/assets/images/dj-album-art.png"
-            />
+            {loading ? (
+              <div className="text-center py-12 text-muted-foreground">
+                Loading mixtapes...
+              </div>
+            ) : djTapes.length > 0 ? (
+              djTapes.map((tape) => (
+                <AudioPlayer
+                  key={tape.id}
+                  src={tape.audio_url || ''}
+                  title={tape.title}
+                  artist={tape.artist_name}
+                  genre={tape.genre}
+                  downloadUrl={tape.audio_url}
+                  albumArt={tape.cover_image || '/assets/images/dj-album-art.png'}
+                />
+              ))
+            ) : (
+              <>
+                <AudioPlayer
+                  src="/mixtapes/summer-vibes-2024.mp3"
+                  title="Summer Vibes Mix 2024"
+                  artist="DJ Soundzy (Odogwu Na Vibes)"
+                  genre="Afrobeats • Dancehall"
+                  downloadUrl="/mixtapes/summer-vibes-2024.mp3"
+                  albumArt="/assets/images/dj-album-art.png"
+                />
+                <AudioPlayer
+                  src="/mixtapes/club-bangers.mp3"
+                  title="Club Bangers Vol. 1"
+                  artist="DJ Soundzy (Odogwu Na Vibes)"
+                  genre="Hip-Hop • Trap"
+                  downloadUrl="/mixtapes/club-bangers.mp3"
+                  albumArt="/assets/images/dj-album-art.png"
+                />
+                <AudioPlayer
+                  src="/mixtapes/afrobeats-essentials.mp3"
+                  title="Afrobeats Essentials"
+                  artist="DJ Soundzy (Odogwu Na Vibes)"
+                  genre="Afrobeats • Amapiano"
+                  downloadUrl="/mixtapes/afrobeats-essentials.mp3"
+                  albumArt="/assets/images/dj-album-art.png"
+                />
+              </>
+            )}
           </div>
 
           {/* Call to Action */}

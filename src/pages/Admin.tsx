@@ -27,6 +27,8 @@ import ProductManager from '@/components/admin/ProductManager';
 import DJTapeManager from '@/components/admin/DJTapeManager';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import ChatManager from '@/components/admin/ChatManager';
+import { MediaManager } from '@/components/admin/MediaManager';
+import { VideoManager } from '@/components/admin/VideoManager';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useToast } from '@/hooks/use-toast';
 
@@ -125,7 +127,7 @@ export default function AdminDashboard() {
       {/* Dashboard Content */}
       <div className="p-6">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10">
             <TabsTrigger value="overview">
               <BarChart3 className="h-4 w-4 mr-2" />
               Overview
@@ -153,6 +155,14 @@ export default function AdminDashboard() {
             <TabsTrigger value="announcements">
               <Megaphone className="h-4 w-4 mr-2" />
               News
+            </TabsTrigger>
+            <TabsTrigger value="media">
+              <Database className="h-4 w-4 mr-2" />
+              Media
+            </TabsTrigger>
+            <TabsTrigger value="videos">
+              <FileText className="h-4 w-4 mr-2" />
+              Videos
             </TabsTrigger>
             <TabsTrigger value="settings">
               <Settings className="h-4 w-4 mr-2" />
@@ -331,6 +341,14 @@ export default function AdminDashboard() {
 
           <TabsContent value="announcements">
             <AnnouncementManager />
+          </TabsContent>
+
+          <TabsContent value="media">
+            <MediaManager />
+          </TabsContent>
+
+          <TabsContent value="videos">
+            <VideoManager />
           </TabsContent>
 
           <TabsContent value="settings">

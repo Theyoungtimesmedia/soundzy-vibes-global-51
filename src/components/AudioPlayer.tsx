@@ -1,323 +1,340 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Download, Share2, Instagram, Facebook, Twitter } from 'lucide-react';
-import { Slider } from '@/components/ui/slider';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, Download, Volume2, VolumeX, Repeat, Shuffle, SkipBack, SkipForward } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AudioPlayerProps {
   src: string;
   title: string;
-  artist?: string;
-  albumArt?: string;
-  downloadUrl?: string;
+  artist: string;
   genre?: string;
+  downloadUrl?: string;
+  albumArt?: string;
+  playlist?: any[];
+  currentIndex?: number;
+  onNext?: () => void;
+  onPrevious?: () => void;
 }
 
-export const AudioPlayer = ({ 
-  src, 
-  title, 
-  artist = "DJ Soundzy",
-  albumArt = "/assets/images/dj-album-art.png",
+export function AudioPlayer({
+  src,
+  title,
+  artist,
+  genre,
   downloadUrl,
-  genre = "Afrobeats"
-}: AudioPlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(1);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
+  albumArt,
+  playlist,
+  currentIndex,
+  onNext,
+  onPrevious
+}: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const waveformRef = useRef<HTMLCanvasElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(70);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+    const audio = audioRef.current;
+    if (!audio) return;
 
-  useEffect(() => {
-    if (waveformRef.current) {
-      const canvas = waveformRef.current;
-      // SAFARI FIX: Safe canvas context handling with null check
-      const ctx = canvas.getContext('2d');
-      if (!ctx) {
-        console.warn('Canvas context not available - waveform disabled for Safari compatibility');
-        return; // Gracefully degrade - audio will still work
-      }
-      let animationId: number;
-      let isMounted = true; // SAFARI FIX: Prevent updates after unmount
-
-      const drawWaveform = () => {
-        if (!isMounted || !ctx) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Background gradient
-        const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        bgGradient.addColorStop(0, 'hsla(45, 100%, 60%, 0.05)');
-        bgGradient.addColorStop(0.5, 'hsla(38, 100%, 55%, 0.08)');
-        bgGradient.addColorStop(1, 'hsla(45, 100%, 60%, 0.05)');
-        ctx.fillStyle = bgGradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Animated waveform
-        ctx.beginPath();
-        const strokeGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        strokeGradient.addColorStop(0, 'hsl(45, 100%, 60%)');
-        strokeGradient.addColorStop(0.5, 'hsl(38, 100%, 55%)');
-        strokeGradient.addColorStop(1, 'hsl(42, 95%, 50%)');
-        ctx.strokeStyle = strokeGradient;
-        ctx.lineWidth = 4;
-        ctx.shadowBlur = isPlaying ? 15 : 5;
-        ctx.shadowColor = 'hsl(45, 100%, 60%)';
-        
-        const time = isPlaying ? Date.now() * 0.003 : 0;
-        for (let i = 0; i < canvas.width; i += 2) {
-          const amplitude = isPlaying 
-            ? Math.sin(i * 0.015 + time) * 35 + Math.sin(i * 0.03 + time * 1.5) * 20
-            : Math.sin(i * 0.02) * 15;
-          const y = canvas.height / 2 + amplitude;
-          
-          if (i === 0) {
-            ctx.moveTo(i, y);
-          } else {
-            ctx.lineTo(i, y);
-          }
-        }
-        
-        ctx.stroke();
-        animationId = requestAnimationFrame(drawWaveform);
-      };
-
-      drawWaveform();
-      // SAFARI FIX: Proper cleanup to prevent memory leaks
-      return () => {
-        isMounted = false;
-        if (animationId) {
-          cancelAnimationFrame(animationId);
-        }
-      };
-    }
-  }, [isPlaying]);
-
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+    const handleEnded = () => {
+      if (isRepeat) {
+        audio.currentTime = 0;
+        audio.play();
+      } else if (onNext) {
+        onNext();
       } else {
-        audioRef.current.play();
+        setIsPlaying(false);
       }
-      setIsPlaying(!isPlaying);
+    };
+
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime);
+      audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, [isRepeat, onNext]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume / 100;
+    }
+  }, [volume, isMuted]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      
+      switch (e.key) {
+        case ' ':
+          e.preventDefault();
+          togglePlayPause();
+          break;
+        case 'ArrowRight':
+          if (onNext) onNext();
+          break;
+        case 'ArrowLeft':
+          if (onPrevious) onPrevious();
+          break;
+        case 'ArrowUp':
+          setVolume(v => Math.min(100, v + 10));
+          break;
+        case 'ArrowDown':
+          setVolume(v => Math.max(0, v - 10));
+          break;
+        case 'm':
+          setIsMuted(m => !m);
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [onNext, onPrevious]);
+
+  const togglePlayPause = () => {
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleSeek = (value: number[]) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = value[0];
+      setCurrentTime(value[0]);
     }
   };
 
   const formatTime = (time: number) => {
+    if (isNaN(time)) return '0:00';
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // SAFARI FIX: Safe window.open with fallback for popup blockers
-  const safeWindowOpen = (url: string) => {
-    try {
-      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        // Popup was blocked - fallback to direct navigation
-        window.location.href = url;
-      }
-    } catch (error) {
-      console.warn('Popup blocked, using fallback navigation:', error);
-      window.location.href = url;
-    }
-  };
-
-  const handleShare = (platform: string) => {
-    // SAFARI FIX: Guard for Safari compatibility
-    if (typeof window === 'undefined') return;
-    
-    const text = `Check out "${title}" by ${artist} 🎵`;
-    const url = window.location.href;
-    
-    const shareUrls: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      instagram: `https://www.instagram.com/`,
-    };
-    
-    if (shareUrls[platform]) {
-      safeWindowOpen(shareUrls[platform]);
-    }
-  };
-
   return (
-    <div className="bg-gradient-to-br from-card via-card to-card/90 rounded-2xl overflow-hidden shadow-glow border border-primary/30">
-      <div className="grid md:grid-cols-[300px_1fr] gap-6 p-6">
-        {/* Album Art */}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="relative w-full aspect-square rounded-xl overflow-hidden shadow-accent border-2 border-primary/20">
-            <img 
-              src={albumArt} 
-              alt={`${title} Album Art`}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
-          
-          {/* Genre Badge */}
-          <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary">
-            {genre}
-          </Badge>
-        </div>
-
-        {/* Player Controls */}
-        <div className="space-y-6">
-          {/* Track Info */}
-          <div className="space-y-2">
-            <h3 className="font-bold text-2xl text-foreground leading-tight">{title}</h3>
-            <p className="text-lg text-primary font-semibold">{artist}</p>
-            <p className="text-sm text-muted-foreground">
-              {audioRef.current && duration > 0 
-                ? `${formatTime(audioRef.current.currentTime)} / ${formatTime(duration)}` 
-                : '0:00 / 0:00'}
-            </p>
-          </div>
-
-          {/* Waveform Visualization */}
-          <div className="relative h-24 bg-gradient-to-r from-primary/5 via-accent/8 to-primary/5 rounded-xl overflow-hidden border border-primary/20">
-            <canvas
-              ref={waveformRef}
-              className="w-full h-full"
-              width={800}
-              height={96}
-            />
-            {/* Progress overlay */}
-            <div 
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary/30 to-accent/30 transition-all duration-100"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-
-          {/* Playback Controls */}
-          <div className="flex items-center gap-4">
-            <Button
-              size="icon"
-              onClick={togglePlay}
-              className="h-16 w-16 rounded-full bg-gradient-primary hover:shadow-glow transition-all duration-300 flex-shrink-0"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-3xl shadow-brand"
+    >
+      {/* Blurred background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center blur-3xl opacity-30"
+        style={{ backgroundImage: albumArt ? `url(${albumArt})` : 'none' }}
+      />
+      
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-card/95 via-card/90 to-card/95 backdrop-blur-xl" />
+      
+      {/* Content */}
+      <div className="relative p-8 md:p-10">
+        <div className="flex flex-col md:flex-row gap-8 items-center">
+          {/* Album Art */}
+          {albumArt && (
+            <motion.div 
+              className="relative group"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              {isPlaying ? <Pause className="h-7 w-7" /> : <Play className="h-7 w-7 ml-1" />}
-            </Button>
-            
-            <div className="flex-1">
+              <div className="w-48 h-48 rounded-2xl overflow-hidden shadow-glow ring-2 ring-primary/20">
+                <img 
+                  src={albumArt} 
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Animated play indicator */}
+              <AnimatePresence>
+                {isPlaying && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0 }}
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-2xl"
+                  >
+                    <div className="flex gap-1">
+                      {[...Array(4)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="w-1 bg-primary rounded-full"
+                          animate={{
+                            height: ["20px", "40px", "20px"],
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: i * 0.1,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+
+          {/* Player Controls */}
+          <div className="flex-1 w-full space-y-6">
+            {/* Track Info */}
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">{title}</h3>
+              <p className="text-muted-foreground text-lg mb-1">{artist}</p>
+              {genre && (
+                <p className="text-sm text-muted-foreground/70">{genre}</p>
+              )}
+            </div>
+
+            {/* Waveform Progress Bar */}
+            <div className="space-y-2">
               <Slider
-                value={[progress]}
-                max={100}
+                value={[currentTime]}
+                max={duration || 100}
                 step={0.1}
-                onValueChange={(value) => {
-                  if (audioRef.current && duration > 0) {
-                    audioRef.current.currentTime = (value[0] / 100) * duration;
-                  }
-                }}
+                onValueChange={handleSeek}
                 className="cursor-pointer"
               />
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>{formatTime(currentTime)}</span>
+                <span>{formatTime(duration)}</span>
+              </div>
             </div>
 
-            {/* Volume Control */}
-            <div className="flex items-center gap-2">
+            {/* Control Buttons */}
+            <div className="flex items-center justify-center gap-4">
               <Button
                 variant="ghost"
-                size="icon"
-                onClick={() => setVolume(volume === 0 ? 1 : 0)}
-                className="hover:bg-primary/10"
-              >
-                {volume === 0 ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-              </Button>
-              <Slider
-                value={[volume * 100]}
-                max={100}
-                step={1}
-                onValueChange={(value) => setVolume(value[0] / 100)}
-                className="w-24"
-              />
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3">
-            {downloadUrl && (
-              <Button 
-                variant="outline" 
                 size="sm"
-                className="border-primary/30 hover:bg-primary/10"
-                asChild
+                onClick={() => setIsShuffle(!isShuffle)}
+                className={isShuffle ? 'text-primary' : 'text-muted-foreground'}
               >
-                <a href={downloadUrl} download>
-                  <Download className="h-4 w-4 mr-2" />
-                  Download Mix
-                </a>
+                <Shuffle className="h-4 w-4" />
               </Button>
-            )}
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-primary/30 hover:bg-primary/10"
-              onClick={() => handleShare('twitter')}
-            >
-              <Twitter className="h-4 w-4 mr-2" />
-              Share
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-primary/30 hover:bg-primary/10"
-              onClick={() => handleShare('facebook')}
-            >
-              <Facebook className="h-4 w-4 mr-2" />
-              Share
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-primary/30 hover:bg-primary/10"
-              onClick={() => handleShare('instagram')}
-            >
-              <Instagram className="h-4 w-4 mr-2" />
-              Share
-            </Button>
-            
-            <Button 
-              variant="default" 
-              size="sm"
-              className="bg-gradient-primary hover:shadow-accent"
-              asChild
-            >
-              <a 
-                href="https://wa.me/2348166687167?text=Hi! I'd love to book DJ Soundzy for my event!" 
-                target="_blank"
-                rel="noopener noreferrer"
+
+              {onPrevious && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onPrevious}
+                  className="hover:text-primary"
+                >
+                  <SkipBack className="h-5 w-5" />
+                </Button>
+              )}
+
+              <Button
+                size="icon"
+                onClick={togglePlayPause}
+                className="h-16 w-16 rounded-full bg-gradient-primary hover:shadow-accent transition-all duration-300 hover:scale-110"
               >
-                Book DJ Soundzy
-              </a>
-            </Button>
+                <AnimatePresence mode="wait">
+                  {isPlaying ? (
+                    <motion.div
+                      key="pause"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <Pause className="h-6 w-6 text-black" fill="currentColor" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="play"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <Play className="h-6 w-6 text-black ml-1" fill="currentColor" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Button>
+
+              {onNext && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onNext}
+                  className="hover:text-primary"
+                >
+                  <SkipForward className="h-5 w-5" />
+                </Button>
+              )}
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsRepeat(!isRepeat)}
+                className={isRepeat ? 'text-primary' : 'text-muted-foreground'}
+              >
+                <Repeat className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Volume and Download */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 flex-1 max-w-xs">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="shrink-0"
+                >
+                  {isMuted || volume === 0 ? (
+                    <VolumeX className="h-5 w-5" />
+                  ) : (
+                    <Volume2 className="h-5 w-5" />
+                  )}
+                </Button>
+                <Slider
+                  value={[isMuted ? 0 : volume]}
+                  max={100}
+                  step={1}
+                  onValueChange={(v) => {
+                    setVolume(v[0]);
+                    setIsMuted(false);
+                  }}
+                  className="flex-1"
+                />
+              </div>
+
+              {downloadUrl && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="gap-2"
+                >
+                  <a href={downloadUrl} download>
+                    <Download className="h-4 w-4" />
+                    Download
+                  </a>
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      
-      <audio
-        ref={audioRef}
-        src={src}
-        onTimeUpdate={() => {
-          if (audioRef.current) {
-            setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
-          }
-        }}
-        onLoadedMetadata={() => {
-          if (audioRef.current) {
-            setDuration(audioRef.current.duration);
-          }
-        }}
-        onEnded={() => setIsPlaying(false)}
-      />
-    </div>
+
+      <audio ref={audioRef} src={src} preload="metadata" />
+    </motion.div>
   );
-};
+}
