@@ -97,12 +97,29 @@ export function VideoManager() {
     return embedUrl;
   };
 
+  const generateAILayout = async (videoData: any) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-ui-layout', {
+        body: { 
+          contentType: 'video',
+          contentData: videoData
+        }
+      });
+
+      if (error) throw error;
+      return data.uiVariant;
+    } catch (error) {
+      console.error('Error generating AI layout:', error);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const embedUrl = parseVideoUrl(formData.video_url, formData.video_type);
 
-    const videoData = {
+    const videoData: any = {
       title: formData.title,
       description: formData.description || null,
       video_type: formData.video_type,
@@ -112,6 +129,12 @@ export function VideoManager() {
     };
 
     try {
+      // Generate AI layout
+      const aiLayout = await generateAILayout(videoData);
+      if (aiLayout) {
+        videoData.ui_variant = aiLayout;
+      }
+
       if (editingVideo) {
         const { error } = await supabase
           .from('video_embeds')
@@ -122,7 +145,7 @@ export function VideoManager() {
 
         toast({
           title: "Video updated",
-          description: "The video has been updated successfully",
+          description: "Video updated with AI-optimized layout",
         });
       } else {
         const { error } = await supabase
@@ -133,7 +156,7 @@ export function VideoManager() {
 
         toast({
           title: "Video added",
-          description: "The video has been added successfully",
+          description: "Video added with AI-optimized layout",
         });
       }
 

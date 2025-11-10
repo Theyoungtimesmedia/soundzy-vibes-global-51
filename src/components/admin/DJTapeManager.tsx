@@ -74,13 +74,36 @@ export default function DJTapeManager() {
     }
   };
 
+  const generateAILayout = async (tapeData: any) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-ui-layout', {
+        body: { 
+          contentType: 'dj_tape',
+          contentData: tapeData
+        }
+      });
+
+      if (error) throw error;
+      return data.uiVariant;
+    } catch (error) {
+      console.error('Error generating AI layout:', error);
+      return null;
+    }
+  };
+
   const handleSave = async () => {
     try {
       const tags = formData.tags ? formData.tags.split(',').map(tag => tag.trim()) : [];
-      const tapeData = {
+      const tapeData: any = {
         ...formData,
         tags
       };
+
+      // Generate AI layout
+      const aiLayout = await generateAILayout(tapeData);
+      if (aiLayout) {
+        tapeData.ui_variant = aiLayout;
+      }
 
       if (editingTape) {
         const { error } = await supabase
@@ -88,13 +111,13 @@ export default function DJTapeManager() {
           .update(tapeData)
           .eq('id', editingTape.id);
         if (error) throw error;
-        toast({ title: "Success", description: "Tape updated successfully" });
+        toast({ title: "Success", description: "Tape updated with AI-optimized layout" });
       } else {
         const { error } = await supabase
           .from('dj_tapes')
           .insert([tapeData]);
         if (error) throw error;
-        toast({ title: "Success", description: "Tape created successfully" });
+        toast({ title: "Success", description: "Tape created with AI-optimized layout" });
       }
       
       setIsDialogOpen(false);
