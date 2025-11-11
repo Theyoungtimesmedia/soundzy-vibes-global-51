@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GoogleBusinessCTA } from "@/components/GoogleBusinessCTA";
-import { AnnouncementBanner } from "@/components/AnnouncementBanner";
+import { MessageCircle, ArrowRight, Award, Sparkles, Headphones, Palette, ShoppingBag } from "lucide-react";
 import heroMain from "@/assets/hero-main.jpg";
 import officeEquipment from "@/assets/office-equipment.jpg";
 import officeInterior from "@/assets/office-interior.jpg";
@@ -12,9 +12,6 @@ import teamMember from "@/assets/team-member.jpg";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Announcement Banner */}
-      <AnnouncementBanner />
-      
       {/* Hero Section */}
       <HeroSection 
         backgroundImage={heroMain}

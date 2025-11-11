@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Music, Mic, Calendar, Award, Users, Volume2 } from "lucide-react";
 import { supabase } from '@/integrations/supabase/client';
-import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import heroDj from "@/assets/hero-dj-premium.jpg";
 
 interface DJTape {
@@ -24,7 +23,6 @@ interface VideoEmbed {
   title: string;
   description: string | null;
   video_url: string;
-  video_type: string;
   thumbnail_url: string | null;
 }
 
@@ -46,12 +44,13 @@ export default function DJ() {
         .eq('status', 'active')
         .order('created_at', { ascending: false });
 
-      // Load Videos (including local uploads)
+      // Load Videos
       const { data: videosData } = await supabase
         .from('video_embeds')
         .select('*')
         .eq('status', 'active')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(4);
 
       setDjTapes(tapesData || []);
       setVideos(videosData || []);
@@ -92,9 +91,6 @@ export default function DJ() {
 
   return (
     <main className="min-h-screen">
-      {/* Announcement Banner */}
-      <AnnouncementBanner />
-      
       {/* Hero Section */}
       <HeroSection 
         backgroundImage={heroDj}
@@ -192,8 +188,8 @@ export default function DJ() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {videos.filter(v => v.video_type !== 'upload').length > 0 ? (
-              videos.filter(v => v.video_type !== 'upload').map((video) => (
+            {videos.length > 0 ? (
+              videos.map((video) => (
                 <Card key={video.id} className="overflow-hidden">
                   <CardContent className="p-0">
                     <div className="aspect-video">
@@ -265,47 +261,6 @@ export default function DJ() {
           </div>
         </div>
       </section>
-
-      {/* Local Videos Section */}
-      {videos.filter(v => v.video_type === 'upload').length > 0 && (
-        <section className="py-16 px-4 bg-muted/30">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-3d-gold uppercase">Local Videos</h2>
-              <p className="text-lg text-muted-foreground">
-                Exclusive content from DJ Soundzy
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {videos.filter(v => v.video_type === 'upload').map((video) => (
-                <Card key={video.id} className="overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="aspect-video">
-                      <video
-                        controls
-                        poster={video.thumbnail_url || undefined}
-                        className="w-full h-full"
-                      >
-                        <source src={video.video_url} />
-                        Your browser does not support video playback.
-                      </video>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-semibold mb-2">{video.title}</h3>
-                      {video.description && (
-                        <p className="text-sm text-muted-foreground">
-                          {video.description}
-                        </p>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* DJ Mixtapes Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-background via-card/50 to-background">
