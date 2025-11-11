@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Palette, Globe, Megaphone, Film, Printer, Camera } from "lucide-react";
 import { useServices } from '@/hooks/useServices';
 import { Link } from 'react-router-dom';
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import heroCreative from "@/assets/hero-creative-premium.jpg";
 
 // Portfolio images
@@ -75,6 +76,9 @@ export default function Creative() {
 
   return (
     <main className="min-h-screen">
+      {/* Announcement Banner */}
+      <AnnouncementBanner />
+      
       {/* Hero Section */}
       <HeroSection
         backgroundImage={heroCreative}
@@ -288,6 +292,48 @@ export default function Creative() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Social Media Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Follow Us</h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Stay connected with Soundzy World Global on social media
+          </p>
+          <div className="flex justify-center gap-6 flex-wrap">
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://youtube.com/@soundzyworldglobal" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/icons/youtube.png" alt="YouTube" className="w-6 h-6 mr-2" />
+                YouTube
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://tiktok.com/@soundzyworldglobal" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/icons/tiktok.png" alt="TikTok" className="w-6 h-6 mr-2" />
+                TikTok
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://instagram.com/soundzyworldglobal" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/icons/instagram.png" alt="Instagram" className="w-6 h-6 mr-2" />
+                Instagram
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://facebook.com/soundzyworldglobal" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/icons/facebook.png" alt="Facebook" className="w-6 h-6 mr-2" />
+                Facebook
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://wa.me/2348166687167" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/icons/whatsapp.png" alt="WhatsApp" className="w-6 h-6 mr-2" />
+                WhatsApp
+              </a>
+            </Button>
           </div>
         </div>
       </section>

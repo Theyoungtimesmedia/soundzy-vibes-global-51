@@ -29,6 +29,7 @@ import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import ChatManager from '@/components/admin/ChatManager';
 import { MediaManager } from '@/components/admin/MediaManager';
 import { VideoManager } from '@/components/admin/VideoManager';
+import WebsiteImagesManager from '@/components/admin/WebsiteImagesManager';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useToast } from '@/hooks/use-toast';
 
@@ -40,11 +41,72 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Accessibility override: Always show Admin dashboard without auth gating
+  // Fetch auth state and check admin role
   useEffect(() => {
-    setUserRole('admin');
-    setLoading(false);
-  }, []);
+    const initAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          toast({
+            title: "Authentication required",
+            description: "Please log in to access the admin dashboard",
+            variant: "destructive"
+          });
+          navigate('/auth');
+          return;
+        }
+
+        setUser(session.user);
+
+        // Check if user has admin role
+        const { data: roleData, error: roleError } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .eq('role', 'admin')
+          .single();
+
+        if (roleError || !roleData) {
+          // Check if there are any admins at all
+          const { data: anyAdmin } = await supabase
+            .from('user_roles')
+            .select('id')
+            .eq('role', 'admin')
+            .limit(1);
+
+          if (!anyAdmin || anyAdmin.length === 0) {
+            // No admins exist - show bootstrap option
+            setUserRole('needs-bootstrap');
+          } else {
+            // Admins exist but user is not one
+            setUserRole('unauthorized');
+          }
+        } else {
+          setUserRole('admin');
+        }
+      } catch (error) {
+        console.error('Auth error:', error);
+        toast({
+          title: "Error",
+          description: "Failed to verify authentication",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        navigate('/auth');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, toast]);
 
   const createQuickAction = async (type: string) => {
     try {
@@ -92,6 +154,35 @@ export default function AdminDashboard() {
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate('/');
+  };
+
+  const handleBootstrapAdmin = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const { error } = await supabase.functions.invoke('bootstrap-admin', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success!",
+        description: "You now have admin access. Refreshing...",
+      });
+
+      // Reload to update role
+      window.location.reload();
+    } catch (error: any) {
+      toast({
+        title: "Bootstrap failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
   };
 
   if (loading) {
@@ -155,6 +246,10 @@ export default function AdminDashboard() {
             <TabsTrigger value="announcements">
               <Megaphone className="h-4 w-4 mr-2" />
               News
+            </TabsTrigger>
+            <TabsTrigger value="site-images">
+              <Database className="h-4 w-4 mr-2" />
+              Site Images
             </TabsTrigger>
             <TabsTrigger value="media">
               <Database className="h-4 w-4 mr-2" />
