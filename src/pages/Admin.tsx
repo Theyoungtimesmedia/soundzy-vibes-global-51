@@ -106,18 +106,18 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b bg-card">
-        <div className="flex h-16 items-center px-6">
-          <div className="flex items-center gap-4">
-            <Shield className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold">SWG Admin Console</h1>
-            <Badge variant="secondary">{userRole}</Badge>
+        <div className="flex flex-col sm:flex-row h-auto sm:h-16 items-start sm:items-center px-4 sm:px-6 py-3 sm:py-0 gap-3 sm:gap-0">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+            <h1 className="text-lg sm:text-xl font-bold">SWG Admin Console</h1>
+            <Badge variant="secondary" className="text-xs">{userRole}</Badge>
           </div>
           
-          <div className="ml-auto flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
+          <div className="sm:ml-auto flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <span className="text-xs sm:text-sm text-muted-foreground truncate max-w-[150px] sm:max-w-none">
               {user?.email}
             </span>
-            <Button variant="outline" onClick={handleSignOut}>
+            <Button variant="outline" size="sm" onClick={handleSignOut}>
               Sign Out
             </Button>
           </div>
@@ -125,50 +125,52 @@ export default function AdminDashboard() {
       </div>
 
       {/* Dashboard Content */}
-      <div className="p-6">
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10">
-            <TabsTrigger value="overview">
-              <BarChart3 className="h-4 w-4 mr-2" />
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="chat">
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Chat
-            </TabsTrigger>
-            <TabsTrigger value="leads">
-              <Users className="h-4 w-4 mr-2" />
-              Leads
-            </TabsTrigger>
-            <TabsTrigger value="products">
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Products
-            </TabsTrigger>
-            <TabsTrigger value="blog">
-              <FileText className="h-4 w-4 mr-2" />
-              Blog
-            </TabsTrigger>
-            <TabsTrigger value="dj-tapes">
-              <Music className="h-4 w-4 mr-2" />
-              DJ Tapes
-            </TabsTrigger>
-            <TabsTrigger value="announcements">
-              <Megaphone className="h-4 w-4 mr-2" />
-              News
-            </TabsTrigger>
-            <TabsTrigger value="media">
-              <Database className="h-4 w-4 mr-2" />
-              Media
-            </TabsTrigger>
-            <TabsTrigger value="videos">
-              <FileText className="h-4 w-4 mr-2" />
-              Videos
-            </TabsTrigger>
-            <TabsTrigger value="settings">
-              <Settings className="h-4 w-4 mr-2" />
-              Settings
-            </TabsTrigger>
-          </TabsList>
+      <div className="p-3 sm:p-6">
+        <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
+          <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0">
+            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-1">
+              <TabsTrigger value="overview" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Overview</span>
+              </TabsTrigger>
+              <TabsTrigger value="chat" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Chat</span>
+              </TabsTrigger>
+              <TabsTrigger value="leads" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Users className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Leads</span>
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Products</span>
+              </TabsTrigger>
+              <TabsTrigger value="blog" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Blog</span>
+              </TabsTrigger>
+              <TabsTrigger value="dj-tapes" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Music className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">DJ Tapes</span>
+              </TabsTrigger>
+              <TabsTrigger value="announcements" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Megaphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">News</span>
+              </TabsTrigger>
+              <TabsTrigger value="media" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Media</span>
+              </TabsTrigger>
+              <TabsTrigger value="videos" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Videos</span>
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Settings</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="overview" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

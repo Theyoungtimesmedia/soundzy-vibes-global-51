@@ -351,30 +351,75 @@ export function VideoManager() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="video_url">Video URL</Label>
-                <Input
-                  id="video_url"
-                  value={formData.video_url}
-                  onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                  placeholder={
-                    formData.video_type === 'youtube' ? 'https://www.youtube.com/watch?v=...' :
-                    formData.video_type === 'facebook' ? 'https://www.facebook.com/watch/?v=...' :
-                    formData.video_type === 'tiktok' ? 'https://www.tiktok.com/@user/video/...' :
-                    'Paste Supabase storage URL or upload via Media Library'
-                  }
-                  required
-                />
-              </div>
+              {formData.video_type === 'upload' ? (
+                <div className="space-y-2">
+                  <Label htmlFor="video_file">Upload Video File</Label>
+                  <Input
+                    id="video_file"
+                    type="file"
+                    accept="video/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        if (file.size > 100 * 1024 * 1024) {
+                          toast({ title: "File too large", description: "Max 100MB", variant: "destructive" });
+                          return;
+                        }
+                        const fileName = `${Date.now()}-${file.name}`;
+                        const { error } = await supabase.storage.from('video-files').upload(fileName, file);
+                        if (!error) {
+                          const { data } = supabase.storage.from('video-files').getPublicUrl(fileName);
+                          setFormData({ ...formData, video_url: data.publicUrl });
+                          toast({ title: "Video uploaded successfully" });
+                        } else {
+                          toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+                        }
+                      }
+                    }}
+                  />
+                  {formData.video_url && <p className="text-xs text-muted-foreground truncate">{formData.video_url}</p>}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label htmlFor="video_url">Video URL</Label>
+                  <Input
+                    id="video_url"
+                    value={formData.video_url}
+                    onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                    placeholder={
+                      formData.video_type === 'youtube' ? 'https://www.youtube.com/watch?v=...' :
+                      formData.video_type === 'facebook' ? 'https://www.facebook.com/watch/?v=...' :
+                      'https://www.tiktok.com/@user/video/...'
+                    }
+                    required
+                  />
+                </div>
+              )}
 
               <div className="space-y-2">
-                <Label htmlFor="thumbnail_url">Thumbnail URL (Optional)</Label>
+                <Label htmlFor="thumbnail_file">Thumbnail Image</Label>
                 <Input
-                  id="thumbnail_url"
-                  value={formData.thumbnail_url}
-                  onChange={(e) => setFormData({ ...formData, thumbnail_url: e.target.value })}
-                  placeholder="https://..."
+                  id="thumbnail_file"
+                  type="file"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const fileName = `thumb-${Date.now()}-${file.name}`;
+                      const { error } = await supabase.storage.from('site-images').upload(fileName, file);
+                      if (!error) {
+                        const { data } = supabase.storage.from('site-images').getPublicUrl(fileName);
+                        setFormData({ ...formData, thumbnail_url: data.publicUrl });
+                        toast({ title: "Thumbnail uploaded" });
+                      } else {
+                        toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+                      }
+                    }
+                  }}
                 />
+                {formData.thumbnail_url && (
+                  <img src={formData.thumbnail_url} alt="Preview" className="mt-2 w-32 h-20 object-cover rounded" />
+                )}
               </div>
             </div>
             <DialogFooter>

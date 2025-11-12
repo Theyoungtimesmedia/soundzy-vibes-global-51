@@ -259,6 +259,43 @@ export default function Creative() {
         </div>
       </section>
 
+      {/* Social Media Section */}
+      <section className="py-16 px-4 bg-primary/10">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-4">Follow Our Creative Journey</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Stay connected with us on social media for the latest projects, behind-the-scenes content, and creative inspiration
+          </p>
+          <div className="flex justify-center gap-6 flex-wrap">
+            <a href="https://www.youtube.com/@soundzyworld" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="w-16 h-16 rounded-full bg-card hover:bg-primary transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110">
+                <img src="/assets/icons/youtube.png" alt="YouTube" className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              </div>
+            </a>
+            <a href="https://www.tiktok.com/@soundzyworld" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="w-16 h-16 rounded-full bg-card hover:bg-primary transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110">
+                <img src="/assets/icons/tiktok.png" alt="TikTok" className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              </div>
+            </a>
+            <a href="https://www.instagram.com/soundzyworld" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="w-16 h-16 rounded-full bg-card hover:bg-primary transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110">
+                <img src="/assets/icons/instagram.png" alt="Instagram" className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              </div>
+            </a>
+            <a href="https://www.facebook.com/soundzyworld" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="w-16 h-16 rounded-full bg-card hover:bg-primary transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110">
+                <img src="/assets/icons/facebook.png" alt="Facebook" className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              </div>
+            </a>
+            <a href="https://wa.me/2348166687167" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="w-16 h-16 rounded-full bg-card hover:bg-primary transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110">
+                <img src="/assets/icons/whatsapp-alt.png" alt="WhatsApp" className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Portfolio Gallery */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">

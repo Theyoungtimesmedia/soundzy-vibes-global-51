@@ -220,11 +220,11 @@ export default function DJTapeManager() {
               Add Tape
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingTape ? 'Edit Tape' : 'Add New Tape'}</DialogTitle>
             </DialogHeader>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="title">Title</Label>
                 <Input
@@ -258,11 +258,24 @@ export default function DJTapeManager() {
                 <Input
                   id="audio_file"
                   type="file"
-                  accept="audio/*"
+                  accept="audio/*,audio/mpeg,audio/mp3,audio/wav,audio/ogg"
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (file) {
+                      // Validate file type
+                      if (!file.type.startsWith('audio/')) {
+                        toast({ title: "Invalid file", description: "Please upload an audio file", variant: "destructive" });
+                        return;
+                      }
+                      // Validate file size (max 50MB)
+                      if (file.size > 50 * 1024 * 1024) {
+                        toast({ title: "File too large", description: "Max file size is 50MB", variant: "destructive" });
+                        return;
+                      }
+                      
                       const fileName = `${Date.now()}-${file.name}`;
+                      toast({ title: "Uploading...", description: "Please wait" });
+                      
                       const { error } = await supabase.storage
                         .from('audio-files')
                         .upload(fileName, file);
@@ -288,11 +301,24 @@ export default function DJTapeManager() {
                 <Input
                   id="cover_file"
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (file) {
+                      // Validate file type
+                      if (!file.type.startsWith('image/')) {
+                        toast({ title: "Invalid file", description: "Please upload an image file", variant: "destructive" });
+                        return;
+                      }
+                      // Validate file size (max 5MB)
+                      if (file.size > 5 * 1024 * 1024) {
+                        toast({ title: "File too large", description: "Max file size is 5MB", variant: "destructive" });
+                        return;
+                      }
+                      
                       const fileName = `${Date.now()}-${file.name}`;
+                      toast({ title: "Uploading...", description: "Please wait" });
+                      
                       const { error } = await supabase.storage
                         .from('cover-art')
                         .upload(fileName, file);
