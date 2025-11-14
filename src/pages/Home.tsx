@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GoogleBusinessCTA } from "@/components/GoogleBusinessCTA";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 import { MessageCircle, Award, Sparkles, Headphones, Palette, ShoppingBag } from "lucide-react";
 import heroMain from "@/assets/hero-main.jpg";
 import officeEquipment from "@/assets/office-equipment.jpg";
@@ -12,8 +13,13 @@ import teamMember from "@/assets/team-member.jpg";
 export default function Home() {
   return (
     <main className="min-h-screen">
+      {/* Announcements */}
+      <div className="container mx-auto px-4 pt-6">
+        <AnnouncementBanner />
+      </div>
+      
       {/* Hero Section */}
-      <HeroSection 
+      <HeroSection
         backgroundImage={heroMain}
         preHeadline="Welcome to"
         headline="SOUNDZY WORLD GLOBAL"
