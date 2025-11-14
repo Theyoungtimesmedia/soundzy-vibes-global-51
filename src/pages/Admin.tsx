@@ -29,6 +29,7 @@ import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import ChatManager from '@/components/admin/ChatManager';
 import { MediaManager } from '@/components/admin/MediaManager';
 import { VideoManager } from '@/components/admin/VideoManager';
+import WebsiteImagesManager from '@/components/admin/WebsiteImagesManager';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useToast } from '@/hooks/use-toast';
 
@@ -128,7 +129,7 @@ export default function AdminDashboard() {
       <div className="p-3 sm:p-6">
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
           <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0">
-            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-1">
+            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-11 gap-1">
               <TabsTrigger value="overview" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
                 <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Overview</span>
@@ -156,6 +157,10 @@ export default function AdminDashboard() {
               <TabsTrigger value="announcements" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
                 <Megaphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">News</span>
+              </TabsTrigger>
+              <TabsTrigger value="site-images" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+                <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Site Images</span>
               </TabsTrigger>
               <TabsTrigger value="media" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
                 <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
@@ -343,6 +348,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="announcements">
             <AnnouncementManager />
+          </TabsContent>
+
+          <TabsContent value="site-images">
+            <WebsiteImagesManager />
           </TabsContent>
 
           <TabsContent value="media">

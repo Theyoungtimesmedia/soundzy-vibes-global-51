@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { UserProfile } from "@/components/UserProfile";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function Profile() {
@@ -40,5 +41,12 @@ export default function Profile() {
     return null;
   }
 
-  return <UserProfile user={user} onSignOut={handleSignOut} />;
+  return (
+    <div className="min-h-screen">
+      <div className="container mx-auto px-4 pt-6">
+        <AnnouncementBanner />
+      </div>
+      <UserProfile user={user} onSignOut={handleSignOut} />
+    </div>
+  );
 }
