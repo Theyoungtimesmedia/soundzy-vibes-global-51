@@ -3,20 +3,64 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GoogleBusinessCTA } from "@/components/GoogleBusinessCTA";
-import AnnouncementBanner from "@/components/AnnouncementBanner";
 import { MessageCircle, Award, Sparkles, Headphones, Palette, ShoppingBag } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import heroMain from "@/assets/hero-main.jpg";
 import officeEquipment from "@/assets/office-equipment.jpg";
 import officeInterior from "@/assets/office-interior.jpg";
 import teamMember from "@/assets/team-member.jpg";
 
+interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  media_url?: string;
+  media_type?: string;
+  pinned?: boolean;
+  created_at: string;
+}
+
 export default function Home() {
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+
+  useEffect(() => {
+    loadAnnouncements();
+    
+    const channel = supabase
+      .channel('announcements-home')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'announcements',
+        filter: 'status=eq.published',
+      }, () => {
+        loadAnnouncements();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const loadAnnouncements = async () => {
+    const { data } = await supabase
+      .from('announcements')
+      .select('*')
+      .eq('status', 'published')
+      .or('expires_at.is.null,expires_at.gt.now()')
+      .order('pinned', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    if (data) {
+      setAnnouncements(data);
+    }
+  };
+
   return (
     <main className="min-h-screen">
-      {/* Announcements */}
-      <div className="container mx-auto px-4 pt-6">
-        <AnnouncementBanner />
-      </div>
       
       {/* Hero Section */}
       <HeroSection
@@ -25,6 +69,85 @@ export default function Home() {
         headline="SOUNDZY WORLD GLOBAL"
         subheadline="(SWG) - Professional Entertainment & DJ Services, Creative Design & Premium Sound Equipment in Port Harcourt"
       />
+
+      {/* Latest Announcements Section */}
+      {announcements.length > 0 && (
+        <section className="py-16 px-4 bg-muted/30">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-10">
+              <Badge variant="outline" className="mb-4 px-4 py-2 text-sm font-semibold">
+                📢 Latest Updates
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Announcements
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Stay updated with our latest news, promotions, and exclusive offers
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {announcements.map((announcement) => (
+                <Card key={announcement.id} className="overflow-hidden hover:shadow-brand transition-all duration-300 border-2">
+                  {announcement.media_type === 'image' && announcement.media_url && (
+                    <div className="aspect-video overflow-hidden bg-muted">
+                      <img 
+                        src={announcement.media_url} 
+                        alt={announcement.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  {announcement.media_type === 'video' && announcement.media_url && (
+                    <div className="aspect-video bg-muted">
+                      <video 
+                        src={announcement.media_url} 
+                        controls 
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+                  {announcement.media_type === 'audio' && announcement.media_url && (
+                    <div className="p-4 bg-muted">
+                      <audio 
+                        src={announcement.media_url} 
+                        controls 
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-bold text-lg line-clamp-2">
+                        {announcement.title}
+                      </h3>
+                      {announcement.pinned && (
+                        <Badge variant="secondary" className="ml-2 shrink-0">
+                          Pinned
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground line-clamp-3 mb-4">
+                      {announcement.content}
+                    </p>
+                    <Button variant="outline" size="sm" asChild className="w-full">
+                      <a 
+                        href="https://wa.me/2348166687167" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        Contact Us
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Services Section */}
       <section className="py-32 px-4">
