@@ -75,7 +75,7 @@ Return ONLY the JSON object, no additional text.`;
     console.error('Error in generate-ui-layout:', error);
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
         uiVariant: {
           layout: 'card',
           theme: 'default',

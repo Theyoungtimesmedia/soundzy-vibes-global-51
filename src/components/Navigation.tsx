@@ -38,7 +38,8 @@ export const Navigation = () => {
   { href: "/", label: "Home" },
   { href: "/dj", label: "Entertainment & DJ Services" },
   { href: "/creative", label: "General Services" },
-  { href: "/shop", label: "Shop" }
+  { href: "/shop", label: "Shop" },
+  { href: "/blog", label: "Blog" }
 ];
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";

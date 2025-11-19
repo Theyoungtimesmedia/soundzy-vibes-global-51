@@ -41,11 +41,43 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Accessibility override: Always show Admin dashboard without auth gating
   useEffect(() => {
-    setUserRole('admin');
-    setLoading(false);
+    checkAuth();
   }, []);
+
+  const checkAuth = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        navigate('/auth');
+        return;
+      }
+
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .eq('role', 'admin')
+        .single();
+
+      if (roles) {
+        setUserRole('admin');
+      } else {
+        toast({
+          title: "Access Denied",
+          description: "Admin privileges required",
+          variant: "destructive"
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+      navigate('/auth');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const createQuickAction = async (type: string) => {
     try {
@@ -129,48 +161,48 @@ export default function AdminDashboard() {
       <div className="p-3 sm:p-6">
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
           <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0">
-            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-11 gap-1">
-              <TabsTrigger value="overview" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+            <TabsList className="flex flex-wrap gap-2 h-auto p-2 bg-muted/50 justify-start">
+              <TabsTrigger value="overview" className="text-xs sm:text-sm px-3 py-2">
                 <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Overview</span>
               </TabsTrigger>
-              <TabsTrigger value="chat" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="chat" className="text-xs sm:text-sm px-3 py-2">
                 <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Chat</span>
               </TabsTrigger>
-              <TabsTrigger value="leads" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="leads" className="text-xs sm:text-sm px-3 py-2">
                 <Users className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Leads</span>
               </TabsTrigger>
-              <TabsTrigger value="products" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="products" className="text-xs sm:text-sm px-3 py-2">
                 <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Products</span>
               </TabsTrigger>
-              <TabsTrigger value="blog" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="blog" className="text-xs sm:text-sm px-3 py-2">
                 <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Blog</span>
               </TabsTrigger>
-              <TabsTrigger value="dj-tapes" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="dj-tapes" className="text-xs sm:text-sm px-3 py-2">
                 <Music className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">DJ Tapes</span>
               </TabsTrigger>
-              <TabsTrigger value="announcements" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="announcements" className="text-xs sm:text-sm px-3 py-2">
                 <Megaphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">News</span>
               </TabsTrigger>
-              <TabsTrigger value="site-images" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="site-images" className="text-xs sm:text-sm px-3 py-2">
                 <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Site Images</span>
               </TabsTrigger>
-              <TabsTrigger value="media" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="media" className="text-xs sm:text-sm px-3 py-2">
                 <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Media</span>
               </TabsTrigger>
-              <TabsTrigger value="videos" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="videos" className="text-xs sm:text-sm px-3 py-2">
                 <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Videos</span>
               </TabsTrigger>
-              <TabsTrigger value="settings" className="flex-shrink-0 text-xs sm:text-sm px-2 sm:px-3 py-2">
+              <TabsTrigger value="settings" className="text-xs sm:text-sm px-3 py-2">
                 <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Settings</span>
               </TabsTrigger>
