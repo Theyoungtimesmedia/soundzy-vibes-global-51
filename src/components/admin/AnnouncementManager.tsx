@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Edit, Trash2, Megaphone, Calendar, Users, AlertCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, Megaphone, Calendar, Users, AlertCircle, Upload, X, ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Announcement {
@@ -22,6 +22,7 @@ interface Announcement {
   target_audience: string;
   expires_at?: string;
   created_at: string;
+  images?: string[];
 }
 
 export default function AnnouncementManager() {
@@ -29,6 +30,8 @@ export default function AnnouncementManager() {
   const [loading, setLoading] = useState(true);
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -53,7 +56,16 @@ export default function AnnouncementManager() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setAnnouncements(data || []);
+      
+      // Convert Json images to string array
+      const transformedData = (data || []).map(announcement => ({
+        ...announcement,
+        images: Array.isArray(announcement.images) 
+          ? (announcement.images as string[])
+          : []
+      }));
+      
+      setAnnouncements(transformedData);
     } catch (error) {
       console.error('Error loading announcements:', error);
       toast({
@@ -66,11 +78,56 @@ export default function AnnouncementManager() {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingImages(true);
+    const newImageUrls: string[] = [];
+
+    try {
+      for (const file of Array.from(files)) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}-${Date.now()}.${fileExt}`;
+        const filePath = `announcements/${fileName}`;
+
+        const { error: uploadError, data } = await supabase.storage
+          .from('site-images')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('site-images')
+          .getPublicUrl(filePath);
+
+        newImageUrls.push(publicUrl);
+      }
+
+      setImageUrls([...imageUrls, ...newImageUrls]);
+      toast({ title: "Success", description: `${files.length} image(s) uploaded successfully` });
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload images",
+        variant: "destructive"
+      });
+    } finally {
+      setUploadingImages(false);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setImageUrls(imageUrls.filter((_, i) => i !== index));
+  };
+
   const handleSave = async () => {
     try {
       const announcementData = {
         ...formData,
-        expires_at: formData.expires_at || null
+        expires_at: formData.expires_at || null,
+        images: imageUrls.length > 0 ? imageUrls : null
       };
 
       if (editingAnnouncement) {
@@ -134,6 +191,7 @@ export default function AnnouncementManager() {
       target_audience: 'all',
       expires_at: ''
     });
+    setImageUrls([]);
   };
 
   const openEditDialog = (announcement: Announcement) => {
@@ -147,6 +205,7 @@ export default function AnnouncementManager() {
       target_audience: announcement.target_audience,
       expires_at: announcement.expires_at ? announcement.expires_at.split('T')[0] : ''
     });
+    setImageUrls(announcement.images || []);
     setIsDialogOpen(true);
   };
 
@@ -288,10 +347,61 @@ export default function AnnouncementManager() {
                   onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
                 />
               </div>
+              
+              <div className="col-span-2">
+                <Label htmlFor="images">Images (optional)</Label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id="images"
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageUpload}
+                      disabled={uploadingImages}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={uploadingImages}
+                      onClick={() => document.getElementById('images')?.click()}
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      {uploadingImages ? 'Uploading...' : 'Upload'}
+                    </Button>
+                  </div>
+                  
+                  {imageUrls.length > 0 && (
+                    <div className="grid grid-cols-3 gap-4">
+                      {imageUrls.map((url, index) => (
+                        <div key={index} className="relative group">
+                          <img
+                            src={url}
+                            alt={`Announcement image ${index + 1}`}
+                            className="w-full h-24 object-cover rounded-lg border"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => removeImage(index)}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-              <Button onClick={handleSave}>{editingAnnouncement ? 'Update' : 'Create'} Announcement</Button>
+              <Button onClick={handleSave} disabled={uploadingImages}>
+                {editingAnnouncement ? 'Update' : 'Create'} Announcement
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -360,6 +470,7 @@ export default function AnnouncementManager() {
             <TableHeader>
               <TableRow>
                 <TableHead>Announcement</TableHead>
+                <TableHead>Images</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Priority</TableHead>
                 <TableHead>Status</TableHead>
@@ -385,6 +496,30 @@ export default function AnnouncementManager() {
                         {announcement.content}
                       </div>
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {announcement.images && announcement.images.length > 0 ? (
+                      <div className="flex gap-1">
+                        {announcement.images.slice(0, 3).map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${announcement.title} image ${idx + 1}`}
+                            className="w-10 h-10 object-cover rounded border"
+                          />
+                        ))}
+                        {announcement.images.length > 3 && (
+                          <div className="w-10 h-10 flex items-center justify-center bg-muted rounded border text-xs">
+                            +{announcement.images.length - 3}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                        <ImageIcon className="h-4 w-4" />
+                        None
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell className="capitalize">{announcement.type}</TableCell>
                   <TableCell>
