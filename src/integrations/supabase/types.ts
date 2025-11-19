@@ -20,6 +20,7 @@ export type Database = {
           created_at: string
           expires_at: string | null
           id: string
+          images: Json | null
           media_type: string | null
           media_url: string | null
           pinned: boolean | null
@@ -35,6 +36,7 @@ export type Database = {
           created_at?: string
           expires_at?: string | null
           id?: string
+          images?: Json | null
           media_type?: string | null
           media_url?: string | null
           pinned?: boolean | null
@@ -50,6 +52,7 @@ export type Database = {
           created_at?: string
           expires_at?: string | null
           id?: string
+          images?: Json | null
           media_type?: string | null
           media_url?: string | null
           pinned?: boolean | null
@@ -257,6 +260,7 @@ export type Database = {
           created_at: string
           description: string | null
           duration: number | null
+          featured: boolean | null
           genre: string | null
           id: string
           play_count: number | null
@@ -273,6 +277,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: number | null
+          featured?: boolean | null
           genre?: string | null
           id?: string
           play_count?: number | null
@@ -289,6 +294,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: number | null
+          featured?: boolean | null
           genre?: string | null
           id?: string
           play_count?: number | null
@@ -351,6 +357,36 @@ export type Database = {
         }
         Relationships: []
       }
+      media_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          media_type: string
+          name: string
+          parent_category: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type: string
+          name: string
+          parent_category?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type?: string
+          name?: string
+          parent_category?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           created_at: string
@@ -387,6 +423,42 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      page_sections: {
+        Row: {
+          content_json: Json
+          created_at: string
+          id: string
+          is_active: boolean | null
+          order_index: number
+          page_name: string
+          section_key: string
+          section_type: string
+          updated_at: string
+        }
+        Insert: {
+          content_json?: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          order_index?: number
+          page_name: string
+          section_key: string
+          section_type: string
+          updated_at?: string
+        }
+        Update: {
+          content_json?: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          order_index?: number
+          page_name?: string
+          section_key?: string
+          section_type?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -509,6 +581,42 @@ export type Database = {
         }
         Relationships: []
       }
+      service_media: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          media_type: string
+          media_url: string
+          order_index: number | null
+          service_key: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type: string
+          media_url: string
+          order_index?: number | null
+          service_key: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type?: string
+          media_url?: string
+          order_index?: number | null
+          service_key?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           created_at: string | null
@@ -559,6 +667,7 @@ export type Database = {
       }
       video_embeds: {
         Row: {
+          category: string | null
           created_at: string
           description: string | null
           duration: number | null
@@ -572,6 +681,7 @@ export type Database = {
           video_url: string
         }
         Insert: {
+          category?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null
@@ -585,6 +695,7 @@ export type Database = {
           video_url: string
         }
         Update: {
+          category?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null

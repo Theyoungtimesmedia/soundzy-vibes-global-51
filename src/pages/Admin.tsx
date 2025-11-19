@@ -30,6 +30,8 @@ import ChatManager from '@/components/admin/ChatManager';
 import { MediaManager } from '@/components/admin/MediaManager';
 import { VideoManager } from '@/components/admin/VideoManager';
 import WebsiteImagesManager from '@/components/admin/WebsiteImagesManager';
+import { PageSectionManager } from '@/components/admin/PageSectionManager';
+import { ServiceMediaManager } from '@/components/admin/ServiceMediaManager';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useToast } from '@/hooks/use-toast';
 
@@ -186,6 +188,14 @@ export default function AdminDashboard() {
               <TabsTrigger value="videos" className="text-xs sm:text-sm px-3 py-2">
                 <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
                 <span className="hidden sm:inline">Videos</span>
+              </TabsTrigger>
+              <TabsTrigger value="pages" className="text-xs sm:text-sm px-3 py-2">
+                <Database className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Pages</span>
+              </TabsTrigger>
+              <TabsTrigger value="service-media" className="text-xs sm:text-sm px-3 py-2">
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Service Media</span>
               </TabsTrigger>
               <TabsTrigger value="settings" className="text-xs sm:text-sm px-3 py-2">
                 <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
@@ -377,6 +387,14 @@ export default function AdminDashboard() {
 
           <TabsContent value="videos">
             <VideoManager />
+          </TabsContent>
+
+          <TabsContent value="pages">
+            <PageSectionManager />
+          </TabsContent>
+
+          <TabsContent value="service-media">
+            <ServiceMediaManager />
           </TabsContent>
 
           <TabsContent value="settings">

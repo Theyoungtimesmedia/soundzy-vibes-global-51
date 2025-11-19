@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { AudioPlayer } from "@/components/AudioPlayer";
+import { EnhancedAudioPlayer } from "@/components/EnhancedAudioPlayer";
 import { HeroSection } from "@/components/HeroSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Music, Mic, Calendar, Award, Users, Volume2 } from "lucide-react";
+import { Music, Mic, Calendar, Award, Users, Volume2, Play } from "lucide-react";
 import { supabase } from '@/integrations/supabase/client';
 import heroDj from "@/assets/hero-dj-premium.jpg";
 
@@ -16,6 +16,8 @@ interface DJTape {
   cover_image?: string;
   genre?: string;
   status: string;
+  play_count?: number;
+  duration?: number;
 }
 
 interface VideoEmbed {
@@ -30,6 +32,8 @@ export default function DJ() {
   const [djTapes, setDjTapes] = useState<DJTape[]>([]);
   const [videos, setVideos] = useState<VideoEmbed[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   useEffect(() => {
     loadData();
