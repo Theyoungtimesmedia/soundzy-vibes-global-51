@@ -288,41 +288,37 @@ export default function DJ() {
               </div>
             ) : djTapes.length > 0 ? (
               djTapes.map((tape) => (
-                <AudioPlayer
+                <EnhancedAudioPlayer
                   key={tape.id}
-                  src={tape.audio_url || ''}
+                  audioUrl={tape.audio_url || ''}
                   title={tape.title}
                   artist={tape.artist_name}
                   genre={tape.genre}
-                  downloadUrl={tape.audio_url}
-                  albumArt={tape.cover_image || '/assets/images/dj-album-art.png'}
+                  coverImage={tape.cover_image || '/assets/images/dj-album-art.png'}
                 />
               ))
             ) : (
               <>
-                <AudioPlayer
-                  src="/mixtapes/summer-vibes-2024.mp3"
+                <EnhancedAudioPlayer
+                  audioUrl="/mixtapes/summer-vibes-2024.mp3"
                   title="Summer Vibes Mix 2024"
                   artist="DJ Soundzy (Odogwu Na Vibes)"
                   genre="Afrobeats • Dancehall"
-                  downloadUrl="/mixtapes/summer-vibes-2024.mp3"
-                  albumArt="/assets/images/dj-album-art.png"
+                  coverImage="/assets/images/dj-album-art.png"
                 />
-                <AudioPlayer
-                  src="/mixtapes/club-bangers.mp3"
+                <EnhancedAudioPlayer
+                  audioUrl="/mixtapes/club-bangers.mp3"
                   title="Club Bangers Vol. 1"
                   artist="DJ Soundzy (Odogwu Na Vibes)"
                   genre="Hip-Hop • Trap"
-                  downloadUrl="/mixtapes/club-bangers.mp3"
-                  albumArt="/assets/images/dj-album-art.png"
+                  coverImage="/assets/images/dj-album-art.png"
                 />
-                <AudioPlayer
-                  src="/mixtapes/afrobeats-essentials.mp3"
+                <EnhancedAudioPlayer
+                  audioUrl="/mixtapes/afrobeats-essentials.mp3"
                   title="Afrobeats Essentials"
                   artist="DJ Soundzy (Odogwu Na Vibes)"
                   genre="Afrobeats • Amapiano"
-                  downloadUrl="/mixtapes/afrobeats-essentials.mp3"
-                  albumArt="/assets/images/dj-album-art.png"
+                  coverImage="/assets/images/dj-album-art.png"
                 />
               </>
             )}
