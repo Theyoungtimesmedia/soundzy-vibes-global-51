@@ -3,45 +3,73 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Layout } from "@/components/Layout";
-import { ChatWidget } from "@/components/chat/ChatWidget";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { AppShell } from "@/components/mobile/AppShell";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useEffect } from "react";
-import Home from "./pages/Home";
-import DJ from "./pages/DJ";
-import Creative from "./pages/Creative";
-import Shop from "./pages/Shop";
-import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
-import Profile from "./pages/Profile";
 
+import AuthScreen from "./pages/AuthScreen";
+import HomeFeed from "./pages/HomeFeed";
+import BookingScreen from "./pages/BookingScreen";
+import ShopScreen from "./pages/ShopScreen";
+import MessagesScreen from "./pages/MessagesScreen";
+import ProfileScreen from "./pages/ProfileScreen";
+import CreatePost from "./pages/CreatePost";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
-import BlogList from "./pages/BlogList";
-import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 * 60 * 1000,
     },
   },
 });
 
-// Secret admin slug
 const ADMIN_SLUG = 'secret-admin-2024';
 
-// Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
+}
+
+function AppRoutes() {
+  const location = useLocation();
+  const isAuth = location.pathname === '/auth';
+  const isAdmin = location.pathname.includes('admin');
+
+  if (isAuth) {
+    return (
+      <Routes>
+        <Route path="/auth" element={<AuthScreen />} />
+      </Routes>
+    );
+  }
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path={`/admin-console-${ADMIN_SLUG}`} element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    );
+  }
+
+  return (
+    <AppShell>
+      <Routes>
+        <Route path="/" element={<HomeFeed />} />
+        <Route path="/book" element={<BookingScreen />} />
+        <Route path="/shop" element={<ShopScreen />} />
+        <Route path="/messages" element={<MessagesScreen />} />
+        <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AppShell>
+  );
 }
 
 const App = () => (
@@ -52,29 +80,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dj" element={<DJ />} />
-              <Route path="/creative" element={<Creative />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/profile" element={<Profile />} />
-              
-              {/* Admin routes */}
-              <Route path={`/admin-console-${ADMIN_SLUG}`} element={<Admin />} />
-              <Route path="/admin" element={<Admin />} />
-              {/* Blog routes */}
-              <Route path="/blog" element={<BlogList />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-          
-          {/* Global Components */}
-          <ChatWidget />
-          <FloatingWhatsApp />
+          <AppRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

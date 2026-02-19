@@ -122,6 +122,66 @@ export type Database = {
         }
         Relationships: []
       }
+      bookings: {
+        Row: {
+          budget: number | null
+          created_at: string
+          display_name: string
+          do_not_play: string[] | null
+          email: string | null
+          event_date: string | null
+          event_time: string | null
+          guest_count: number | null
+          id: string
+          must_play: string[] | null
+          phone: string
+          service_type: string
+          special_requests: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+          venue: string | null
+        }
+        Insert: {
+          budget?: number | null
+          created_at?: string
+          display_name: string
+          do_not_play?: string[] | null
+          email?: string | null
+          event_date?: string | null
+          event_time?: string | null
+          guest_count?: number | null
+          id?: string
+          must_play?: string[] | null
+          phone: string
+          service_type: string
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+          venue?: string | null
+        }
+        Update: {
+          budget?: number | null
+          created_at?: string
+          display_name?: string
+          do_not_play?: string[] | null
+          email?: string | null
+          event_date?: string | null
+          event_time?: string | null
+          guest_count?: number | null
+          id?: string
+          must_play?: string[] | null
+          phone?: string
+          service_type?: string
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+          venue?: string | null
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -252,6 +312,36 @@ export type Database = {
           },
         ]
       }
+      conversations: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          last_message: string | null
+          last_message_at: string | null
+          unread_count: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          unread_count?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          unread_count?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       dj_tapes: {
         Row: {
           artist_name: string
@@ -303,6 +393,24 @@ export type Database = {
           title?: string
           ui_variant?: Json | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      guest_sessions: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
         }
         Relationships: []
       }
@@ -387,6 +495,116 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_admin: boolean | null
+          is_ai: boolean | null
+          media_url: string | null
+          sender_id: string | null
+          sender_name: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_admin?: boolean | null
+          is_ai?: boolean | null
+          media_url?: string | null
+          sender_id?: string | null
+          sender_name: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_admin?: boolean | null
+          is_ai?: boolean | null
+          media_url?: string | null
+          sender_id?: string | null
+          sender_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mixtapes: {
+        Row: {
+          artwork_url: string | null
+          audio_url: string | null
+          created_at: string
+          duration: number | null
+          genre: string | null
+          id: string
+          likes_count: number | null
+          title: string
+        }
+        Insert: {
+          artwork_url?: string | null
+          audio_url?: string | null
+          created_at?: string
+          duration?: number | null
+          genre?: string | null
+          id?: string
+          likes_count?: number | null
+          title: string
+        }
+        Update: {
+          artwork_url?: string | null
+          audio_url?: string | null
+          created_at?: string
+          duration?: number | null
+          genre?: string | null
+          id?: string
+          likes_count?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           created_at: string
@@ -462,6 +680,109 @@ export type Database = {
         }
         Relationships: []
       }
+      post_comments: {
+        Row: {
+          content: string
+          created_at: string
+          display_name: string
+          id: string
+          post_id: string
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          display_name: string
+          id?: string
+          post_id: string
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          post_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_likes: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          content: string
+          created_at: string
+          display_name: string
+          event_tag: string | null
+          id: string
+          is_guest: boolean | null
+          likes_count: number | null
+          location: string | null
+          media_urls: string[] | null
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          display_name: string
+          event_tag?: string | null
+          id?: string
+          is_guest?: boolean | null
+          likes_count?: number | null
+          location?: string | null
+          media_urls?: string[] | null
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          display_name?: string
+          event_tag?: string | null
+          id?: string
+          is_guest?: boolean | null
+          likes_count?: number | null
+          location?: string | null
+          media_urls?: string[] | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       product_reviews: {
         Row: {
           comment: string | null
@@ -508,10 +829,12 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          is_rentable: boolean | null
           name: string
           original_price_cents: number | null
           price_cents: number
           rating: number | null
+          rental_price: number | null
           stock_quantity: number | null
           updated_at: string
         }
@@ -522,10 +845,12 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_rentable?: boolean | null
           name: string
           original_price_cents?: number | null
           price_cents: number
           rating?: number | null
+          rental_price?: number | null
           stock_quantity?: number | null
           updated_at?: string
         }
@@ -536,10 +861,12 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_rentable?: boolean | null
           name?: string
           original_price_cents?: number | null
           price_cents?: number
           rating?: number | null
+          rental_price?: number | null
           stock_quantity?: number | null
           updated_at?: string
         }
@@ -580,6 +907,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      reviews: {
+        Row: {
+          booking_id: string | null
+          content: string | null
+          created_at: string
+          display_name: string
+          id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          content?: string | null
+          created_at?: string
+          display_name: string
+          id?: string
+          rating: number
+          user_id: string
+        }
+        Update: {
+          booking_id?: string | null
+          content?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       service_media: {
         Row: {
@@ -736,6 +1101,35 @@ export type Database = {
           url?: string
         }
         Relationships: []
+      }
+      wishlists: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

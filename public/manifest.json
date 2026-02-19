@@ -1,0 +1,21 @@
+{
+  "name": "Soundzy World Global",
+  "short_name": "Soundzy",
+  "description": "Book DJ Soundzy, shop premium audio equipment, and join the community",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
