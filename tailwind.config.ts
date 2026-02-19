@@ -18,7 +18,7 @@ export default {
 			}
 		},
 		extend: {
-			colors: {
+		colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -38,8 +38,8 @@ export default {
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				danger: {
-					DEFAULT: 'hsl(var(--danger))',
-					foreground: 'hsl(var(--danger-foreground))'
+					DEFAULT: 'hsl(var(--danger, 0 84% 60%))',
+					foreground: 'hsl(var(--danger-foreground, 0 0% 100%))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -57,6 +57,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				success: 'hsl(var(--app-success, 160 84% 39%))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

@@ -1,109 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Soundzy World Global Premium Design System - Gold on Black Theme */
-    --primary: 45 100% 60%; /* Bright gold */
+    /* Soundzy Mobile App — Dark DJ Aesthetic */
+    --background: 0 0% 4%; /* #0A0A0A */
+    --foreground: 0 0% 100%; /* white text */
+    
+    --card: 0 0% 8%; /* #141414 */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+    
+    --primary: 47 93% 54%; /* #F5C518 gold */
     --primary-foreground: 0 0% 0%;
-    --accent: 38 100% 55%; /* Rich gold accent */
-    --accent-foreground: 0 0% 0%;
-    --secondary: 42 95% 50%; /* Deep gold */
+    --primary-glow: 47 93% 64%;
+    
+    --secondary: 263 70% 58%; /* #8B5CF6 purple */
     --secondary-foreground: 0 0% 100%;
     
-    --background: 0 0% 5%; /* Near black */
-    --foreground: 45 100% 85%; /* Light gold text */
+    --accent: 263 70% 58%;
+    --accent-foreground: 0 0% 100%;
     
-    --card: 0 0% 8%; /* Dark card background */
-    --card-foreground: 45 100% 85%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 45 100% 85%;
-    
-    --muted: 0 0% 15%;
-    --muted-foreground: 45 20% 60%;
-    --border: 45 30% 20%;
-    --input: 0 0% 15%;
-    --ring: 45 100% 60%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 63%; /* #A0A0A0 */
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 16%; /* #2A2A2A */
+    --input: 0 0% 12%;
+    --ring: 47 93% 54%;
     
     --radius: 1rem;
     
-    /* Premium gradients matching gold on black theme */
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0% / 0.95), hsl(45 100% 10% / 0.95));
-    --gradient-primary: linear-gradient(135deg, hsl(45 100% 60%), hsl(38 100% 55%));
-    --gradient-accent: linear-gradient(135deg, hsl(38 100% 55%), hsl(42 95% 50%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 8% / 0.9), hsl(0 0% 10% / 0.95));
+    --gradient-primary: linear-gradient(135deg, hsl(47 93% 54%), hsl(38 100% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(263 70% 58%), hsl(280 80% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 6%));
     
-    /* Shadows */
-    --shadow-soft: 0 4px 20px hsl(45 100% 60% / 0.15);
-    --shadow-accent: 0 8px 32px hsl(38 100% 55% / 0.25);
-    --shadow-hero: 0 20px 60px hsl(45 100% 60% / 0.3);
-    --shadow-card: 0 4px 16px hsl(0 0% 0% / 0.5);
-    --shadow-brand: 0 10px 40px -10px hsl(45 100% 60% / 0.4);
-    --shadow-glow: 0 0 50px hsl(45 100% 60% / 0.5);
+    --shadow-brand: 0 10px 40px -10px hsl(47 93% 54% / 0.4);
+    --shadow-glow: 0 0 20px hsl(47 93% 54% / 0.15);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
     
-    /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 0 0% 8%;
-
-    --sidebar-foreground: 45 100% 85%;
-
-    --sidebar-primary: 45 100% 60%;
-
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 47 93% 54%;
     --sidebar-primary-foreground: 0 0% 0%;
-
     --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 47 93% 54%;
 
-    --sidebar-accent-foreground: 45 100% 85%;
-
-    --sidebar-border: 45 30% 20%;
-
-    --sidebar-ring: 45 100% 60%;
+    /* Custom mobile app tokens */
+    --app-bg-elevated: 0 0% 13%; /* #222222 */
+    --app-success: 160 84% 39%; /* #10B981 */
+    --app-gold-shadow: 0 0 20px hsl(47 93% 54% / 0.15);
   }
 
   .dark {
-    --primary: 45 100% 60%;
-    --primary-foreground: 0 0% 0%;
-    --accent: 38 100% 55%;
-    --accent-foreground: 0 0% 0%;
-    --secondary: 42 95% 50%;
-    --secondary-foreground: 0 0% 100%;
-    
-    --background: 0 0% 3%;
-    --foreground: 45 100% 90%;
-    
-    --card: 0 0% 6%;
-    --card-foreground: 45 100% 90%;
-    --popover: 0 0% 6%;
-    --popover-foreground: 45 100% 90%;
-    
-    --muted: 0 0% 12%;
-    --muted-foreground: 45 20% 65%;
-    --border: 45 30% 18%;
-    --input: 0 0% 12%;
-    --ring: 45 100% 60%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0% / 0.98), hsl(45 100% 8% / 0.98));
-    --shadow-card: 0 4px 16px hsl(0 0% 0% / 0.6);
-    --sidebar-background: 0 0% 5%;
-    --sidebar-foreground: 45 100% 90%;
-    --sidebar-primary: 45 100% 60%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 45 100% 90%;
-    --sidebar-border: 45 30% 18%;
-    --sidebar-ring: 45 100% 60%;
+    /* same as root — dark mode by default */
   }
 }
 
@@ -114,21 +74,59 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    /* SAFARI FIX: Font smoothing and minimum height for Safari/Mac */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: contain;
   }
 
-  /* SAFARI FIX: Ensure minimum height on all browsers including Safari mobile */
   html, body, #root {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    min-height: 100dvh;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-weight: 800;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
     letter-spacing: -0.02em;
   }
 }
+
+/* Mobile app utilities */
+@layer utilities {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .app-container {
+    @apply max-w-[430px] mx-auto w-full;
+  }
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  .skeleton-pulse {
+    @apply animate-pulse bg-muted rounded-md;
+  }
+}
+
+/* Equalizer animation for splash screen */
+@keyframes equalizer {
+  0%, 100% { height: 10%; }
+  50% { height: 80%; }
+}
+.equalizer-bar {
+  animation: equalizer 1.2s ease-in-out infinite;
+}
+.equalizer-bar:nth-child(2) { animation-delay: 0.1s; }
+.equalizer-bar:nth-child(3) { animation-delay: 0.2s; }
+.equalizer-bar:nth-child(4) { animation-delay: 0.3s; }
+.equalizer-bar:nth-child(5) { animation-delay: 0.4s; }
+.equalizer-bar:nth-child(6) { animation-delay: 0.15s; }
+.equalizer-bar:nth-child(7) { animation-delay: 0.35s; }
+
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
