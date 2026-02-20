@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -67,6 +68,9 @@ export default function BookingScreen() {
       return;
     }
     setScreen('success');
+    // Fire confetti!
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#F5C518', '#FFA500', '#FFD700', '#FFFFFF'] });
+    setTimeout(() => confetti({ particleCount: 60, spread: 100, origin: { y: 0.5 } }), 300);
   };
 
   const loadBookings = async () => {
