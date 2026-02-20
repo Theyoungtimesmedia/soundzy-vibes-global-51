@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.generate-ui-layout]
 verify_jwt = false
+
+[functions.soundzy-ai]
+verify_jwt = false
