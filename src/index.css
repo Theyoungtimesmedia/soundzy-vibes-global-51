@@ -6,24 +6,25 @@
 
 @layer base {
   :root {
-    /* Soundzy V2 — Premium Dark DJ Aesthetic */
-    --background: 240 14% 4%;     /* #050507 void */
+    /* Soundzy V2 — Premium Black & Gold */
+    --background: 240 14% 4%;
     --foreground: 0 0% 100%;
 
-    --card: 240 12% 8%;           /* #14141A surface */
+    --card: 240 12% 8%;
     --card-foreground: 0 0% 100%;
-    --popover: 240 12% 10%;       /* #1C1C24 elevated */
+    --popover: 240 12% 10%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 47 93% 54%;        /* #F5C518 gold */
+    --primary: 47 93% 54%;
     --primary-foreground: 0 0% 0%;
     --primary-glow: 47 93% 64%;
 
-    --secondary: 263 84% 58%;     /* #7C3AED purple */
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary = warm gold variant instead of purple */
+    --secondary: 38 100% 50%;
+    --secondary-foreground: 0 0% 0%;
 
-    --accent: 263 84% 58%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 47 93% 54%;
+    --accent-foreground: 0 0% 0%;
 
     --muted: 240 12% 12%;
     --muted-foreground: 240 5% 65%;
@@ -37,10 +38,9 @@
 
     --radius: 1rem;
 
-    /* Gradients */
+    /* Gradients — gold only, no purple */
     --gradient-primary: linear-gradient(135deg, hsl(47 93% 54%), hsl(38 100% 55%));
-    --gradient-accent: linear-gradient(135deg, hsl(263 84% 58%), hsl(280 80% 50%));
-    --gradient-hero: linear-gradient(135deg, hsl(270 30% 8%) 0%, hsl(240 14% 4%) 40%, hsl(40 30% 8%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(40 30% 8%) 0%, hsl(240 14% 4%) 40%, hsl(40 20% 6%) 100%);
 
     /* Shadows */
     --shadow-brand: 0 10px 40px -10px hsl(47 93% 54% / 0.4);
@@ -118,7 +118,7 @@
     @apply max-w-[430px] mx-auto w-full;
   }
   .tap-target {
-    @apply min-h-[44px] min-w-[44px];
+    @apply min-h-[48px] min-w-[48px];
   }
   .skeleton-pulse {
     @apply animate-pulse rounded-md;
@@ -130,8 +130,8 @@
     box-shadow: var(--shadow-glow);
   }
   .card-premium {
-    @apply bg-card border rounded-[20px];
-    border-color: hsl(0 0% 100% / 0.06);
+    @apply bg-card rounded-[20px];
+    border: 1px solid hsl(0 0% 100% / 0.06);
     box-shadow: var(--shadow-card);
   }
 }
@@ -141,7 +141,7 @@
   100% { background-position: -200% 0; }
 }
 
-/* Equalizer animation for splash screen */
+/* Equalizer animation */
 @keyframes equalizer {
   0%, 100% { height: 10%; }
   50% { height: 80%; }
@@ -160,11 +160,31 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Floating bottom nav */
+/* Floating bottom nav bounce */
 @keyframes navBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-2px); }
 }
 .nav-tab-active {
   animation: navBounce 0.3s ease-out;
+}
+
+/* Heart burst animation */
+@keyframes heartBurst {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.heart-burst {
+  animation: heartBurst 0.4s ease-out;
+}
+
+/* Confetti keyframe */
+@keyframes confetti-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.confetti-piece {
+  animation: confetti-fall 2s ease-out forwards;
 }

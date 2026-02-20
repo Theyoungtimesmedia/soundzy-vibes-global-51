@@ -9,7 +9,7 @@ interface AppShellProps {
 export function AppShell({ children, hideNav }: AppShellProps) {
   return (
     <div className="min-h-screen bg-background">
-      <div className="app-container min-h-screen pb-[calc(80px+env(safe-area-inset-bottom,0px))]">
+      <div className="app-container min-h-screen pb-[calc(96px+env(safe-area-inset-bottom,0px))]">
         {children}
       </div>
       {!hideNav && <BottomNav />}
