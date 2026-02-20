@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { useAppStore } from '@/stores/useAppStore';
-import { ShoppingCart, Plus, Minus, X, Heart, MessageCircle } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, X, Heart, MessageCircle, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Product {
@@ -32,6 +32,7 @@ export default function ShopScreen() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [showCart, setShowCart] = useState(false);
+  const [addedId, setAddedId] = useState<string | null>(null);
   const { toast } = useToast();
   const setCartCount = useAppStore((s) => s.setCartCount);
 
@@ -68,8 +69,22 @@ export default function ShopScreen() {
     } else {
       await supabase.from('cart_items').insert({ user_id: user.id, product_id: productId, quantity: 1 });
     }
+    // Checkmark animation
+    setAddedId(productId);
+    setTimeout(() => setAddedId(null), 1500);
     loadCart();
     toast({ title: 'Added to cart! 🛒' });
+  };
+
+  const removeFromCart = async (itemId: string) => {
+    await supabase.from('cart_items').delete().eq('id', itemId);
+    loadCart();
+  };
+
+  const updateQty = async (itemId: string, qty: number) => {
+    if (qty <= 0) { removeFromCart(itemId); return; }
+    await supabase.from('cart_items').update({ quantity: qty }).eq('id', itemId);
+    loadCart();
   };
 
   const filtered = activeCategory === 'All' ? products : products.filter((p) => p.category.toLowerCase().includes(activeCategory.toLowerCase()));
@@ -79,8 +94,20 @@ export default function ShopScreen() {
     <div className="flex flex-col">
       {/* Header */}
       <div className="px-4 pt-6 pb-3">
-        <h1 className="text-2xl font-bold text-foreground">Premium Gear</h1>
-        <p className="text-xs text-muted-foreground">Pro Audio Equipment & Sound Solutions</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Premium Gear 🎵</h1>
+            <p className="text-sm text-muted-foreground">Pro Audio Equipment & Sound Solutions</p>
+          </div>
+          <button onClick={() => setShowCart(true)} className="relative tap-target flex items-center justify-center">
+            <ShoppingCart className="h-7 w-7 text-muted-foreground" />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
+                {cartItems.reduce((a: number, ci: any) => a + ci.quantity, 0)}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Category filter */}
@@ -90,10 +117,10 @@ export default function ShopScreen() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors tap-target ${
+              className={`shrink-0 px-4 py-2.5 rounded-full text-sm font-semibold transition-colors tap-target ${
                 activeCategory === cat
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-card text-muted-foreground border border-border'
+                  : 'bg-card text-muted-foreground'
               }`}
             >
               {cat}
@@ -103,60 +130,63 @@ export default function ShopScreen() {
       </div>
 
       {/* Products grid */}
-      <div className="px-4 pb-24">
+      <div className="px-4 pb-32">
         {loading ? (
           <div className="grid grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-56 rounded-2xl" />)}
+            {[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-64 rounded-2xl" />)}
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            {filtered.map((product) => (
-              <Card key={product.id} className="overflow-hidden border-border/50 bg-card">
-                <div className="aspect-square bg-muted/30 relative">
-                  {product.image_url ? (
-                    <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                      <ShoppingCart className="h-8 w-8 opacity-30" />
-                    </div>
-                  )}
-                  {product.original_price_cents && (
-                    <Badge className="absolute top-2 left-2 bg-destructive text-white text-[9px]">Sale</Badge>
-                  )}
-                  {(product.stock_quantity ?? 0) <= 0 && (
-                    <Badge variant="outline" className="absolute top-2 right-2 bg-background text-[9px]">Out of Stock</Badge>
-                  )}
-                </div>
-                <CardContent className="p-3">
-                  <p className="text-xs font-bold text-foreground truncate mb-1">{product.name}</p>
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <span className="text-sm font-bold text-primary">₦{(product.price_cents / 100).toLocaleString()}</span>
-                    {product.original_price_cents && (
-                      <span className="text-[10px] text-muted-foreground line-through">₦{(product.original_price_cents / 100).toLocaleString()}</span>
+            {filtered.map((product, idx) => (
+              <motion.div key={product.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
+                <Card className="overflow-hidden bg-card" style={{ border: '1px solid hsl(0 0% 100% / 0.06)' }}>
+                  <div className="aspect-square bg-muted/20 relative">
+                    {product.image_url ? (
+                      <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        <ShoppingCart className="h-10 w-10 opacity-20" />
+                      </div>
+                    )}
+                    {product.category === 'Bundles' && (
+                      <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground text-[10px] font-bold">Bundle</Badge>
                     )}
                   </div>
-                  <Button
-                    size="sm"
-                    onClick={() => addToCart(product.id)}
-                    disabled={(product.stock_quantity ?? 0) <= 0}
-                    className="w-full h-8 text-[10px] rounded-xl bg-primary text-primary-foreground font-bold"
-                  >
-                    <Plus className="h-3 w-3 mr-1" /> Add to Cart
-                  </Button>
-                </CardContent>
-              </Card>
+                  <CardContent className="p-3">
+                    <p className="text-[10px] text-primary font-bold uppercase tracking-wider mb-0.5">{product.category}</p>
+                    <p className="text-sm font-bold text-foreground line-clamp-2 mb-1.5 leading-tight">{product.name}</p>
+                    <p className="text-lg font-bold text-foreground mb-0.5">₦{(product.price_cents / 100).toLocaleString()}</p>
+                    {product.is_rentable && product.rental_price && (
+                      <p className="text-xs text-muted-foreground mb-2">Rent: ₦{(product.rental_price / 100).toLocaleString()}/day</p>
+                    )}
+                    <Button
+                      size="sm"
+                      onClick={() => addToCart(product.id)}
+                      disabled={(product.stock_quantity ?? 0) <= 0}
+                      className="w-full h-11 text-xs rounded-full bg-primary text-primary-foreground font-bold uppercase tracking-wide"
+                    >
+                      {addedId === product.id ? (
+                        <><Check className="h-4 w-4 mr-1" /> Added!</>
+                      ) : (
+                        <><Plus className="h-4 w-4 mr-1" /> Add to Cart</>
+                      )}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Cart bar */}
-      {cartItems.length > 0 && (
-        <div className="fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-40">
-          <div className="app-container px-4 pb-2">
+      {/* Cart bar — positioned above bottom nav with proper spacing */}
+      {cartItems.length > 0 && !showCart && (
+        <div className="fixed bottom-[calc(88px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-40">
+          <div className="app-container px-4">
             <button
               onClick={() => setShowCart(true)}
-              className="w-full bg-primary text-primary-foreground rounded-2xl p-3 flex items-center justify-between font-bold text-sm shadow-lg"
+              className="w-full bg-primary text-primary-foreground rounded-2xl p-4 flex items-center justify-between font-bold text-sm"
+              style={{ boxShadow: 'var(--shadow-glow)' }}
             >
               <span>🛒 {cartItems.reduce((a: number, ci: any) => a + ci.quantity, 0)} items</span>
               <span>₦{(cartTotal / 100).toLocaleString()} → Checkout</span>
@@ -172,40 +202,59 @@ export default function ShopScreen() {
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed inset-0 z-50 bg-background"
           >
             <div className="app-container h-full flex flex-col">
-              <div className="flex items-center justify-between p-4 border-b border-border">
-                <h2 className="text-lg font-bold">Your Cart</h2>
-                <button onClick={() => setShowCart(false)} className="tap-target"><X className="h-5 w-5" /></button>
+              <div className="flex items-center justify-between p-4">
+                <h2 className="text-xl font-bold">Your Cart</h2>
+                <button onClick={() => setShowCart(false)} className="tap-target flex items-center justify-center">
+                  <X className="h-6 w-6 text-muted-foreground" />
+                </button>
               </div>
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {cartItems.map((ci: any) => (
-                  <div key={ci.id} className="flex items-center gap-3 bg-card rounded-xl p-3">
-                    {ci.products?.image_url && (
-                      <img src={ci.products.image_url} alt="" className="h-14 w-14 rounded-lg object-cover" />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold truncate">{ci.products?.name}</p>
-                      <p className="text-xs text-primary font-bold">₦{((ci.products?.price_cents || 0) / 100).toLocaleString()}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold w-6 text-center">{ci.quantity}</span>
-                    </div>
+                {cartItems.length === 0 ? (
+                  <div className="text-center py-16">
+                    <ShoppingCart className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-20" />
+                    <p className="text-base font-bold mb-1">Your cart is empty</p>
+                    <p className="text-sm text-muted-foreground">Browse our premium gear collection</p>
                   </div>
-                ))}
+                ) : (
+                  cartItems.map((ci: any) => (
+                    <div key={ci.id} className="flex items-center gap-3 bg-card rounded-2xl p-3" style={{ border: '1px solid hsl(0 0% 100% / 0.06)' }}>
+                      {ci.products?.image_url && (
+                        <img src={ci.products.image_url} alt="" className="h-16 w-16 rounded-xl object-cover" />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold truncate">{ci.products?.name}</p>
+                        <p className="text-sm text-primary font-bold">₦{((ci.products?.price_cents || 0) / 100).toLocaleString()}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => updateQty(ci.id, ci.quantity - 1)} className="h-9 w-9 rounded-full bg-muted flex items-center justify-center">
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="text-sm font-bold w-6 text-center">{ci.quantity}</span>
+                        <button onClick={() => updateQty(ci.id, ci.quantity + 1)} className="h-9 w-9 rounded-full bg-muted flex items-center justify-center">
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
-              <div className="p-4 border-t border-border space-y-3">
-                <div className="flex items-center justify-between text-sm font-bold">
-                  <span>Total</span>
-                  <span className="text-primary">₦{(cartTotal / 100).toLocaleString()}</span>
+              {cartItems.length > 0 && (
+                <div className="p-4 space-y-4" style={{ background: 'hsl(240 14% 6%)' }}>
+                  <div className="flex items-center justify-between text-base font-bold">
+                    <span>Total</span>
+                    <span className="text-primary text-xl">₦{(cartTotal / 100).toLocaleString()}</span>
+                  </div>
+                  <Button asChild className="w-full h-14 bg-primary text-primary-foreground font-bold rounded-full text-sm uppercase tracking-wide">
+                    <a href={`https://wa.me/2348166687167?text=Hi! I'd like to order: ${cartItems.map((ci: any) => `${ci.products?.name} x${ci.quantity}`).join(', ')}. Total: ₦${(cartTotal / 100).toLocaleString()}`} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="h-5 w-5 mr-2" /> Complete via WhatsApp
+                    </a>
+                  </Button>
                 </div>
-                <Button asChild className="w-full h-12 bg-primary text-primary-foreground font-bold rounded-xl">
-                  <a href={`https://wa.me/2348166687167?text=Hi! I'd like to order: ${cartItems.map((ci: any) => `${ci.products?.name} x${ci.quantity}`).join(', ')}. Total: ₦${(cartTotal / 100).toLocaleString()}`} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4 mr-2" /> Complete via WhatsApp
-                  </a>
-                </Button>
-              </div>
+              )}
             </div>
           </motion.div>
         )}

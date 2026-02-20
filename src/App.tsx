@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AppShell } from "@/components/mobile/AppShell";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { lazy, Suspense, useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { AnimatePresence, motion } from "framer-motion";
 
 const AuthScreen = lazy(() => import("./pages/AuthScreen"));
@@ -19,6 +18,12 @@ const CreatePost = lazy(() => import("./pages/CreatePost"));
 const MixtapesScreen = lazy(() => import("./pages/MixtapesScreen"));
 const NotificationsScreen = lazy(() => import("./pages/NotificationsScreen"));
 const Admin = lazy(() => import("./pages/Admin"));
+const MyBookingsPage = lazy(() => import("./pages/MyBookingsPage"));
+const MyOrdersPage = lazy(() => import("./pages/MyOrdersPage"));
+const SavedItemsPage = lazy(() => import("./pages/SavedItemsPage"));
+const MyReviewsPage = lazy(() => import("./pages/MyReviewsPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -95,6 +100,12 @@ function AppRoutes() {
             <Route path="/create-post" element={<AnimatedPage><CreatePost /></AnimatedPage>} />
             <Route path="/mixtapes" element={<AnimatedPage><MixtapesScreen /></AnimatedPage>} />
             <Route path="/notifications" element={<AnimatedPage><NotificationsScreen /></AnimatedPage>} />
+            <Route path="/my-bookings" element={<AnimatedPage><MyBookingsPage /></AnimatedPage>} />
+            <Route path="/my-orders" element={<AnimatedPage><MyOrdersPage /></AnimatedPage>} />
+            <Route path="/saved-items" element={<AnimatedPage><SavedItemsPage /></AnimatedPage>} />
+            <Route path="/my-reviews" element={<AnimatedPage><MyReviewsPage /></AnimatedPage>} />
+            <Route path="/about" element={<AnimatedPage><AboutPage /></AnimatedPage>} />
+            <Route path="/contact" element={<AnimatedPage><ContactPage /></AnimatedPage>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
