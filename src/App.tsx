@@ -7,6 +7,7 @@ import { AppShell } from "@/components/mobile/AppShell";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { lazy, Suspense, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AnimatePresence, motion } from "framer-motion";
 
 const AuthScreen = lazy(() => import("./pages/AuthScreen"));
 const HomeFeed = lazy(() => import("./pages/HomeFeed"));
@@ -26,8 +27,6 @@ const queryClient = new QueryClient({
   },
 });
 
-const ADMIN_SLUG = 'secret-admin-2024';
-
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -37,10 +36,24 @@ function ScrollToTop() {
 function PageLoader() {
   return (
     <div className="p-4 space-y-4">
-      <Skeleton className="h-8 w-48 rounded-xl" />
-      <Skeleton className="h-40 rounded-2xl" />
-      <Skeleton className="h-32 rounded-2xl" />
+      <div className="skeleton-pulse h-8 w-48 rounded-xl" />
+      <div className="skeleton-pulse h-40 rounded-2xl" />
+      <div className="skeleton-pulse h-32 rounded-2xl" />
     </div>
+  );
+}
+
+const pageVariants = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0, transition: { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] as const } },
+  exit: { opacity: 0, x: -20, transition: { duration: 0.15, ease: [0.42, 0, 1, 1] as const } },
+};
+
+function AnimatedPage({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      {children}
+    </motion.div>
   );
 }
 
@@ -52,7 +65,7 @@ function AppRoutes() {
   if (isAuth) {
     return (
       <Suspense fallback={<PageLoader />}>
-        <Routes>
+        <Routes location={location} key={location.pathname}>
           <Route path="/auth" element={<AuthScreen />} />
         </Routes>
       </Suspense>
@@ -62,8 +75,7 @@ function AppRoutes() {
   if (isAdmin) {
     return (
       <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path={`/admin-console-${ADMIN_SLUG}`} element={<Admin />} />
+        <Routes location={location} key={location.pathname}>
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </Suspense>
@@ -73,17 +85,19 @@ function AppRoutes() {
   return (
     <AppShell>
       <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<HomeFeed />} />
-          <Route path="/book" element={<BookingScreen />} />
-          <Route path="/shop" element={<ShopScreen />} />
-          <Route path="/messages" element={<MessagesScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/mixtapes" element={<MixtapesScreen />} />
-          <Route path="/notifications" element={<NotificationsScreen />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<AnimatedPage><HomeFeed /></AnimatedPage>} />
+            <Route path="/book" element={<AnimatedPage><BookingScreen /></AnimatedPage>} />
+            <Route path="/shop" element={<AnimatedPage><ShopScreen /></AnimatedPage>} />
+            <Route path="/messages" element={<AnimatedPage><MessagesScreen /></AnimatedPage>} />
+            <Route path="/profile" element={<AnimatedPage><ProfileScreen /></AnimatedPage>} />
+            <Route path="/create-post" element={<AnimatedPage><CreatePost /></AnimatedPage>} />
+            <Route path="/mixtapes" element={<AnimatedPage><MixtapesScreen /></AnimatedPage>} />
+            <Route path="/notifications" element={<AnimatedPage><NotificationsScreen /></AnimatedPage>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
       </Suspense>
     </AppShell>
   );

@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { AppHeader } from '@/components/mobile/AppHeader';
 import { StoriesBar } from '@/components/mobile/StoriesBar';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Heart, MessageCircle, Share2, MapPin, Music, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Heart, MessageCircle, Share2, MapPin, Music, Plus, MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Post {
@@ -45,39 +43,53 @@ export default function HomeFeed() {
     <div className="flex flex-col">
       <AppHeader />
 
-      {/* Book CTA */}
+      {/* Book CTA Hero */}
       <div className="px-4 py-3">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-2xl border border-primary/20 p-4"
-          style={{ background: 'linear-gradient(135deg, hsl(270 30% 8%) 0%, hsl(0 0% 4%) 40%, hsl(40 30% 8%) 100%)', boxShadow: 'var(--app-gold-shadow)' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative overflow-hidden rounded-[20px] p-5"
+          style={{
+            background: 'var(--gradient-hero)',
+            border: '1px solid hsl(47 93% 54% / 0.2)',
+            boxShadow: 'var(--shadow-gold)',
+          }}
+        >
           <div className="relative z-10">
-            <p className="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">Available for Events</p>
-            <p className="text-foreground font-bold text-lg mb-0.5">Book DJ Soundzy</p>
-            <p className="text-muted-foreground text-xs mb-3">Weddings · Clubs · Corporate</p>
-            <Button onClick={() => navigate('/book')} size="sm" className="h-9 bg-primary text-primary-foreground font-bold text-xs rounded-full px-5">
+            <p className="text-[10px] text-primary font-bold uppercase tracking-[0.15em] mb-1.5">
+              Available for Events
+            </p>
+            <h2 className="text-xl font-bold text-foreground mb-0.5">Book DJ Soundzy</h2>
+            <p className="text-xs text-muted-foreground mb-4">Weddings · Clubs · Corporate</p>
+            <Button
+              onClick={() => navigate('/book')}
+              size="sm"
+              className="h-10 bg-primary text-primary-foreground font-bold text-xs rounded-full px-6 uppercase tracking-wide"
+            >
               Book Now →
             </Button>
           </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-primary/10">
-            <Music className="h-24 w-24" />
-          </div>
+          {/* Decorative SVG wave */}
+          <svg className="absolute right-0 top-0 h-full w-32 opacity-10 text-primary" viewBox="0 0 100 100" fill="none">
+            <path d="M50 0 C55 20, 70 30, 60 50 C50 70, 80 80, 50 100" stroke="currentColor" strokeWidth="2" />
+            <path d="M70 0 C75 25, 90 35, 80 55 C70 75, 95 85, 70 100" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="80" cy="30" r="3" fill="currentColor" opacity="0.3" />
+            <circle cx="90" cy="60" r="2" fill="currentColor" opacity="0.2" />
+          </svg>
         </motion.div>
       </div>
 
-      {/* Stories */}
       <StoriesBar />
-
-      {/* Latest Mixtape */}
       <MixtapeCard />
 
       {/* Section header */}
-      <div className="px-4 pt-2 pb-1">
+      <div className="px-4 pt-3 pb-1.5">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-foreground">Community Vibes ✨</h2>
             <p className="text-[10px] text-muted-foreground">Events, reviews, and memories</p>
           </div>
-          <Button size="sm" variant="ghost" onClick={() => navigate('/create-post')} className="h-8 text-primary text-xs gap-1">
+          <Button size="sm" variant="ghost" onClick={() => navigate('/create-post')} className="h-8 text-primary text-xs gap-1 rounded-full">
             <Plus className="h-3.5 w-3.5" /> Post
           </Button>
         </div>
@@ -86,15 +98,20 @@ export default function HomeFeed() {
       {/* Feed */}
       <div className="px-4 pb-4">
         {loading ? (
-          <div className="space-y-4">{[1,2,3].map(i => <Skeleton key={i} className="h-40 rounded-2xl" />)}</div>
+          <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="skeleton-pulse h-40 rounded-[20px]" />)}</div>
         ) : posts.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground">
-            <Music className="h-12 w-12 mx-auto mb-3 opacity-30" />
-            <p className="text-sm">No posts yet</p>
+            <svg className="h-16 w-16 mx-auto mb-4 opacity-20" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="38" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M30 55 C30 35, 50 30, 50 45 C50 55, 30 60, 30 55Z" fill="currentColor" opacity="0.3" />
+              <circle cx="35" cy="32" r="4" fill="currentColor" opacity="0.4" />
+              <path d="M25 45 L35 35 L40 40 L55 28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <p className="text-sm font-bold">No posts yet</p>
             <p className="text-xs mt-1">Be the first to share your vibes!</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {posts.map((post, i) => <PostCard key={post.id} post={post} index={i} />)}
           </div>
         )}
@@ -116,14 +133,21 @@ function MixtapeCard() {
 
   return (
     <div className="px-4 py-2">
-      <button onClick={() => navigate('/mixtapes')} className="w-full bg-card rounded-2xl border border-secondary/20 p-3 flex items-center gap-3 text-left">
-        {mixtape.artwork_url && <img src={mixtape.artwork_url} alt={mixtape.title} className="h-14 w-14 rounded-xl object-cover" />}
+      <button
+        onClick={() => navigate('/mixtapes')}
+        className="w-full rounded-[20px] p-3.5 flex items-center gap-3 text-left"
+        style={{
+          background: 'hsl(var(--app-bg-elevated))',
+          border: '1px solid hsl(263 84% 58% / 0.2)',
+        }}
+      >
+        {mixtape.artwork_url && <img src={mixtape.artwork_url} alt={mixtape.title} className="h-[60px] w-[60px] rounded-xl object-cover" />}
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-bold text-foreground truncate">{mixtape.title}</p>
-          <p className="text-[10px] text-muted-foreground">By DJ Soundzy</p>
+          <p className="text-sm font-bold text-foreground truncate">{mixtape.title}</p>
+          <p className="text-[11px] text-muted-foreground">By DJ Soundzy</p>
           {mixtape.genre && <Badge variant="outline" className="text-[9px] h-4 mt-1 border-secondary/30 text-secondary">{mixtape.genre}</Badge>}
         </div>
-        <div className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+        <div className="h-11 w-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-lg" style={{ boxShadow: 'var(--shadow-gold)' }}>
           <Music className="h-4 w-4" />
         </div>
       </button>
@@ -133,55 +157,74 @@ function MixtapeCard() {
 
 function PostCard({ post, index }: { post: Post; index: number }) {
   const [expanded, setExpanded] = useState(false);
+  const [liked, setLiked] = useState(false);
   const isLong = post.content.length > 150;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05, duration: 0.3 }}>
-      <Card className="overflow-hidden border-border/50 bg-card">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xs font-bold">
-              {post.display_name.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-foreground truncate">{post.display_name}</span>
-                {post.is_guest && <Badge variant="outline" className="text-[9px] h-4 border-muted-foreground/30 text-muted-foreground">Guest</Badge>}
-              </div>
-              <span className="text-[10px] text-muted-foreground">{timeAgo(post.created_at)}</span>
-            </div>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.3 }}
+    >
+      <div className="card-premium overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center gap-2.5 p-3.5 pb-2">
+          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xs font-bold">
+            {post.display_name.charAt(0).toUpperCase()}
           </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[13px] font-bold text-foreground truncate">{post.display_name}</span>
+              {post.is_guest && <Badge variant="outline" className="text-[9px] h-4 border-muted-foreground/30 text-muted-foreground">Guest</Badge>}
+            </div>
+            <span className="text-[10px] text-muted-foreground">{timeAgo(post.created_at)}</span>
+          </div>
+          <button className="tap-target flex items-center justify-center text-muted-foreground">
+            <MoreHorizontal className="h-4 w-4" />
+          </button>
+        </div>
 
-          <p className="text-sm text-foreground/90 leading-relaxed mb-3">
+        {/* Media */}
+        {post.media_urls?.length > 0 && (
+          <div className="overflow-hidden">
+            <img src={post.media_urls[0]} alt="" className="w-full aspect-video object-cover" loading="lazy" />
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="px-3.5 py-2.5">
+          <p className="text-sm text-foreground/90 leading-relaxed">
             {isLong && !expanded ? post.content.slice(0, 150) + '...' : post.content}
-            {isLong && !expanded && <button onClick={() => setExpanded(true)} className="text-primary text-xs ml-1">Read more</button>}
+            {isLong && !expanded && (
+              <button onClick={() => setExpanded(true)} className="text-primary text-xs ml-1 font-medium">Read more</button>
+            )}
           </p>
 
-          {post.media_urls?.length > 0 && (
-            <div className="rounded-xl overflow-hidden mb-3">
-              <img src={post.media_urls[0]} alt="" className="w-full aspect-video object-cover" loading="lazy" />
-            </div>
-          )}
-
           {post.location && (
-            <div className="flex items-center gap-1 text-muted-foreground text-[10px] mb-3">
+            <div className="flex items-center gap-1 text-muted-foreground text-[10px] mt-2">
               <MapPin className="h-3 w-3" /> {post.location}
             </div>
           )}
+        </div>
 
-          <div className="flex items-center gap-4 pt-2 border-t border-border/50">
-            <button className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors tap-target">
-              <Heart className="h-4 w-4" /><span className="text-xs">{post.likes_count || 0}</span>
-            </button>
-            <button className="flex items-center gap-1 text-muted-foreground hover:text-secondary transition-colors tap-target">
-              <MessageCircle className="h-4 w-4" /><span className="text-xs">0</span>
-            </button>
-            <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors tap-target ml-auto">
-              <Share2 className="h-4 w-4" />
-            </button>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Footer */}
+        <div className="flex items-center gap-4 px-3.5 py-2.5 border-t border-[hsl(0_0%_100%/0.06)]">
+          <motion.button
+            whileTap={{ scale: 1.4 }}
+            onClick={() => setLiked(!liked)}
+            className={`flex items-center gap-1 transition-colors tap-target ${liked ? 'text-destructive' : 'text-muted-foreground'}`}
+          >
+            <Heart className={`h-[18px] w-[18px] ${liked ? 'fill-current' : ''}`} />
+            <span className="text-xs">{(post.likes_count || 0) + (liked ? 1 : 0)}</span>
+          </motion.button>
+          <button className="flex items-center gap-1 text-muted-foreground tap-target">
+            <MessageCircle className="h-[18px] w-[18px]" /><span className="text-xs">0</span>
+          </button>
+          <button className="flex items-center gap-1 text-muted-foreground tap-target ml-auto">
+            <Share2 className="h-[18px] w-[18px]" />
+          </button>
+        </div>
+      </div>
     </motion.div>
   );
 }
