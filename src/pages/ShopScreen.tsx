@@ -6,8 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { useAppStore } from '@/stores/useAppStore';
-import { ShoppingCart, Plus, Minus, X, Heart, MessageCircle, Check } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, X, Heart, MessageCircle, Check, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -35,6 +36,7 @@ export default function ShopScreen() {
   const [addedId, setAddedId] = useState<string | null>(null);
   const { toast } = useToast();
   const setCartCount = useAppStore((s) => s.setCartCount);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProducts();
@@ -129,6 +131,31 @@ export default function ShopScreen() {
         </div>
       </div>
 
+      {/* Featured Banner */}
+      {activeCategory === 'All' && products.length > 0 && (
+        <div className="px-4 pb-3">
+          <button
+            onClick={() => navigate(`/product/${products.find(p => p.category === 'Bundles')?.id || products[0].id}`)}
+            className="w-full relative overflow-hidden rounded-[20px] h-[160px] text-left"
+            style={{ background: 'linear-gradient(135deg, hsl(40 30% 8%) 0%, hsl(240 14% 4%) 50%, hsl(47 93% 54% / 0.08) 100%)', border: '1px solid hsl(47 93% 54% / 0.15)' }}
+          >
+            <div className="absolute inset-0 flex items-center">
+              {(products.find(p => p.category === 'Bundles') || products[0])?.image_url && (
+                <img src={(products.find(p => p.category === 'Bundles') || products[0]).image_url!} alt="" className="absolute right-0 top-0 h-full w-1/2 object-cover opacity-30" style={{ maskImage: 'linear-gradient(to right, transparent, black)' }} />
+              )}
+            </div>
+            <div className="relative z-10 p-5 flex flex-col justify-center h-full">
+              <Badge className="bg-primary text-primary-foreground text-[10px] font-bold w-fit mb-2">🔥 Featured Deal</Badge>
+              <p className="text-lg font-bold text-foreground mb-1">{(products.find(p => p.category === 'Bundles') || products[0]).name}</p>
+              <p className="text-2xl font-bold text-primary">₦{((products.find(p => p.category === 'Bundles') || products[0]).price_cents / 100).toLocaleString()}</p>
+              <div className="flex items-center gap-1 mt-2 text-primary text-sm font-bold">
+                View Deal <ChevronRight className="h-4 w-4" />
+              </div>
+            </div>
+          </button>
+        </div>
+      )}
+
       {/* Products grid */}
       <div className="px-4 pb-32">
         {loading ? (
@@ -139,7 +166,7 @@ export default function ShopScreen() {
           <div className="grid grid-cols-2 gap-3">
             {filtered.map((product, idx) => (
               <motion.div key={product.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
-                <Card className="overflow-hidden bg-card" style={{ border: '1px solid hsl(0 0% 100% / 0.06)' }}>
+                <Card className="overflow-hidden bg-card cursor-pointer" style={{ border: '1px solid hsl(0 0% 100% / 0.06)' }} onClick={() => navigate(`/product/${product.id}`)}>
                   <div className="aspect-square bg-muted/20 relative">
                     {product.image_url ? (
                       <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
@@ -161,7 +188,7 @@ export default function ShopScreen() {
                     )}
                     <Button
                       size="sm"
-                      onClick={() => addToCart(product.id)}
+                      onClick={(e) => { e.stopPropagation(); addToCart(product.id); }}
                       disabled={(product.stock_quantity ?? 0) <= 0}
                       className="w-full h-11 text-xs rounded-full bg-primary text-primary-foreground font-bold uppercase tracking-wide"
                     >
@@ -181,7 +208,7 @@ export default function ShopScreen() {
 
       {/* Cart bar — positioned above bottom nav with proper spacing */}
       {cartItems.length > 0 && !showCart && (
-        <div className="fixed bottom-[calc(88px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-40">
+        <div className="fixed left-0 right-0 z-40" style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}>
           <div className="app-container px-4">
             <button
               onClick={() => setShowCart(true)}

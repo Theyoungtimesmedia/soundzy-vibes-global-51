@@ -12,6 +12,8 @@ const AuthScreen = lazy(() => import("./pages/AuthScreen"));
 const HomeFeed = lazy(() => import("./pages/HomeFeed"));
 const BookingScreen = lazy(() => import("./pages/BookingScreen"));
 const ShopScreen = lazy(() => import("./pages/ShopScreen"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const UserProfilePage = lazy(() => import("./pages/UserProfilePage"));
 const MessagesScreen = lazy(() => import("./pages/MessagesScreen"));
 const ProfileScreen = lazy(() => import("./pages/ProfileScreen"));
 const CreatePost = lazy(() => import("./pages/CreatePost"));
@@ -95,6 +97,8 @@ function AppRoutes() {
             <Route path="/" element={<AnimatedPage><HomeFeed /></AnimatedPage>} />
             <Route path="/book" element={<AnimatedPage><BookingScreen /></AnimatedPage>} />
             <Route path="/shop" element={<AnimatedPage><ShopScreen /></AnimatedPage>} />
+            <Route path="/product/:id" element={<AnimatedPage><ProductDetail /></AnimatedPage>} />
+            <Route path="/user/:userId" element={<AnimatedPage><UserProfilePage /></AnimatedPage>} />
             <Route path="/messages" element={<AnimatedPage><MessagesScreen /></AnimatedPage>} />
             <Route path="/profile" element={<AnimatedPage><ProfileScreen /></AnimatedPage>} />
             <Route path="/create-post" element={<AnimatedPage><CreatePost /></AnimatedPage>} />

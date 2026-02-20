@@ -193,7 +193,8 @@ export default function MixtapesScreen() {
         {currentTrack && !showFullPlayer && (
           <motion.div
             initial={{ y: 80 }} animate={{ y: 0 }} exit={{ y: 80 }}
-            className="fixed bottom-[calc(88px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-40"
+            className="fixed left-0 right-0 z-40"
+            style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
             onClick={() => setShowFullPlayer(true)}
           >
             <div className="app-container px-4">
